@@ -1,0 +1,22 @@
+---
+# Source: dex/templates/service.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: dex
+  labels:
+    app.kubernetes.io/name: dex
+    helm.sh/chart: dex-2.1.0
+    app.kubernetes.io/instance: dex
+    app.kubernetes.io/version: "2.17.0"
+    app.kubernetes.io/managed-by: Tiller
+spec:
+  type: ClusterIP
+  sessionAffinity: None
+  ports:
+  - name: http
+    targetPort: http
+    port: 32000
+  selector:
+    app.kubernetes.io/name: dex
+    app.kubernetes.io/instance: dex

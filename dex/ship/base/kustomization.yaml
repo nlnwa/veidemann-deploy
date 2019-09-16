@@ -1,0 +1,10 @@
+kind: ""
+apiversion: ""
+resources:
+- clusterrole.yaml
+- clusterrolebinding.yaml
+- deployment.yaml
+- ingress.yaml
+- secret.yaml
+- service.yaml
+- serviceaccount.yaml

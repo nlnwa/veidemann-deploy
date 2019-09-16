@@ -1,0 +1,167 @@
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  labels:
+    app.kubernetes.io/instance: dex
+    app.kubernetes.io/managed-by: Tiller
+    app.kubernetes.io/name: dex
+    app.kubernetes.io/version: 2.17.0
+    helm.sh/chart: dex-2.1.0
+  name: dex
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  labels:
+    app.kubernetes.io/instance: dex
+    app.kubernetes.io/managed-by: Tiller
+    app.kubernetes.io/name: dex
+    app.kubernetes.io/version: 2.17.0
+    helm.sh/chart: dex-2.1.0
+  name: dex
+rules:
+- apiGroups:
+  - dex.coreos.com
+  resources:
+  - '*'
+  verbs:
+  - '*'
+- apiGroups:
+  - apiextensions.k8s.io
+  resources:
+  - customresourcedefinitions
+  verbs:
+  - create
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  labels:
+    app.kubernetes.io/instance: dex
+    app.kubernetes.io/managed-by: Tiller
+    app.kubernetes.io/name: dex
+    app.kubernetes.io/version: 2.17.0
+    helm.sh/chart: dex-2.1.0
+  name: dex
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: dex
+subjects:
+- kind: ServiceAccount
+  name: dex
+  namespace: default
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  labels:
+    app.kubernetes.io/instance: dex
+    app.kubernetes.io/managed-by: Tiller
+    app.kubernetes.io/name: dex
+    app.kubernetes.io/version: 2.17.0
+    helm.sh/chart: dex-2.1.0
+  name: dex
+stringData:
+  config.yaml: "issuer: http://dex.io:8080\nstorage:\n  config:\n    inCluster: true\n  type: kubernetes\n  \nlogger:\n  level: debug\n  \nweb:\n  http: 0.0.0.0:5556\noauth2:\n  skipApprovalScreen: true\n\nenablePasswordDB: true"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app.kubernetes.io/instance: dex
+    app.kubernetes.io/managed-by: Tiller
+    app.kubernetes.io/name: dex
+    app.kubernetes.io/version: 2.17.0
+    helm.sh/chart: dex-2.1.0
+  name: dex
+spec:
+  ports:
+  - name: http
+    port: 32000
+    targetPort: http
+  selector:
+    app.kubernetes.io/instance: dex
+    app.kubernetes.io/name: dex
+  sessionAffinity: None
+  type: ClusterIP
+---
+apiVersion: apps/v1beta2
+kind: Deployment
+metadata:
+  labels:
+    app.kubernetes.io/component: dex
+    app.kubernetes.io/instance: dex
+    app.kubernetes.io/managed-by: Tiller
+    app.kubernetes.io/name: dex
+    app.kubernetes.io/version: 2.17.0
+    helm.sh/chart: dex-2.1.0
+  name: dex
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/component: dex
+      app.kubernetes.io/instance: dex
+      app.kubernetes.io/name: dex
+  strategy:
+    rollingUpdate:
+      maxSurge: 0
+      maxUnavailable: 1
+    type: RollingUpdate
+  template:
+    metadata:
+      annotations:
+        checksum/config: a8a257530d6e9af3a4c0431b6d7981b51f5c0e5f9f7907cf425f871cb41b2feb
+      labels:
+        app.kubernetes.io/component: dex
+        app.kubernetes.io/instance: dex
+        app.kubernetes.io/name: dex
+    spec:
+      containers:
+      - command:
+        - /usr/local/bin/dex
+        - serve
+        - /etc/dex/cfg/config.yaml
+        env: []
+        image: quay.io/dexidp/dex:v2.17.0
+        imagePullPolicy: IfNotPresent
+        name: main
+        ports:
+        - containerPort: 5556
+          name: http
+          protocol: TCP
+        resources: {}
+        volumeMounts:
+        - mountPath: /etc/dex/cfg
+          name: config
+      nodeSelector: {}
+      serviceAccountName: dex
+      volumes:
+      - name: config
+        secret:
+          defaultMode: 420
+          items:
+          - key: config.yaml
+            path: config.yaml
+          secretName: dex
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  labels:
+    app.kubernetes.io/instance: dex
+    app.kubernetes.io/managed-by: Tiller
+    app.kubernetes.io/name: dex
+    app.kubernetes.io/version: 2.17.0
+    helm.sh/chart: dex-2.1.0
+  name: dex
+spec:
+  rules:
+  - host: dex.example.com
+    http:
+      paths:
+      - backend:
+          serviceName: dex
+          servicePort: 32000
+        path: /
