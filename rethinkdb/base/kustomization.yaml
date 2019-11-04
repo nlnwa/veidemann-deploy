@@ -3,6 +3,7 @@ kind: Kustomization
 
 commonLabels:
   app.kubernetes.io/name: rethinkdb
+  app.kubernetes.io/version: 2.3.5
 
 bases:
   - cluster
