@@ -1,0 +1,45 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: veidemann-reset
+spec:
+  backoffLimit: 1
+  template:
+    spec:
+      restartPolicy: Never
+      volumes:
+        - name: warcs
+          persistentVolumeClaim:
+            claimName: veidemann-warcs
+        - name: validwarcs
+          persistentVolumeClaim:
+            claimName: veidemann-validwarcs
+        - name: invalidwarcs
+          persistentVolumeClaim:
+            claimName: veidemann-invalidwarcs
+        - name: delivery
+          persistentVolumeClaim:
+            claimName: veidemann-delivery
+        - name: backup
+          persistentVolumeClaim:
+            claimName: veidemann-backup
+      containers:
+        - name: veidemann-reset
+          image: veidemann-reset
+          volumeMounts:
+            - name: warcs
+              mountPath: /warcs
+            - name: validwarcs
+              mountPath: /validwarcs
+            - name: invalidwarcs
+              mountPath: /invalidwarcs
+            - name: delivery
+              mountPath: /delivery
+            - name: backup
+              mountPath: /backup
+          envFrom:
+            - secretRef:
+                name: veidemann-reset-secrets
+          env:
+            - name: RETHINKDB_HOST
+              value: $(RETHINKDB_PROXY_SERVICE_NAME)
