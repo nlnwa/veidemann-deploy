@@ -1,0 +1,16 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: veidemann-controller
+spec:
+  template:
+    spec:
+      containers:
+        - name: veidemann-controller
+          env:
+            - name: OPENID_CONNECT_ISSUER
+              value: https://veidemann.local/dex
+            - name: DB_HOST
+              value: $(DB_SERVICE_NAME)
+            - name: FRONTIER_HOST
+              value: $(FRONTIER_SERVICE_NAME)
