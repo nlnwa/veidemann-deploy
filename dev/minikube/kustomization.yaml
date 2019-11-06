@@ -1,0 +1,73 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+  - ../bases
+
+patches:
+  - path: ingress_tls_patch.yaml
+    target:
+      kind: Ingress
+  - path: minikube_ip_patch.yaml
+  - path: add_ca_patch.yaml
+  - path: controller_env_patch.yaml
+
+secretGenerator:
+  - files:
+      - tls.crt=minica.pem
+      - tls.key=minica-key.pem
+    name: veidemann-controller
+    type: kubernetes.io/tls
+  - literals:
+      - DB_USER=admin
+      - DB_PASSWORD=rethinkdb
+    name: veidemann-rethinkdb-env
+    behavior: merge
+
+configmapGenerator:
+  - name: veidemann
+    files:
+      - log4j2.xml
+    literals:
+      - cache_host=local-veidemann-cache-balancer
+      - cache.port="3128"
+      - contentWriter_host=local-veidemann-contentwriter
+      - contentWriter.port="8082"
+      - db_host=local-rethinkdb-proxy
+      - dnsResolver_host=local-veidemann-dns-resolver
+      - dnsResolver.port="8053"
+      - frontier_host=local-veidemann-frontier
+      - harvester_host=local-veidemann-harvester
+      - harvester.port="8080"
+      - oosHandler_host=local-veidemann-ooshandler
+      - oosHandler.port="50052"
+      - robotsEvaluator_host=local-veidemann-robotsevaluator-service
+      - robotsEvaluator.port="7053"
+      - openidConnectIssuer=https://veidemann.local/dex
+
+vars:
+  # Get service names.
+  # This should be fetched from services along these lines as soon as everything is converted to Kustomize
+  #  - name: FRONTIER_SERVICE_NAME
+  #    objref:
+  #      kind: Service
+  #      apiVersion: v1
+  #      name: veidemann-frontier
+  - name: DB_SERVICE_NAME
+    objref:
+      kind: ConfigMap
+      apiVersion: v1
+      name: veidemann
+    fieldref:
+      fieldpath: data.db_host
+  - name: FRONTIER_SERVICE_NAME
+    objref:
+      kind: ConfigMap
+      apiVersion: v1
+      name: veidemann
+    fieldref:
+      fieldpath: data.frontier_host
+  - name: CONTROLLER_SERVICE_NAME
+    objref:
+      kind: Service
+      apiVersion: v1
+      name: veidemann-controller

@@ -1,0 +1,104 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: veidemann-controller
+  annotations:
+    sidecar.jaegertracing.io/inject: "true"
+
+spec:
+  replicas: 1
+  template:
+    metadata:
+      annotations:
+        config.linkerd.io/skip-inbound-ports: "7700"
+        config.linkerd.io/skip-outbound-ports: "14250"
+        linkerd.io/inject: enabled
+
+    spec:
+      volumes:
+        - name: log4j-config
+          configMap:
+            name: veidemann
+            items:
+              - key: log4j2.xml
+                path: log4j2.xml
+        - name: envoy-config
+          configMap:
+            name: veidemann-controller-envoy
+
+      terminationGracePeriodSeconds: 30
+
+      containers:
+        - name: veidemann-controller
+          image: "norsknettarkiv/veidemann-controller:0.3.18"
+          imagePullPolicy: IfNotPresent
+          ports:
+            - name: grpc
+              containerPort: 7700
+          resources: {}
+          envFrom:
+            - secretRef:
+                name: veidemann-rethinkdb-env
+                optional: false
+          env:
+            - name: NODE_NAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: status.hostIP
+            - name: API_PORT
+              value: "7700"
+            - name: DB_HOST
+              value: "rethinkdb-proxy"
+            - name: DB_PORT
+              value: "28015"
+            - name: DB_NAME
+              value: "veidemann"
+            - name: FRONTIER_HOST
+              value: "veidemann-frontier"
+            - name: FRONTIER_PORT
+              value: "7700"
+            - name: OPENID_CONNECT_ISSUER
+              value: "https://veidemann/dex"
+            - name: JAEGER_SERVICE_NAME
+              value: "veidemann-controller"
+            - name: JAEGER_AGENT_HOST
+              value: "localhost"
+            - name: JAEGER_AGENT_PORT
+              value: "6831"
+            - name: JAVA_TOOL_OPTIONS
+              value: "-Dfile.encoding=UTF-8"
+          volumeMounts:
+            - name: log4j-config
+              mountPath: /veidemann/config/log4j2.xml
+              subPath: log4j2.xml
+
+        - name: veidemann-controller-envoy
+          image: "envoyproxy/envoy-alpine:v1.8.0"
+          imagePullPolicy: IfNotPresent
+          ports:
+            - name: admin
+              containerPort: 9901
+              protocol: TCP
+            - name: grpc-web
+              containerPort: 10000
+              protocol: TCP
+          command:
+            - /usr/bin/dumb-init
+            - --
+          args:
+            - /usr/local/bin/envoy
+            - -l
+            - $loglevel
+            - -c
+            - /config/envoy.yaml
+          livenessProbe:
+            tcpSocket:
+              port: admin
+            initialDelaySeconds: 2
+          readinessProbe:
+            tcpSocket:
+              port: admin
+            initialDelaySeconds: 2
+          volumeMounts:
+            - name: envoy-config
+              mountPath: /config

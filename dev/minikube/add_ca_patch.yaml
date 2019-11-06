@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: veidemann-controller
+spec:
+  template:
+    spec:
+      volumes:
+        - name: ca
+          secret:
+            defaultMode: 420
+            items:
+              - key: tls.crt
+                path: tls.crt
+            secretName: veidemann-controller
+      containers:
+        - name: veidemann-controller
+          volumeMounts:
+            - mountPath: /veidemann/trustedca/tls.crt
+              name: ca
+              subPath: tls.crt
