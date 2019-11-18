@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: heketi-exporter
+spec:
+  template:
+    spec:
+      restartPolicy: Always
+      containers:
+        - name: heketi-exporter
+          image: timtindell/heketi_exporter:latest
+          imagePullPolicy: IfNotPresent
+          envFrom:
+            - secretRef:
+                name: heketi-exporter-secrets
+          env:
+            - name: HEKETI_CLI_SERVER
+              value: http://heketi:8080
+          ports:
+            - containerPort: 9189
+              name: http-metrics
+          resources:
+            requests:
+              cpu: 10m
+              memory: 200Mi
