@@ -1,0 +1,44 @@
+apiVersion: traefik.containo.us/v1alpha1
+kind: Middleware
+metadata:
+  name: grpcweb-stripprefix
+spec:
+  stripPrefix:
+    prefixes:
+      - /grpc-web
+---
+
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: veidemann-ingressroute
+spec:
+  entryPoints:
+    - web
+    - websecure
+  routes:
+    - match: Host(`veidemann.local`) && PathPrefix(`/dex`)
+      kind: Rule
+      services:
+        - name: dex
+          port: 32000
+    - match: Host(`veidemann.local`) && PathPrefix(`/veidemann.api`)
+      kind: Rule
+      services:
+        - name: veidemann-controller
+          port: 7700
+          scheme: h2c
+    - match: Host(`veidemann.local`) && PathPrefix(`/grpc-web`)
+      kind: Rule
+      middlewares:
+        - name: grpcweb-stripprefix
+      services:
+        - name: veidemann-controller
+          port: 10000
+    - match: Host(`veidemann.local`) && PathPrefix(`/veidemann`)
+      kind: Rule
+      services:
+        - name: veidemann-dashboard
+          port: 80
+  tls:
+    secretName: veidemann-ingress-tls-cert

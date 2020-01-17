@@ -1,1 +1,3 @@
 .idea
+/dev/kind/kind_ip_patch.yaml
+/dev/minikube/minikube_ip_patch.yaml

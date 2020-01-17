@@ -12,7 +12,7 @@ spec:
             items:
               - key: tls.crt
                 path: tls.crt
-            secretName: veidemann-controller
+            secretName: veidemann-ingress-tls-cert
       containers:
         - name: veidemann-controller
           volumeMounts:
