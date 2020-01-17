@@ -1,0 +1,114 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: veidemann-frontier
+  labels:
+    app.kubernetes.io/name: veidemann-frontier
+    app.kubernetes.io/component: frontier
+  annotations:
+    sidecar.jaegertracing.io/inject: jaeger
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: veidemann-frontier
+      app.kubernetes.io/component: frontier
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: veidemann-frontier
+        app.kubernetes.io/component: frontier
+      annotations:
+        config.linkerd.io/skip-inbound-ports: "9301"
+        config.linkerd.io/skip-outbound-ports: "14250"
+        linkerd.io/inject: enabled
+    spec:
+      volumes:
+        - name: workdir
+          emptyDir: {}
+        - name: veidemann-config
+          configMap:
+            name: veidemann
+            items:
+              - key: log4j2.xml
+                path: log4j2.xml
+
+      terminationGracePeriodSeconds: 600
+
+      containers:
+        - name: veidemann-frontier
+          image: norsknettarkiv/veidemann-frontier:0.4.1
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 7700
+              name: grpc
+              protocol: TCP
+            - containerPort: 9301
+              name: http-metrics
+              protocol: TCP
+          resources:
+            limits:
+              cpu: "1"
+              memory: 4Gi
+            requests:
+              cpu: 250m
+              memory: 2Gi
+          envFrom:
+            - secretRef:
+                name: veidemann-rethinkdb-env
+                optional: false
+          env:
+            - name: NODE_NAME
+              valueFrom:
+                fieldRef:
+                  apiVersion: v1
+                  fieldPath: status.hostIP
+            - name: DB_HOST
+              value: "rethinkdb-proxy"
+            - name: DB_PORT
+              value: "28015"
+            - name: DB_NAME
+              value: "veidemann"
+            - name: LOCK_REDIS_HOST
+              value: redis-distributed-lock-master
+            - name: LOCK_REDIS_PORT
+              value: "6379"
+            - name: API_PORT
+              value: "7700"
+            - name: ROBOTS_EVALUATOR_HOST
+              value: "veidemann-robotsevaluator-service"
+            - name: ROBOTS_EVALUATOR_PORT
+              value: "7053"
+            - name: DNS_RESOLVER_HOST
+              value: "veidemann-dns-resolver"
+            - name: DNS_RESOLVER_PORT
+              value: "8053"
+            - name: OOS_HANDLER_HOST
+              value: "veidemann-ooshandler"
+            - name: OOS_HANDLER_PORT
+              value: "50052"
+            - name: TERMINATION_GRACE_PERIOD_SECONDS
+              value: "300"
+            - name: JAVA_OPTS
+              value: -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=34774
+                -XX:+HeapDumpOnOutOfMemoryError -XX:HeapDumpPath=/workdir/heapdump
+            - name: JAEGER_SERVICE_NAME
+              value: veidemann-frontier
+            - name: JAEGER_AGENT_HOST
+              value: localhost
+            - name: JAEGER_AGENT_PORT
+              value: "6831"
+            - name: JAEGER_SAMPLER_TYPE
+              value: probabilistic
+            - name: JAEGER_SAMPLER_PARAM
+              value: "0.1"
+            - name: JAVA_TOOL_OPTIONS
+              value: -Dfile.encoding=UTF-8
+            - name: JAEGER_PROPAGATION
+              value: jaeger,b3
+          volumeMounts:
+            - mountPath: /workdir
+              name: workdir
+            - mountPath: /veidemann/config/log4j2.xml
+              name: veidemann-config
+              subPath: log4j2.xml
