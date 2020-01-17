@@ -4,14 +4,11 @@ resources:
   - clusterrole.yaml
   - clusterrolebinding.yaml
   - deployment.yaml
-  - ingress.yaml
   - service.yaml
   - serviceaccount.yaml
 
 commonLabels:
-  app.kubernetes.io/name: dex
   app.kubernetes.io/instance: dex
-  app.kubernetes.io/component: idp
   app.kubernetes.io/part-of: veidemann
 
 secretGenerator:
