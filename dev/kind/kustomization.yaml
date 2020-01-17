@@ -4,7 +4,7 @@ resources:
   - ../bases/veidemann
 
 patches:
-  - path: minikube_ip_patch.yaml
+  - path: kind_ip_patch.yaml
   - patch: |-
       - op: add
         path: /spec/template/spec/containers/0/env/-

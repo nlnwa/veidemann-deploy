@@ -1,0 +1,18 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: veidemann-frontier
+spec:
+  template:
+    spec:
+      containers:
+        - name: veidemann-frontier
+          env:
+            - name: DB_HOST
+              value: $(DB_SERVICE_NAME)
+            - name: ROBOTS_EVALUATOR_HOST
+              value: $(ROBOTS_EVALUATOR_SERVICE_NAME)
+            - name: DNS_RESOLVER_HOST
+              value: $(DNS_RESOLVER_SERVICE_NAME)
+            - name: OOS_HANDLER_HOST
+              value: $(OOS_HANDLER_SERVICE_NAME)

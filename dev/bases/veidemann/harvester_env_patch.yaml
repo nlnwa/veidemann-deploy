@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: veidemann-harvester
+spec:
+  replicas: 2
+  template:
+    spec:
+      containers:
+        - name: veidemann-harvester
+          env:
+            - name: MAX_OPEN_SESSIONS
+              value: "5"
+            - name: DB_HOST
+              value: $(DB_SERVICE_NAME)
+            - name: FRONTIER_HOST
+              value: $(FRONTIER_SERVICE_NAME)
+            - name: CONTENT_WRITER_HOST
+              value: $(CONTENT_WRITER_SERVICE_NAME)
+            - name: ROBOTS_EVALUATOR_HOST
+              value: $(ROBOTS_EVALUATOR_SERVICE_NAME)
+        - name: veidemann-harvester-proxy
+          env:
+            - name: PROXY_COUNT
+              value: "5"
+            - name: DNS_RESOLVER_HOST
+              value: $(DNS_RESOLVER_SERVICE_NAME)
+            - name: CONTENT_WRITER_HOST
+              value: $(CONTENT_WRITER_SERVICE_NAME)
+            - name: CACHE_HOST
+              value: $(CACHE_BALANCER_SERVICE_NAME)
