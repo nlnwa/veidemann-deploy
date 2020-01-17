@@ -33,3 +33,7 @@ secretGenerator:
   - name: rethinkdb
     literals:
       - rethinkdb-password=rethinkdb
+  - name: veidemann-rethinkdb-env
+    literals:
+      - DB_USER=admin
+      - DB_PASSWORD=rethinkdb
