@@ -5,10 +5,5 @@ resources:
   - deployment.yaml
 
 commonLabels:
-  app.kubernetes.io/instance: veidemann-controller
+  app.kubernetes.io/instance: veidemann-dns-resolver
   app.kubernetes.io/part-of: veidemann
-
-configmapGenerator:
-  - name: veidemann-controller-envoy
-    files:
-      - envoy.yaml

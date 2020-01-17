@@ -3,12 +3,8 @@ kind: Kustomization
 resources:
   - service.yaml
   - deployment.yaml
+  - configmap.yaml
 
 commonLabels:
-  app.kubernetes.io/instance: veidemann-controller
+  app.kubernetes.io/instance: veidemann-dashboard
   app.kubernetes.io/part-of: veidemann
-
-configmapGenerator:
-  - name: veidemann-controller-envoy
-    files:
-      - envoy.yaml

@@ -1,0 +1,90 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: veidemann-contentwriter
+  labels:
+    app.kubernetes.io/name: veidemann-contentwriter
+    app.kubernetes.io/component: contentwriter
+  annotations:
+    sidecar.jaegertracing.io/inject: jaeger
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: veidemann-contentwriter
+      app.kubernetes.io/component: contentwriter
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: veidemann-contentwriter
+        app.kubernetes.io/component: contentwriter
+      annotations:
+        config.linkerd.io/skip-outbound-ports: "14250"
+        linkerd.io/inject: enabled
+    spec:
+      terminationGracePeriodSeconds: 600
+      volumes:
+        - emptyDir: {}
+          name: workdir
+        - name: warcs
+          emptyDir: {}
+        - name: veidemann-config
+          configMap:
+            name: veidemann
+            items:
+              - key: log4j2.xml
+                path: log4j2.xml
+      containers:
+        - name: veidemann-contentwriter
+          image: norsknettarkiv/veidemann-contentwriter:0.2.8
+          imagePullPolicy: IfNotPresent
+          ports:
+            - name: grpc
+              containerPort: 8082
+          volumeMounts:
+            - mountPath: /workdir
+              name: workdir
+            - mountPath: /warcs
+              name: warcs
+            - mountPath: /veidemann/config/log4j2.xml
+              name: veidemann-config
+              subPath: log4j2.xml
+          envFrom:
+            - secretRef:
+                name: veidemann-rethinkdb-env
+                optional: false
+          env:
+            - name: NODE_NAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: status.hostIP
+            - name: DB_HOST
+              value: "rethinkdb-proxy"
+            - name: DB_PORT
+              value: "28015"
+            - name: DB_NAME
+              value: "veidemann"
+            - name: HOST_NAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.name
+            - name: TERMINATION_GRACE_PERIOD_SECONDS
+              value: "300"
+            - name: API_PORT
+              value: "8082"
+            - name: WARC_WRITER_POOL_SIZE
+              value: "2"
+            - name: JAEGER_SERVICE_NAME
+              value: veidemann-contentwriter
+            - name: JAEGER_AGENT_HOST
+              value: localhost
+            - name: JAEGER_AGENT_PORT
+              value: "6831"
+            - name: JAEGER_SAMPLER_TYPE
+              value: probabilistic
+            - name: JAEGER_SAMPLER_PARAM
+              value: "0.1"
+            - name: JAVA_TOOL_OPTIONS
+              value: -Dfile.encoding=UTF-8
+            - name: JAEGER_PROPAGATION
+              value: jaeger,b3
