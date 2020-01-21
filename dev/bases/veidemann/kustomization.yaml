@@ -29,7 +29,7 @@ generatorOptions:
   # disableNameSuffixHash is true disables the default behavior of adding a
   # suffix to the names of generated resources that is a hash of
   # the resource contents.
-  disableNameSuffixHash: false
+  disableNameSuffixHash: true
 
 secretGenerator:
   - name: veidemann-ingress-tls-cert
