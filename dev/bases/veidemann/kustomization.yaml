@@ -16,6 +16,7 @@ resources:
   - ../../../bases/veidemann-dashboard
   - ../../../bases/veidemann-warcvalidator
   - ingressroute.yaml
+  - persistence/
 
 namespace: veidemann
 
@@ -28,6 +29,7 @@ patches:
   - path: contentwriter_env_patch.yaml
   - path: robotsevaluator_env_patch.yaml
   - path: harvester_env_patch.yaml
+  - path: contentwriter_volume_patch.yaml
   - path: warcvalidator_env_patch.yaml
   - path: warcvalidator_volume_patch.yaml
 
