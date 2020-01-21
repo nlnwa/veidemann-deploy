@@ -14,6 +14,7 @@ resources:
   - ../../../bases/veidemann-robotsevaluator
   - ../../../bases/veidemann-harvester
   - ../../../bases/veidemann-dashboard
+  - ../../../bases/veidemann-warcvalidator
   - ingressroute.yaml
 
 namespace: veidemann
@@ -27,6 +28,8 @@ patches:
   - path: contentwriter_env_patch.yaml
   - path: robotsevaluator_env_patch.yaml
   - path: harvester_env_patch.yaml
+  - path: warcvalidator_env_patch.yaml
+  - path: warcvalidator_volume_patch.yaml
 
 generatorOptions:
   # disableNameSuffixHash is true disables the default behavior of adding a
