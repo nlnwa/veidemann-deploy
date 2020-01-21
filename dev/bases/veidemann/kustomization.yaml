@@ -15,6 +15,7 @@ resources:
   - ../../../bases/veidemann-harvester
   - ../../../bases/veidemann-dashboard
   - ingressroute.yaml
+  - persistence/
 
 namespace: veidemann
 
@@ -27,6 +28,7 @@ patches:
   - path: contentwriter_env_patch.yaml
   - path: robotsevaluator_env_patch.yaml
   - path: harvester_env_patch.yaml
+  - path: contentwriter_volume_patch.yaml
 
 generatorOptions:
   # disableNameSuffixHash is true disables the default behavior of adding a
