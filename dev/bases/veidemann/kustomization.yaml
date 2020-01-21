@@ -38,10 +38,13 @@ secretGenerator:
       - tls.key=cert/veidemann-local_key.pem
       - tls.crt=cert/veidemann-local_cert.pem
   - name: veidemann-rethinkdb-env
-    behavior: merge
     literals:
       - DB_USER=admin
       - DB_PASSWORD=rethinkdb
+  - name: rethinkdb
+    behavior: replace
+    literals:
+      - rethinkdb-password=rethinkdb
 
 configMapGenerator:
   - name: veidemann
@@ -57,7 +60,7 @@ vars:
     objref:
       kind: Service
       apiVersion: v1
-      name: rethinkdb-rethinkdb-proxy
+      name: rethinkdb-proxy
   - name: CONTROLLER_SERVICE_NAME
     objref:
       kind: Service

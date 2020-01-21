@@ -3,24 +3,24 @@ kind: Deployment
 metadata:
   name: rethinkdb-admin
   labels:
-    app.kubernetes.io/component: admin
+    app.kubernetes.io/name: rethinkdb
+    app.kubernetes.io/component: dashboard
 spec:
-  replicas: 1
-  minReadySeconds: 5
   selector:
     matchLabels:
-      app.kubernetes.io/component: admin
+      app.kubernetes.io/name: rethinkdb
+      app.kubernetes.io/component: dashboard
   template:
     metadata:
       name: rethinkdb-admin
       labels:
-        app.kubernetes.io/component: admin
+        app.kubernetes.io/name: rethinkdb
+        app.kubernetes.io/component: dashboard
     spec:
       serviceAccountName: rethinkdb
       containers:
         - name: rethinkdb-admin
-          image: rethinkdb-cluster
-          imagePullPolicy: IfNotPresent
+          image: codylundquist/helm-rethinkdb-cluster:0.1.0
           ports:
             - name: cluster
               containerPort: 29015
@@ -58,6 +58,18 @@ spec:
               valueFrom:
                 fieldRef:
                   fieldPath: metadata.name
+          livenessProbe:
+            exec:
+              command:
+                - /rethinkdb-probe
+            initialDelaySeconds: 5
+            timeoutSeconds: 5
+          readinessProbe:
+            exec:
+              command:
+                - /rethinkdb-probe
+            initialDelaySeconds: 10
+            timeoutSeconds: 5
       volumes:
         - name: secrets
           secret:
