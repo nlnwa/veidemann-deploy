@@ -6,6 +6,7 @@ resources:
   - ../../../bases/dex
   - ../../../bases/rethinkdb
   - ../../../bases/veidemann-db-initializer
+  - ../../../bases/veidemann-metrics
   - ../../../bases/veidemann-dns-resolver
   - ../../../bases/veidemann-controller
   - ../../../bases/veidemann-frontier
@@ -76,6 +77,11 @@ vars:
       kind: Service
       apiVersion: v1
       name: veidemann-frontier
+  - name: METRICS_SERVICE_NAME
+    objref:
+      kind: Service
+      apiVersion: v1
+      name: veidemann-metrics
   - name: ROBOTS_EVALUATOR_SERVICE_NAME
     objref:
       kind: Service
