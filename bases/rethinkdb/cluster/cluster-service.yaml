@@ -3,6 +3,7 @@ kind: Service
 metadata:
   name: rethinkdb-cluster
   labels:
+    app.kubernetes.io/name: rethinkdb
     app.kubernetes.io/component: cluster
 spec:
   clusterIP: None
@@ -11,4 +12,5 @@ spec:
     - port: 29015
       targetPort: cluster
   selector:
+    app.kubernetes.io/name: rethinkdb
     app.kubernetes.io/component: cluster

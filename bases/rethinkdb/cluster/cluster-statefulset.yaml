@@ -2,18 +2,26 @@ apiVersion: apps/v1
 kind: StatefulSet
 metadata:
   name: rethinkdb-cluster
+  labels:
+    app.kubernetes.io/name: rethinkdb
+    app.kubernetes.io/component: cluster
 spec:
   serviceName: rethinkdb-cluster
-  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: rethinkdb
+      app.kubernetes.io/component: cluster
   template:
     metadata:
       name: rethinkdb-cluster
+      labels:
+        app.kubernetes.io/name: rethinkdb
+        app.kubernetes.io/component: cluster
     spec:
       serviceAccountName: rethinkdb
       containers:
         - name: rethinkdb-cluster
-          image: rethinkdb-cluster
-          imagePullPolicy: IfNotPresent
+          image: codylundquist/helm-rethinkdb-cluster:0.1.0
           ports:
             - name: cluster
               containerPort: 29015
@@ -52,19 +60,13 @@ spec:
             exec:
               command:
                 - /rethinkdb-probe
-            failureThreshold: 3
-            initialDelaySeconds: 15
-            periodSeconds: 10
-            successThreshold: 1
+            initialDelaySeconds: 10
             timeoutSeconds: 5
           readinessProbe:
             exec:
               command:
                 - /rethinkdb-probe
-            failureThreshold: 3
             initialDelaySeconds: 10
-            periodSeconds: 10
-            successThreshold: 1
             timeoutSeconds: 5
       volumes:
         - name: datadir
