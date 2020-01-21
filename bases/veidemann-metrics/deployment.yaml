@@ -39,7 +39,7 @@ spec:
                 fieldRef:
                   fieldPath: status.hostIP
             - name: DB_HOST
-              value: "rethinkdb-proxy"
+              value: "rethinkdb-cluster"
             - name: DB_PORT
               value: "28015"
             - name: DB_NAME
