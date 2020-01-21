@@ -17,6 +17,7 @@ resources:
   - ../../../bases/veidemann-dashboard
   - ../../../bases/veidemann-warcvalidator-api
   - ../../../bases/veidemann-warcvalidator
+  - ../../../bases/veidemann-health-check-api
   - ingressroute.yaml
   - persistence/
 
@@ -35,6 +36,7 @@ patches:
   - path: warcvalidator_api_env_patch.yaml
   - path: warcvalidator_env_patch.yaml
   - path: warcvalidator_volume_patch.yaml
+  - path: controller_volume_patch.yaml
 
 generatorOptions:
   # disableNameSuffixHash is true disables the default behavior of adding a
@@ -48,6 +50,11 @@ secretGenerator:
     files:
       - tls.key=cert/veidemann-local_key.pem
       - tls.crt=cert/veidemann-local_cert.pem
+  - name: veidemann-env
+    files:
+      - apiKeyRoleMapping.txt
+    literals:
+      - CONTROLLER_API_KEY=ABCD-1234
   - name: veidemann-rethinkdb-env
     literals:
       - DB_USER=admin

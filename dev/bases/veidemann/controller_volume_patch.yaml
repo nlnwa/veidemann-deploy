@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: veidemann-controller
+
+spec:
+  template:
+    spec:
+      volumes:
+        - name: api-key
+          secret:
+            secretName: veidemann-env
+            items:
+                - key: apiKeyRoleMapping.txt
+                  path: apiKeyRoleMapping.txt
+      containers:
+        - name: veidemann-controller
+          volumeMounts:
+            - name: api-key
+              mountPath: /app/resources/apiKeyRoleMapping.txt
+              subPath: apiKeyRoleMapping.txt
