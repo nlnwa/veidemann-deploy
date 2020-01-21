@@ -77,11 +77,6 @@ vars:
       kind: Service
       apiVersion: v1
       name: veidemann-frontier
-  - name: METRICS_SERVICE_NAME
-    objref:
-      kind: Service
-      apiVersion: v1
-      name: veidemann-metrics
   - name: ROBOTS_EVALUATOR_SERVICE_NAME
     objref:
       kind: Service
