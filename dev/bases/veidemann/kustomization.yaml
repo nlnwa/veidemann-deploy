@@ -6,6 +6,7 @@ resources:
   - ../../../bases/dex
   - ../../../bases/rethinkdb
   - ../../../bases/veidemann-db-initializer
+  - ../../../bases/veidemann-metrics
   - ../../../bases/veidemann-dns-resolver
   - ../../../bases/veidemann-controller
   - ../../../bases/veidemann-frontier
