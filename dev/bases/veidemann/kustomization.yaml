@@ -11,6 +11,7 @@ resources:
   - ../../../bases/veidemann-controller
   - ../../../bases/veidemann-frontier
   - ../../../bases/veidemann-contentwriter
+  - ../../../bases/veidemann-contentexplorer
   - ../../../bases/veidemann-cache
   - ../../../bases/veidemann-robotsevaluator
   - ../../../bases/veidemann-harvester
@@ -30,6 +31,7 @@ patches:
   - path: frontier_env_patch.yaml
   - path: dnsresolver_env_patch.yaml
   - path: contentwriter_env_patch.yaml
+  - path: contentexplorer_env_patch.yaml
   - path: robotsevaluator_env_patch.yaml
   - path: harvester_env_patch.yaml
   - path: contentwriter_volume_patch.yaml
