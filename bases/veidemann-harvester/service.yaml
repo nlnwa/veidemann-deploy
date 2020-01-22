@@ -5,6 +5,7 @@ metadata:
   labels:
     app.kubernetes.io/name: veidemann-harvester
     app.kubernetes.io/component: harvester
+    metrics: prometheus
 spec:
   type: ClusterIP
   ports:

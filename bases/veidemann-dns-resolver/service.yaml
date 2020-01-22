@@ -3,9 +3,9 @@ kind: Service
 metadata:
   name: veidemann-dns-resolver
   labels:
-    k8s-app: veidemann
     app.kubernetes.io/name: veidemann-dns-resolver
     app.kubernetes.io/component: dns-resolver
+    metrics: prometheus
 spec:
   type: ClusterIP
   ports:
