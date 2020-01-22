@@ -37,7 +37,6 @@ spec:
       containers:
         - name: veidemann-contentwriter
           image: norsknettarkiv/veidemann-contentwriter:0.2.8
-          imagePullPolicy: IfNotPresent
           ports:
             - name: grpc
               containerPort: 8082
