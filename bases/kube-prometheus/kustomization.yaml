@@ -1,0 +1,20 @@
+kind: Kustomization
+apiVersion: kustomize.config.k8s.io/v1beta1
+resources:
+  - https://github.com/coreos/kube-prometheus
+
+patches:
+  - path: grafana_deployment_patch.yaml
+
+configMapGenerator:
+  - name: grafana-dashboards-veidemann
+    namespace: monitoring
+    files:
+      - dashboards/rethinkdb.json
+      - dashboards/veidemann-cache.json
+      - dashboards/veidemann-dns.json
+      - dashboards/veidemann-frontier-jvm.json
+      - dashboards/veidemann-harvester-jvm.json
+      - dashboards/veidemann-harvesters.json
+      - dashboards/veidemann-job-status.json
+      - dashboards/veidemann-overview.json
