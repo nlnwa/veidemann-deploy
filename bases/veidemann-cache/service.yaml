@@ -5,6 +5,7 @@ metadata:
   labels:
     app.kubernetes.io/name: veidemann-cache
     app.kubernetes.io/component: cache-balancer
+    metrics: prometheus
 spec:
   type: ClusterIP
   ports:
@@ -28,6 +29,7 @@ metadata:
   labels:
     app.kubernetes.io/name: veidemann-cache
     app.kubernetes.io/component: cache
+    metrics: prometheus
 spec:
   type: ClusterIP
   ports:
