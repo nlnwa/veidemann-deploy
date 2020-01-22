@@ -15,6 +15,7 @@ resources:
   - ../../../bases/veidemann-robotsevaluator
   - ../../../bases/veidemann-harvester
   - ../../../bases/veidemann-dashboard
+  - ../../../bases/veidemann-warcvalidator-api
   - ../../../bases/veidemann-warcvalidator
   - ingressroute.yaml
   - persistence/
@@ -31,6 +32,7 @@ patches:
   - path: robotsevaluator_env_patch.yaml
   - path: harvester_env_patch.yaml
   - path: contentwriter_volume_patch.yaml
+  - path: warcvalidator_api_env_patch.yaml
   - path: warcvalidator_env_patch.yaml
   - path: warcvalidator_volume_patch.yaml
 

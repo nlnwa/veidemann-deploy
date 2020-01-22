@@ -40,5 +40,10 @@ spec:
       services:
         - name: veidemann-dashboard
           port: 80
+    - match: Host(`veidemann.local`) && PathPrefix(`/validator/api`)
+      kind: Rule
+      services:
+        - name: veidemann-warcvalidator-api
+          port: 3000
   tls:
     secretName: veidemann-ingress-tls-cert
