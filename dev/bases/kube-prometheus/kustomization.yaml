@@ -9,6 +9,7 @@ resources:
 
 patches:
   - path: prometheus_patch.yaml
+  - path: alertmanager_alertmanager_patch.yaml
 
 secretGenerator:
   - name: grafana-config
