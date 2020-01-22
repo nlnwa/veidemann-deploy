@@ -14,5 +14,5 @@ spec:
       protocol: TCP
   selector:
     app.kubernetes.io/name: veidemann-warcvalidator-api
-    app.kubernetes.io/component: controller
+    app.kubernetes.io/component: warcvalidator
 
