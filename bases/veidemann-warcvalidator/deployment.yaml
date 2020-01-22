@@ -5,7 +5,7 @@ metadata:
   labels:
     app.kubernetes.io/name: veidemann-warcvalidator
     app.kubernetes.io/component: warcvalidator
-specs:
+spec:
   selector:
     matchLabels:
       app.kubernetes.io/name: veidemann-warcvalidator
