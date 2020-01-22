@@ -5,18 +5,16 @@ metadata:
   labels:
     app.kubernetes.io/name: veidemann-warcvalidator-api
     app.kubernetes.io/component: warcvalidator
-
 spec:
   selector:
     matchLabels:
       app.kubernetes.io/name: veidemann-warcvalidator-api
       app.kubernetes.io/component: warcvalidator
-    template:
-      metadata:
-        labels:
-          app.kubernetes.io/name: veidemann-warcvalidator-api
-          app.kubernetes.io/component: warcvalidator
-
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: veidemann-warcvalidator-api
+        app.kubernetes.io/component: warcvalidator
     spec:
       containers:
         - name: veidemann-warcvalidator-api
