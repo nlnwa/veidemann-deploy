@@ -33,7 +33,7 @@ spec:
                 path: log4j2.xml
       containers:
         - name: veidemann-warcvalidator
-          image: norsknettarkiv/veidemann-warcvalidator:v0.1.0-beta3
+          image: norsknettarkiv/veidemann-warcvalidator:0.1.0-beta3
           volumeMounts:
             - name: warcs
               mountPath: /warcs
