@@ -5,6 +5,7 @@ resources:
   - redis_distributed_lock.yaml
   - ../../../bases/dex
   - ../../../bases/rethinkdb
+  - ../../../bases/rethinkdb-exporter
   - ../../../bases/veidemann-db-initializer
   - ../../../bases/veidemann-metrics
   - ../../../bases/veidemann-dns-resolver
