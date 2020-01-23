@@ -43,3 +43,6 @@ kustomize build ${SCRIPT_DIR}/../bases/traefik | kubectl apply -f -
 
 # Install Redis operator
 kustomize build ${SCRIPT_DIR}/../../bases/redis-operator | kubectl apply -f -
+
+# Install jager operator
+kustomize build ${SCRIPT_DIR}/../../bases/jaeger-operator | kubectl apply -f -
