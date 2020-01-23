@@ -22,7 +22,7 @@ resources:
   - ../../../bases/veidemann-health-check-api
   - ingressroute.yaml
   - persistence/
-
+  - jaeger.yaml
 namespace: veidemann
 
 patches:
