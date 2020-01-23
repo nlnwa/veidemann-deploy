@@ -37,6 +37,10 @@ spec:
                 name: veidemann-rethinkdb-env
                 optional: false
           env:
+            - name: DB_HOST
+              value: "rethinkdb-proxy"
+            - name: DB_PORT
+              value: "28015"
             - name: DB_COUNT_ROWS
               value: "true"
           args:
