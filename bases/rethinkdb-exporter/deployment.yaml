@@ -1,0 +1,53 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: rethinkdb-exporter
+  labels:
+    app.kubernetes.io/name: rethinkdb-exporter
+    app.kubernetes.io/component: metrics
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: rethinkdb-exporter
+      app.kubernetes.io/component: metrics 
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: rethinkdb-exporter
+        app.kubernetes.io/component: metrics
+    spec:
+      containers:
+        - name: rethinkdb-exporter
+          image: norsknettarkiv/rethinkdb_exporter:0.1.0
+          ports:
+            - name: http
+              containerPort: 9123
+              protocol: TCP
+          livenessProbe:
+            httpGet:
+              path: /
+              port: http
+          readinessProbe:
+            httpGet:
+              path: /
+              port: http
+          envFrom:
+            - secretRef:
+                name: veidemann-rethinkdb-env
+                optional: false
+          env:
+            - name: DB_COUNT_ROWS
+              value: "true"
+          args:
+            - "--db.addr"
+            - "$(DB_HOST):$(DB_PORT)"
+            - "--db.user"
+            - "$(DB_USER)"
+            - "--db.pass"
+            - "$(DB_PASSWORD)"
+            - "--db.count-rows"
+            - "$(DB_COUNT_ROWS)"
+            - "--clustername"
+            - "rethinkdb"
+
