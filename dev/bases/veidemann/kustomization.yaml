@@ -21,6 +21,7 @@ resources:
   - ../../../bases/veidemann-warcvalidator
   - ../../../bases/veidemann-ooshandler
   - ../../../bases/veidemann-health-check-api
+  - ../../../bases/rethinkdb-backup
   - ingressroute.yaml
   - persistence/
 
@@ -42,6 +43,8 @@ patches:
   - path: warcvalidator_volume_patch.yaml
   - path: ooshandler_volume_patch.yaml
   - path: controller_volume_patch.yaml
+  - path: rethinkdb_backup_env_patch.yaml
+  - path: rethinkdb_backup_volume_patch.yaml
   - path: rethinkdb-exporter_env_patch.yaml
 
 generatorOptions:

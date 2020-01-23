@@ -1,0 +1,14 @@
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: rethinkdb-backup
+spec:
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+            - name: rethinkdb-backup
+              env:
+                - name: DB_HOST
+                  value: $(DB_SERVICE_NAME)
