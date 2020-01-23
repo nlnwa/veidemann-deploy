@@ -34,6 +34,13 @@ EOF
 
 $UPDATE_HOSTS veidemann.local $LOCAL_IP
 
+
+echo "Waiting for nodes to be ready"
+NODES_READY=$(kubectl describe nodes | grep "Taints:.*<none>")
+until [[ $NODES_READY ]]; do
+  echo -n "."; sleep 2s;
+done
+
 # Install Service mesh
 linkerd install | kubectl apply -f -
 linkerd check
