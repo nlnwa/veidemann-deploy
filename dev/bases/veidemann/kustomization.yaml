@@ -42,6 +42,7 @@ patches:
   - path: warcvalidator_volume_patch.yaml
   - path: ooshandler_volume_patch.yaml
   - path: controller_volume_patch.yaml
+  - path: rethinkdb-exporter_env_patch.yaml
 
 generatorOptions:
   # disableNameSuffixHash is true disables the default behavior of adding a
