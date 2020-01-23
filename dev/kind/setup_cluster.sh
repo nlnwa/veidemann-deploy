@@ -6,15 +6,6 @@ UPDATE_HOSTS=${SCRIPT_DIR}/../../scripts/update_hosts.sh
 
 source $PREREQUISITES kubectl kind linkerd kustomize
 
-kind create cluster --config=kind-config.yaml
-
-echo "waiting for cluster to be ready"
-while [[ $(kubectl get node kind-control-plane --no-headers | sed -e 's/\S\+\s\+\(\S\+\).*/\1/') != "Ready" ]]; do
-  echo -n "."
-  sleep 2
-done
-echo
-
 # Create patch and update /etc/hosts for local cluster ip
 LOCAL_IP=$(ip route get 1 | sed -n 's/^.*src \([0-9.]*\) .*$/\1/p')
 
@@ -33,6 +24,12 @@ cat <<EOF >kind_ip_patch.yaml
 EOF
 
 $UPDATE_HOSTS veidemann.local $LOCAL_IP
+
+kind create cluster --config=kind-config.yaml
+
+echo "waiting for cluster to be ready"
+kubectl wait --for=condition=Ready nodes --all --timeout=5m
+echo
 
 # Install Service mesh
 linkerd install | kubectl apply -f -
