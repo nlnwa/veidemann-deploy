@@ -41,6 +41,9 @@ kustomize build ${SCRIPT_DIR}/traefik | kubectl apply -f -
 # Install Redis operator
 kustomize build ${SCRIPT_DIR}/../../bases/redis-operator | kubectl apply -f -
 
+# Install jager operator
+kustomize build ${SCRIPT_DIR}/../../bases/jaeger-operator | kubectl apply -f -
+
 R=$(firewall-cmd --direct --get-rules ipv4 filter INPUT)
 if [ "$R" != "4 -i docker0 -j ACCEPT" ]; then
   sudo firewall-cmd --direct --add-rule ipv4 filter INPUT 4 -i docker0 -j ACCEPT
