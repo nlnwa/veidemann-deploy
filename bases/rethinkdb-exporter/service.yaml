@@ -5,6 +5,7 @@ metadata:
   labels:
     app.kubernetes.io/name: rethinkdb-exporter
     app.kubernetes.io/component: metrics
+    metrics: prometheus
 spec:
   type: ClusterIP
   ports:
