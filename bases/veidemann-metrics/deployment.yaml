@@ -31,8 +31,8 @@ spec:
 
           envFrom:
             - secretRef:
-                    name: veidemann-rethinkdb-env
-                    optional: false
+                name: veidemann-rethinkdb-env
+                optional: false
           env:
             - name: NODE_NAME
               valueFrom:
