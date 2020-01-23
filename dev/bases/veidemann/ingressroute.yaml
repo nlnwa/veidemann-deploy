@@ -50,5 +50,10 @@ spec:
       services:
         - name: veidemann-health-check-api
           port: 80
+    - match: Host(`veidemann.local`) && PathPrefix(`/warcs`)
+      kind: Rule
+      services:
+        - name: veidemann-contentexplorer
+          port: 8081
   tls:
     secretName: veidemann-ingress-tls-cert
