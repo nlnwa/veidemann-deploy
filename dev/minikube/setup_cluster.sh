@@ -36,8 +36,7 @@ $UPDATE_HOSTS veidemann.local $LOCAL_IP
 
 
 echo "Waiting for nodes to be ready"
-NODES_READY=$(kubectl describe nodes | grep "Taints:.*<none>")
-until [[ $NODES_READY ]]; do
+until [[ $(kubectl describe nodes | grep "Taints:.*<none>") ]]; do
   echo -n "."; sleep 2s;
 done
 
