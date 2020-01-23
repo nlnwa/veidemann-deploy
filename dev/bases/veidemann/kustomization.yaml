@@ -17,6 +17,7 @@ resources:
   - ../../../bases/veidemann-dashboard
   - ../../../bases/veidemann-warcvalidator-api
   - ../../../bases/veidemann-warcvalidator
+  - ../../../bases/veidemann-ooshandler
   - ../../../bases/veidemann-health-check-api
   - ingressroute.yaml
   - persistence/
@@ -36,6 +37,7 @@ patches:
   - path: warcvalidator_api_env_patch.yaml
   - path: warcvalidator_env_patch.yaml
   - path: warcvalidator_volume_patch.yaml
+  - path: ooshandler_volume_patch.yaml
   - path: controller_volume_patch.yaml
 
 generatorOptions:
