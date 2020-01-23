@@ -11,12 +11,14 @@ resources:
   - ../../../bases/veidemann-controller
   - ../../../bases/veidemann-frontier
   - ../../../bases/veidemann-contentwriter
+  - ../../../bases/veidemann-contentexplorer
   - ../../../bases/veidemann-cache
   - ../../../bases/veidemann-robotsevaluator
   - ../../../bases/veidemann-harvester
   - ../../../bases/veidemann-dashboard
   - ../../../bases/veidemann-warcvalidator-api
   - ../../../bases/veidemann-warcvalidator
+  - ../../../bases/veidemann-ooshandler
   - ../../../bases/veidemann-health-check-api
   - ingressroute.yaml
   - persistence/
@@ -30,12 +32,14 @@ patches:
   - path: frontier_env_patch.yaml
   - path: dnsresolver_env_patch.yaml
   - path: contentwriter_env_patch.yaml
+  - path: contentexplorer_env_patch.yaml
   - path: robotsevaluator_env_patch.yaml
   - path: harvester_env_patch.yaml
   - path: contentwriter_volume_patch.yaml
   - path: warcvalidator_api_env_patch.yaml
   - path: warcvalidator_env_patch.yaml
   - path: warcvalidator_volume_patch.yaml
+  - path: ooshandler_volume_patch.yaml
   - path: controller_volume_patch.yaml
 
 generatorOptions:
