@@ -16,3 +16,9 @@ secretGenerator:
     namespace: monitoring
     files:
       - grafana.ini
+  - name: veidemann-ingress-tls-cert
+    type: kubernetes.io/tls
+    files:
+      - tls.key=cert/veidemann-local_key.pem
+      - tls.crt=cert/veidemann-local_cert.pem
+
