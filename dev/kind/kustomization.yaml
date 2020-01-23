@@ -15,3 +15,7 @@ patches:
     target:
       kind: Deployment
       name: veidemann-controller
+  - path: kind-pvc-patch.yaml
+    target:
+      kind: PersistentVolumeClaim
+      namespace: veidemann
