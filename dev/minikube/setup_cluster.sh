@@ -12,8 +12,8 @@ if [ -n "$EXISTS" ]; then
   exit
 fi
 
-minikube start --cpus 2 --memory 8096 --vm-driver kvm2
 minikube addons disable ingress
+minikube start # --cpus 2 --memory 8096 --vm-driver kvm2
 
 # Create patch and update /etc/hosts for local cluster ip
 LOCAL_IP=$(minikube ip)
