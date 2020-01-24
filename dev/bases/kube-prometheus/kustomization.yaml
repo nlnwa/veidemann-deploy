@@ -11,21 +11,8 @@ patches:
   - path: prometheus_patch.yaml
   - path: alertmanager_alertmanager_patch.yaml
 
-generatorOptions:
-  # disableNameSuffixHash is true disables the default behavior of adding a
-  # suffix to the names of generated resources that is a hash of
-  # the resource contents.
-  disableNameSuffixHash: true
-
 secretGenerator:
   - name: grafana-config
     namespace: monitoring
     files:
       - grafana.ini
-  - name: veidemann-ingress-tls-cert
-    namespace: monitoring
-    type: kubernetes.io/tls
-    files:
-      - tls.key=cert/veidemann-local_key.pem
-      - tls.crt=cert/veidemann-local_cert.pem
-

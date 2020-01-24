@@ -23,13 +23,6 @@ spec:
       containers:
         - name: traefik
           image: traefik:v2.0
-          args:
-            - --api.dashboard=true
-            - --api.insecure=true
-            - --accesslog
-            - --entrypoints.web.Address=:80
-            - --entrypoints.websecure.Address=:443
-            - --providers.kubernetescrd
           ports:
             - name: web
               containerPort: 80
@@ -40,7 +33,19 @@ spec:
             - name: admin
               containerPort: 8080
               hostPort: 8080
+          volumeMounts:
+            - mountPath: /etc/traefik
+              name: traefik-static-config
+            - mountPath: /config
+              name: traefik-dynamic-config
       tolerations:
         - key: node-role.kubernetes.io/master
           operator: Equal
           effect: NoSchedule
+      volumes:
+        - name: traefik-static-config
+          configMap:
+            name: traefik-static-config
+        - name: traefik-dynamic-config
+          configMap:
+            name: traefik-dynamic-config

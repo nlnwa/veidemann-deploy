@@ -14,5 +14,4 @@ spec:
       services:
         - name: traefik
           port: 8080
-  tls:
-    secretName: veidemann-ingress-tls-cert
+  tls: {}
