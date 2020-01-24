@@ -25,6 +25,7 @@ resources:
   - ingressroute.yaml
   - persistence/
   - jaeger.yaml
+
 namespace: veidemann
 
 patches:
