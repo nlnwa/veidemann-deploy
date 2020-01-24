@@ -61,5 +61,4 @@ spec:
         - name: jaeger-query
           port: 16686
 
-  tls:
-    secretName: veidemann-ingress-tls-cert
+  tls: {}

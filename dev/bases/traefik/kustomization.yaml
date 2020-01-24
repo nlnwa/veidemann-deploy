@@ -1,19 +1,18 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
+  - ../cert
   - ../../../bases/traefik
   - ingressroute.yaml
 
-generatorOptions:
-  # disableNameSuffixHash is true disables the default behavior of adding a
-  # suffix to the names of generated resources that is a hash of
-  # the resource contents.
-  disableNameSuffixHash: true
+namespace: ingress-traefik
 
-secretGenerator:
-  - name: veidemann-ingress-tls-cert
+configMapGenerator:
+  - name: traefik-dynamic-config
     namespace: ingress-traefik
-    type: kubernetes.io/tls
+    behavior: replace
     files:
-      - tls.key=veidemann-local_key.pem
-      - tls.crt=veidemann-local_cert.pem
+      - traefik.yaml=traefik-dynamic-config.yaml
+
+patchesStrategicMerge:
+  - traefik-deployment-patch.yaml

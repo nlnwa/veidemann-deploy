@@ -31,5 +31,4 @@ spec:
       services:
         - name: prometheus-k8s
           port: 9090
-  tls:
-    secretName: veidemann-ingress-tls-cert
+  tls: {}

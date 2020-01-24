@@ -2,6 +2,7 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
   - namespace.yaml
+  - ../cert
   - redis_distributed_lock.yaml
   - ../../../bases/dex
   - ../../../bases/rethinkdb
@@ -48,18 +49,7 @@ patches:
   - path: rethinkdb_backup_volume_patch.yaml
   - path: rethinkdb-exporter_env_patch.yaml
 
-generatorOptions:
-  # disableNameSuffixHash is true disables the default behavior of adding a
-  # suffix to the names of generated resources that is a hash of
-  # the resource contents.
-  disableNameSuffixHash: true
-
 secretGenerator:
-  - name: veidemann-ingress-tls-cert
-    type: kubernetes.io/tls
-    files:
-      - tls.key=cert/veidemann-local_key.pem
-      - tls.crt=cert/veidemann-local_cert.pem
   - name: veidemann-env
     files:
       - apiKeyRoleMapping.txt
