@@ -30,31 +30,35 @@ resources:
 namespace: veidemann
 
 patches:
+  - path: cache-balancer_env_patch.yaml
+  - path: cache_env_patch.yaml
+  - path: contentexplorer_env_patch.yaml
+  - path: contentexplorer_volume_patch.yaml
+  - path: contentwriter_env_patch.yaml
+  - path: contentwriter_volume_patch.yaml
   - path: controller_ca_patch.yaml
   - path: controller_env_patch.yaml
+  - path: controller_volume_patch.yaml
   - path: db-initializer_env_patch.yaml
-  - path: frontier_env_patch.yaml
   - path: dnsresolver_env_patch.yaml
-  - path: contentwriter_env_patch.yaml
-  - path: contentexplorer_env_patch.yaml
-  - path: robotsevaluator_env_patch.yaml
+  - path: frontier_env_patch.yaml
   - path: harvester_env_patch.yaml
-  - path: contentwriter_volume_patch.yaml
+  - path: health-check_env_patch.yaml
+  - path: metrics_env_patch.yaml
+  - path: ooshandler_volume_patch.yaml
+  - path: rethinkdb-exporter_env_patch.yaml
+  - path: rethinkdb_backup_env_patch.yaml
+  - path: rethinkdb_backup_volume_patch.yaml
+  - path: robotsevaluator_env_patch.yaml
   - path: warcvalidator_api_env_patch.yaml
   - path: warcvalidator_env_patch.yaml
   - path: warcvalidator_volume_patch.yaml
-  - path: ooshandler_volume_patch.yaml
-  - path: controller_volume_patch.yaml
-  - path: rethinkdb_backup_env_patch.yaml
-  - path: rethinkdb_backup_volume_patch.yaml
-  - path: rethinkdb-exporter_env_patch.yaml
 
 secretGenerator:
   - name: veidemann-env
-    files:
-      - apiKeyRoleMapping.txt
     literals:
       - CONTROLLER_API_KEY=ABCD-1234
+      - apiKeyRoleMapping.txt=ABCD-1234 ADMIN
   - name: veidemann-rethinkdb-env
     literals:
       - DB_USER=admin
@@ -69,7 +73,6 @@ configMapGenerator:
     files:
       - log4j2.xml
     literals:
-      - oosHandler_host=veidemann-ooshandler
       - openidConnectIssuer=https://veidemann.local/dex
 
 vars:
@@ -121,8 +124,11 @@ vars:
       name: veidemann-harvester
   - name: OOS_HANDLER_SERVICE_NAME
     objref:
-      kind: ConfigMap
+      kind: Service
       apiVersion: v1
-      name: veidemann
-    fieldref:
-      fieldpath: data.oosHandler_host
+      name: veidemann-ooshandler
+  - name: DASHBOARD_SERVICE_NAME
+    objref:
+      kind: Service
+      apiVersion: v1
+      name: veidemann-dashboard
