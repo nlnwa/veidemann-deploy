@@ -1,0 +1,27 @@
+kind: Kustomization
+apiVersion: kustomize.config.k8s.io/v1beta1
+
+namespace: observability
+
+resources:
+  - statefulset.yaml
+  - service.yaml
+
+patches:
+  - path: statefulset_env_patch.yaml
+
+vars:
+  - name: NAME
+    objref:
+      kind: StatefulSet
+      name: cassandra
+      apiVersion: apps/v1
+    fieldref:
+      fieldpath: metadata.name
+  - name: NAMESPACE
+    objref:
+      kind: StatefulSet
+      name: cassandra
+      apiVersion: apps/v1
+    fieldref:
+      fieldpath: metadata.namespace
