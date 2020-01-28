@@ -25,7 +25,6 @@ resources:
   - ../../../bases/rethinkdb-backup
   - ingressroute.yaml
   - persistence/
-  - jaeger.yaml
 
 namespace: veidemann
 
