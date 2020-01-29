@@ -1,0 +1,10 @@
+kind: Kustomization
+apiVersion: kustomize.config.k8s.io/v1beta1
+
+resources:
+  - namespace.yaml
+  - deploy/crds/jaegertracing.io_jaegers_crd.yaml
+  - deploy/service_account.yaml
+  - deploy/role.yaml
+  - deploy/role_binding.yaml
+  - deploy/operator.yaml

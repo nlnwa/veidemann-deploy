@@ -1,0 +1,60 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: veidemann-metrics
+  labels:
+    app.kubernetes.io/name: veidemann-metrics
+    app.kubernetes.io/component: metrics
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: veidemann-metrics
+      app.kubernetes.io/component: metrics
+  template:
+    metadata:
+      name: veidemann-metrics
+      labels:
+        app.kubernetes.io/name: veidemann-metrics
+        app.kubernetes.io/component: metrics
+    spec:
+
+      terminationGracePeriodSeconds: 30
+
+      containers:
+        - name: veidemann-metrics
+          image: norsknettarkiv/veidemann-metrics:0.1.5
+          ports:
+            - containerPort: 9301
+              name: http-metrics
+              protocol: TCP
+
+          envFrom:
+            - secretRef:
+                name: veidemann-rethinkdb-env
+                optional: false
+          env:
+            - name: NODE_NAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: status.hostIP
+            - name: DB_HOST
+              value: "rethinkdb-cluster"
+            - name: DB_PORT
+              value: "28015"
+            - name: DB_NAME
+              value: "veidemann"
+
+          args:
+            - "-listen"
+            - "0.0.0.0:9301"
+            - "-dbhostname"
+            - "$(DB_HOST)"
+            - "-dbport"
+            - "$(DB_PORT)"
+            - "-dbname"
+            - "$(DB_NAME)"
+            - "-dbuser"
+            - "$(DB_USER)"
+            - "-dbpassword"
+            - "$(DB_PASSWORD)"

@@ -1,0 +1,133 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+  - namespace.yaml
+  - ../cert
+  - redis_distributed_lock.yaml
+  - ../../../bases/dex
+  - ../../../bases/rethinkdb
+  - ../../../bases/rethinkdb-exporter
+  - ../../../bases/veidemann-db-initializer
+  - ../../../bases/veidemann-metrics
+  - ../../../bases/veidemann-dns-resolver
+  - ../../../bases/veidemann-controller
+  - ../../../bases/veidemann-frontier
+  - ../../../bases/veidemann-contentwriter
+  - ../../../bases/veidemann-contentexplorer
+  - ../../../bases/veidemann-cache
+  - ../../../bases/veidemann-robotsevaluator
+  - ../../../bases/veidemann-harvester
+  - ../../../bases/veidemann-dashboard
+  - ../../../bases/veidemann-warcvalidator-api
+  - ../../../bases/veidemann-warcvalidator
+  - ../../../bases/veidemann-ooshandler
+  - ../../../bases/veidemann-health-check-api
+  - ../../../bases/rethinkdb-backup
+  - ingressroute.yaml
+  - persistence/
+
+namespace: veidemann
+
+patches:
+  - path: cache-balancer_env_patch.yaml
+  - path: cache_env_patch.yaml
+  - path: contentexplorer_env_patch.yaml
+  - path: contentexplorer_volume_patch.yaml
+  - path: contentwriter_env_patch.yaml
+  - path: contentwriter_volume_patch.yaml
+  - path: controller_ca_patch.yaml
+  - path: controller_env_patch.yaml
+  - path: controller_volume_patch.yaml
+  - path: db-initializer_env_patch.yaml
+  - path: dnsresolver_env_patch.yaml
+  - path: frontier_env_patch.yaml
+  - path: harvester_env_patch.yaml
+  - path: health-check_env_patch.yaml
+  - path: metrics_env_patch.yaml
+  - path: ooshandler_volume_patch.yaml
+  - path: rethinkdb-exporter_env_patch.yaml
+  - path: rethinkdb_backup_env_patch.yaml
+  - path: rethinkdb_backup_volume_patch.yaml
+  - path: robotsevaluator_env_patch.yaml
+  - path: warcvalidator_api_env_patch.yaml
+  - path: warcvalidator_env_patch.yaml
+  - path: warcvalidator_volume_patch.yaml
+
+secretGenerator:
+  - name: veidemann-env
+    literals:
+      - CONTROLLER_API_KEY=ABCD-1234
+      - apiKeyRoleMapping.txt=ABCD-1234 ADMIN
+  - name: veidemann-rethinkdb-env
+    literals:
+      - DB_USER=admin
+      - DB_PASSWORD=rethinkdb
+  - name: rethinkdb
+    behavior: replace
+    literals:
+      - rethinkdb-password=rethinkdb
+
+configMapGenerator:
+  - name: veidemann
+    files:
+      - log4j2.xml
+    literals:
+      - openidConnectIssuer=https://veidemann.local/dex
+
+vars:
+  # Get service names.
+  - name: DB_SERVICE_NAME
+    objref:
+      kind: Service
+      apiVersion: v1
+      name: rethinkdb-proxy
+  - name: CONTROLLER_SERVICE_NAME
+    objref:
+      kind: Service
+      apiVersion: v1
+      name: veidemann-controller
+  - name: FRONTIER_SERVICE_NAME
+    objref:
+      kind: Service
+      apiVersion: v1
+      name: veidemann-frontier
+  - name: ROBOTS_EVALUATOR_SERVICE_NAME
+    objref:
+      kind: Service
+      apiVersion: v1
+      name: veidemann-robotsevaluator-service
+  - name: DNS_RESOLVER_SERVICE_NAME
+    objref:
+      kind: Service
+      apiVersion: v1
+      name: veidemann-dns-resolver
+  - name: CONTENT_WRITER_SERVICE_NAME
+    objref:
+      kind: Service
+      apiVersion: v1
+      name: veidemann-contentwriter
+  - name: CACHE_BALANCER_SERVICE_NAME
+    objref:
+      kind: Service
+      apiVersion: v1
+      name: veidemann-cache-balancer
+  - name: CACHE_SERVICE_NAME
+    objref:
+      kind: Service
+      apiVersion: v1
+      name: veidemann-cache
+  - name: HARVESTER_SERVICE_NAME
+    objref:
+      kind: Service
+      apiVersion: v1
+      name: veidemann-harvester
+  - name: OOS_HANDLER_SERVICE_NAME
+    objref:
+      kind: Service
+      apiVersion: v1
+      name: veidemann-ooshandler
+  - name: DASHBOARD_SERVICE_NAME
+    objref:
+      kind: Service
+      apiVersion: v1
+      name: veidemann-dashboard

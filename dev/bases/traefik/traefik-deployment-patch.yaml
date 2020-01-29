@@ -1,0 +1,18 @@
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  namespace: ingress-traefik
+  name: traefik
+spec:
+  template:
+    spec:
+      containers:
+        - name: traefik
+          volumeMounts:
+            - mountPath: /run/secrets/certificates
+              name: certs
+      volumes:
+        - name: certs
+          secret:
+            secretName: veidemann-ingress-tls-cert
+            optional: false

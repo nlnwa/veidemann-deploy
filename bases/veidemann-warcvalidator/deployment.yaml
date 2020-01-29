@@ -1,0 +1,67 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: veidemann-warcvalidator
+  labels:
+    app.kubernetes.io/name: veidemann-warcvalidator
+    app.kubernetes.io/component: warcvalidator
+spec:
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: veidemann-warcvalidator
+      app.kubernetes.io/component: warcvalidator
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: veidemann-warcvalidator
+        app.kubernetes.io/component: warcvalidator
+    spec:
+      volumes:
+        - name: warcs
+          emptyDir: {}
+        - name: validwarcs
+          emptyDir: {}
+        - name: invalidwarcs
+          emptyDir: {}
+        - name: delivery
+          emptyDir: {}
+        - name: veidemann-config
+          configMap:
+            name: veidemann
+            items:
+              - key: log4j2.xml
+                path: log4j2.xml
+      containers:
+        - name: veidemann-warcvalidator
+          image: norsknettarkiv/veidemann-warcvalidator:0.1.0-beta3
+          volumeMounts:
+            - name: warcs
+              mountPath: /warcs
+            - name: validwarcs
+              mountPath: /validwarcs
+            - name: invalidwarcs
+              mountPath: /invalidwarcs
+            - name: delivery
+              mountPath: /delivery
+            - name: veidemann-config
+              mountPath: /veidemann/config/log4j2.xml
+              subPath: log4j2.xml
+          envFrom:
+            - secretRef:
+                name: veidemann-rethinkdb-env
+                optional: false
+          env:
+            - name: NODE_NAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: status.hostIP
+            - name: DB_HOST
+              value: "rethinkdb-proxy"
+            - name: DB_PORT
+              value: "28015"
+            - name: DB_NAME
+              value: "veidemann"
+            - name: SLEEP_TIME
+              value: "5"
+
+

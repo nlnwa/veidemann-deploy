@@ -1,0 +1,12 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: veidemann-contentwriter
+spec:
+  template:
+    spec:
+      volumes:
+        - name: warcs
+          persistentVolumeClaim:
+            claimName: veidemann-warcs
+          emptyDir: # unset emptyDir from base

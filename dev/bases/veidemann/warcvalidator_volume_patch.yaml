@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: veidemann-warcvalidator
+spec:
+  template:
+    spec:
+      volumes:
+        - name: warcs
+          persistentVolumeClaim:
+            claimName: veidemann-warcs
+          emptyDir: # unset emptyDir from base
+        - name: validwarcs
+          persistentVolumeClaim:
+            claimName: veidemann-validwarcs
+          emptyDir: # unset emptyDir from base
+        - name: invalidwarcs
+          persistentVolumeClaim:
+            claimName: veidemann-invalidwarcs
+          emptyDir: # unset emptyDir from base
+        - name: delivery
+          persistentVolumeClaim:
+            claimName: veidemann-delivery
+          emptyDir: # unset emptyDir from base

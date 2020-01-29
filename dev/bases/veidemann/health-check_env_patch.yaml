@@ -1,0 +1,16 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: veidemann-health-check-api
+spec:
+  template:
+    spec:
+      containers:
+        - name: veidemann-health-check-api
+          env:
+            - name: DB_HOST
+              value: $(DB_SERVICE_NAME)
+            - name: CONTROLLER_HOST
+              value: $(CONTROLLER_SERVICE_NAME)
+            - name: VEIDEMANN_DASHBOARD_URL
+              value: "http://$(DASHBOARD_SERVICE_NAME)/veidemann"
