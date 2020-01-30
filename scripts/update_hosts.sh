@@ -1,4 +1,6 @@
-#!/usr/bin/env sh
+#!/usr/bin/env bash
+
+set -e
 
 # Update /etc/hosts with hostname and ip
 
