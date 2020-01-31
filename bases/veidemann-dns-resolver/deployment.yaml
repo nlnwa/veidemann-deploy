@@ -28,6 +28,10 @@ spec:
                 name: veidemann-rethinkdb-env
                 optional: false
           env:
+            - name: NODE_NAME
+              valueFrom:
+                fieldRef:
+                  fieldPath: status.hostIP
             - name: DB_HOST
               value: "rethinkdb-proxy"
             - name: DB_PORT
