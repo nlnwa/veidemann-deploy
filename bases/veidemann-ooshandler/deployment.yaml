@@ -16,7 +16,7 @@ spec:
         app.kubernetes.io/name: veidemann-ooshandler
         app.kubernetes.io/component: ooshandler
       annotations:
-        linkerd.io/inject: enable
+        linkerd.io/inject: enabled
     spec:
       volumes:
         - name: data
