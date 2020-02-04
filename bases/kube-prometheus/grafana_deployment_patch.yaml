@@ -18,6 +18,8 @@ spec:
             - mountPath: /grafana-dashboard-definitions/0/veidemann
               name: grafana-dashboards-veidemann
               readOnly: false
+            - mountPath: /grafana-dashboard-definitions/0/redis
+              name: grafana-dashboards-redis
       volumes:
         - name: grafana-config
           secret:
@@ -25,3 +27,6 @@ spec:
         - configMap:
             name: grafana-dashboards-veidemann
           name: grafana-dashboards-veidemann
+        - configMap:
+            name: grafana-dashboards-redis
+          name: grafana-dashboards-redis
