@@ -6,6 +6,7 @@ resources:
   - prometheus-roleBindingSpecificNamespaces.yaml
   - prometheus-roleSpecificNamespaces.yaml
   - prometheus-serviceMonitorVeidemann.yaml
+  - prometheus-serviceMonitorRedis.yaml
 
 patches:
   - path: prometheus_patch.yaml

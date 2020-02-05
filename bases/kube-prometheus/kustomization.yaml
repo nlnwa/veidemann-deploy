@@ -18,3 +18,7 @@ configMapGenerator:
       - dashboards/veidemann-harvesters.json
       - dashboards/veidemann-job-status.json
       - dashboards/veidemann-overview.json
+  - name: grafana-dashboards-redis
+    namespace: monitoring
+    files:
+      - dashboards/redis.json
