@@ -4,8 +4,6 @@ SCRIPT_DIR=$(dirname $0)
 PREREQUISITES=${SCRIPT_DIR}/../../scripts/prerequisites.sh
 UPDATE_HOSTS=${SCRIPT_DIR}/../../scripts/update_hosts.sh
 
-set -e
-
 source $PREREQUISITES kubectl minikube linkerd kustomize veidemannctl
 
 EXISTS=$(minikube status --format='{{.Host}}')
@@ -13,6 +11,8 @@ if [ -n "$EXISTS" ]; then
   echo "Cluster is already set up and has status: ${EXISTS}"
   exit
 fi
+
+set -e
 
 minikube addons disable ingress
 minikube start # --cpus 2 --memory 8096 --vm-driver kvm2

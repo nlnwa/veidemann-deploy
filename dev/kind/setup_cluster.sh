@@ -1,7 +1,5 @@
 #!/usr/bin/env bash
 
-set -e
-
 SCRIPT_DIR=$(dirname $0)
 PREREQUISITES=${SCRIPT_DIR}/../../scripts/prerequisites.sh
 UPDATE_HOSTS=${SCRIPT_DIR}/../../scripts/update_hosts.sh
@@ -26,6 +24,8 @@ cat <<EOF >kind_ip_patch.yaml
 EOF
 
 $UPDATE_HOSTS veidemann.local $LOCAL_IP
+
+set -e
 
 kind create cluster --config=kind-config.yaml
 
