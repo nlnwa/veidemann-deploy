@@ -25,6 +25,8 @@ EOF
 
 $UPDATE_HOSTS veidemann.local $LOCAL_IP
 
+set -e
+
 kind create cluster --config=kind-config.yaml
 
 echo "waiting for cluster to be ready"

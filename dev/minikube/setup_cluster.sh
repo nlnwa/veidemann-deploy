@@ -12,6 +12,8 @@ if [ -n "$EXISTS" ]; then
   exit
 fi
 
+set -e
+
 minikube addons disable ingress
 minikube start # --cpus 2 --memory 8096 --vm-driver kvm2
 
