@@ -1,7 +1,5 @@
 #!/usr/bin/env bash
 
-set -e
-
 OPSYS=$(uname)
 KUSTOMIZE_VERSION=v3.5.4
 KIND_VERSION=0.7.0
