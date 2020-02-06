@@ -1,0 +1,12 @@
+kind: Kustomization
+apiVersion: kustomize.config.k8s.io/v1beta1
+
+namespace: veidemann
+
+resources:
+  - job.yaml
+
+secretGenerator:
+  - name: veidemann-reset-secret
+    literals:
+      - RETHINKDB_PASSWORD=rethinkdb

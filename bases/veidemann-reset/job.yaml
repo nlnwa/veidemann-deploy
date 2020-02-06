@@ -1,0 +1,52 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: veidemann-reset
+  labels:
+    app.kubernetes.io/name: veidemann-reset
+spec:
+  ttlSecondsAfterFinished: 60
+  backoffLimit: 1
+  template:
+    metadata:
+      name: veidemann-reset
+      labels:
+        app.kubernetes.io/name: veidemann-reset
+    spec:
+      restartPolicy: Never
+      volumes:
+        - name: warcs
+          persistentVolumeClaim:
+            claimName: veidemann-warcs
+        - name: validwarcs
+          persistentVolumeClaim:
+            claimName: veidemann-validwarcs
+        - name: invalidwarcs
+          persistentVolumeClaim:
+            claimName: veidemann-invalidwarcs
+        - name: delivery
+          persistentVolumeClaim:
+            claimName: veidemann-delivery
+        - name: backup
+          persistentVolumeClaim:
+            claimName: veidemann-backup
+      containers:
+        - name: veidemann-reset
+          image: norsknettarkiv/veidemann-reset:0.1.1
+          volumeMounts:
+            - name: warcs
+              mountPath: /warcs
+            - name: validwarcs
+              mountPath: /validwarcs
+            - name: invalidwarcs
+              mountPath: /invalidwarcs
+            - name: delivery
+              mountPath: /delivery
+            - name: backup
+              mountPath: /backup
+          envFrom:
+            - secretRef:
+                name: veidemann-reset-secret
+          env:
+            - name: RETHINKDB_HOST
+              value: rethinkdb-proxy
