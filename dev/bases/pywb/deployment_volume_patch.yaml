@@ -1,0 +1,16 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: pywb
+spec:
+  template:
+    spec:
+      volumes:
+        - name: collections
+          persistentVolumeClaim:
+            claimName: veidemann-validwarcs
+      containers:
+        - name: pywb
+          volumeMounts:
+            - name: collections
+              mountPath: /webarchive/collections/validwarcs/archive
