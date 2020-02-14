@@ -1,0 +1,16 @@
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: pywb-ingressroute
+spec:
+  entryPoints:
+    - web
+    - websecure
+  routes:
+    - match: Host(`veidemann.local`) && PathPrefix(`/loke`)
+      kind: Rule
+      services:
+        - name: pywb
+          port: 80
+
+  tls: {}

@@ -1,0 +1,24 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: pywb
+  labels:
+    app.kubernetes.io/name: pywb
+    app.kubernetes.io/component: webarchive
+spec:
+  type: ClusterIP
+  ports:
+    - port: 80
+      name: http
+      targetPort: http
+    - port: 8080
+      name: http-socket
+      targetPort: http-socket
+      protocol: TCP
+    - port: 8081
+      name: uwsgi-socket
+      targetPort: uwsgi-socket
+      protocol: TCP
+  selector:
+    app.kubernetes.io/name: pywb
+    app.kubernetes.io/component: webarchive
