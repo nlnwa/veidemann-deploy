@@ -7,14 +7,13 @@ UPDATE_HOSTS=${SCRIPT_DIR}/../../scripts/update_hosts.sh
 source $PREREQUISITES kubectl minikube linkerd kustomize veidemannctl
 
 EXISTS=$(minikube status --format='{{.Host}}')
-if [ -n "$EXISTS" ]; then
+if [ "$EXISTS" != Nonexistent ]; then
   echo "Cluster is already set up and has status: ${EXISTS}"
   exit
 fi
 
 set -e
 
-minikube addons disable ingress
 minikube start # --cpus 2 --memory 8096 --vm-driver kvm2
 
 # Create patch and update /etc/hosts for local cluster ip
