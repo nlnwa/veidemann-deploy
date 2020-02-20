@@ -83,7 +83,7 @@ spec:
               subPath: log4j2.xml
 
         - name: veidemann-controller-envoy
-          image: envoyproxy/envoy-alpine:v1.12.1
+          image: envoyproxy/envoy-alpine:v1.12.2
           imagePullPolicy: IfNotPresent
           ports:
             - name: admin
