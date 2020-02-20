@@ -30,7 +30,7 @@ spec:
                 path: log4j2.xml
       containers:
         - name: veidemann-contentexplorer
-          image: norsknettarkiv/veidemann-contentexplorer:0.5.0
+          image: norsknettarkiv/veidemann-contentexplorer:0.5.1
           ports:
             - name: http
               containerPort: 8081

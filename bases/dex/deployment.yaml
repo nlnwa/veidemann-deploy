@@ -30,7 +30,7 @@ spec:
 
       containers:
       - name: main
-        image: "quay.io/dexidp/dex:v2.19.0"
+        image: quay.io/dexidp/dex:v2.19.0
         imagePullPolicy: IfNotPresent
         command:
         - /usr/local/bin/dex
