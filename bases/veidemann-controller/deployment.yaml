@@ -40,7 +40,7 @@ spec:
 
       containers:
         - name: veidemann-controller
-          image: "norsknettarkiv/veidemann-controller:0.5.2"
+          image: norsknettarkiv/veidemann-controller:0.5.3
           imagePullPolicy: IfNotPresent
           ports:
             - name: grpc
@@ -83,7 +83,7 @@ spec:
               subPath: log4j2.xml
 
         - name: veidemann-controller-envoy
-          image: "envoyproxy/envoy-alpine:v1.12.1"
+          image: envoyproxy/envoy-alpine:v1.12.2
           imagePullPolicy: IfNotPresent
           ports:
             - name: admin
