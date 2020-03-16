@@ -1,0 +1,16 @@
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: gowarc-server-ingressroute
+spec:
+  entryPoints:
+    - web
+    - websecure
+  routes:
+    - match: Host(`veidemann.local`) && PathPrefix(`/warcserver`)
+      kind: Rule
+      services:
+        - name: gowarc-server
+          port: 9999
+
+  tls: {}
