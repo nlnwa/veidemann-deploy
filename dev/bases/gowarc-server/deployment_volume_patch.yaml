@@ -1,0 +1,16 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: gowarc-server
+spec:
+  template:
+    spec:
+      volumes:
+        - name: collections
+          persistentVolumeClaim:
+            claimName: veidemann-validwarcs
+      containers:
+        - name: gowarc-server
+          volumeMounts:
+            - name: collections
+              mountPath: /warcfiles
