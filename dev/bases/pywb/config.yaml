@@ -8,7 +8,7 @@ collections:
   nb:
     index:
       type: cdx
-      api_url: http://gowarc-server:9999/warcserver/all/index?url={url}&closest={timestamp}
+      api_url: http://gowarc-server:9999/warcserver/all/index?url={url}&closest={closest}
       replay_url: http://gowarc-server:9999/warcserver/all/resource?url={url}&closest={timestamp}&output=content
 
 # Settings for each collection
