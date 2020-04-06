@@ -3,8 +3,12 @@ kind: Kustomization
 resources:
   - service.yaml
   - deployment.yaml
-  - configmap.yaml
 
 commonLabels:
   app.kubernetes.io/instance: veidemann-dashboard
   app.kubernetes.io/part-of: veidemann
+
+configMapGenerator:
+  - name: veidemann-dashboard-environment
+    literals:
+      - environment.json=""
