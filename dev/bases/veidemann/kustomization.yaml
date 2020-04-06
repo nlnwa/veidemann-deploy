@@ -25,6 +25,8 @@ resources:
   - ../../../bases/rethinkdb-backup
   - ingressroute.yaml
   - persistence/
+  - ../pywb
+  - ../gowarc-server
 
 namespace: veidemann
 
@@ -73,6 +75,10 @@ configMapGenerator:
       - log4j2.xml
     literals:
       - openidConnectIssuer=https://veidemann.local/dex
+  - name: veidemann-dashboard-environment
+    behavior: replace
+    files:
+      - environment.json
 
 vars:
   # Get service names.
