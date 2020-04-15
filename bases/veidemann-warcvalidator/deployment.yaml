@@ -33,7 +33,7 @@ spec:
                 path: log4j2.xml
       containers:
         - name: veidemann-warcvalidator
-          image: norsknettarkiv/veidemann-warcvalidator:0.1.0-beta3
+          image: norsknettarkiv/veidemann-warcvalidator:0.1.0
           volumeMounts:
             - name: warcs
               mountPath: /warcs
@@ -44,7 +44,7 @@ spec:
             - name: delivery
               mountPath: /delivery
             - name: veidemann-config
-              mountPath: /veidemann/config/log4j2.xml
+              mountPath: /app/resources/log4j2.xml
               subPath: log4j2.xml
           envFrom:
             - secretRef:
@@ -63,5 +63,3 @@ spec:
               value: "veidemann"
             - name: SLEEP_TIME
               value: "5"
-
-
