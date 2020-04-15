@@ -2,6 +2,10 @@
 # ========================================
 #
 
+templates:
+  home_html: index.html
+
+
 collections:
   all: $all
   ia: memento+https://web.archive.org/web/

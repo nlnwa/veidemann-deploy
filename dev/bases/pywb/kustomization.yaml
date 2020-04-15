@@ -9,6 +9,7 @@ resources:
 
 patchesStrategicMerge:
   - deployment_volume_patch.yaml
+  - deployment_template_patch.yaml
 
 configMapGenerator:
   - name: pywb-config
@@ -19,3 +20,10 @@ configMapGenerator:
     behavior: replace
     files:
       - default.conf
+  - name: pywb-templates
+    files:
+      - search.html
+      - index.html
+      - error.html
+      - not_found.html
+      - query.html
