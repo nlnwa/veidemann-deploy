@@ -22,8 +22,8 @@ configMapGenerator:
       - default.conf
   - name: pywb-templates
     files:
-      - search.html
-      - index.html
-      - error.html
-      - not_found.html
-      - query.html
+      - templates/base.html
+      - templates/index.html
+      - templates/search.html
+      - templates/query.html
+

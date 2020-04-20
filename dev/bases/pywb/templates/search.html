@@ -13,7 +13,7 @@ window.wb_prefix = "{{ wb_prefix }}";
 <div class="container-fluid">
     <div class="row justify-content-center">
         <h4 class="display-4">
-            Collection {{ coll }} Search Page
+            Søk i samling {{ coll }}
         </h4>
     </div>
 </div>
@@ -23,7 +23,7 @@ window.wb_prefix = "{{ wb_prefix }}";
             <div class="col-12">
                 <label for="search-url" class="lead" aria-label="Search For Col">
                     {% set coll_title = metadata.title if metadata and metadata.title else coll %}
-                    {% trans %}Search the {{ coll_title }} collection by url:{% endtrans %}
+                    Search the {{ coll_title }} collection by url:
                 </label>
                 <input aria-label="url" aria-required="true" class="form-control form-control-lg" id="search-url"
                        name="search" placeholder="Enter a URL to search for"
@@ -42,7 +42,7 @@ window.wb_prefix = "{{ wb_prefix }}";
             </div>
             <div class="col-7">
                 <button type="submit" class="btn btn-outline-primary float-right" role="button" aria-label="Search">
-                    {% trans %}Search{% endtrans %}
+                    Search
                 </button>
                 <button class="btn btn-outline-info float-right mr-3" type="button" role="button"
                         data-toggle="collapse" data-target="#advancedOptions"

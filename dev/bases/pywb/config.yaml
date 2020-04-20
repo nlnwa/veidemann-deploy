@@ -2,8 +2,9 @@
 # ========================================
 #
 
-templates:
-  home_html: index.html
+home_html: index.html
+search_html: search.html
+query_html: query.html
 
 
 collections:
