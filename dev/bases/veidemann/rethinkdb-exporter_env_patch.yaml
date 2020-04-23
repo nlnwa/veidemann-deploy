@@ -10,5 +10,3 @@ spec:
           env:
             - name: DB_HOST
               value: $(DB_SERVICE_NAME)
-            - name: DB_COUNT_ROWS
-              value: "false"
