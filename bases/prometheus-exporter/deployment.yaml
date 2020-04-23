@@ -19,18 +19,18 @@ spec:
     spec:
       containers:
         - name: rethinkdb-exporter
-          image: norsknettarkiv/rethinkdb_exporter:0.1.0
+          image: norsknettarkiv/prometheus-exporter:0.1.0
           ports:
             - name: http
-              containerPort: 9123
+              containerPort: 9055
               protocol: TCP
           livenessProbe:
             httpGet:
-              path: /
+              path: /-/healthy
               port: http
           readinessProbe:
             httpGet:
-              path: /
+              path: /-/ready
               port: http
           envFrom:
             - secretRef:
@@ -45,17 +45,14 @@ spec:
               value: "rethinkdb-proxy"
             - name: DB_PORT
               value: "28015"
-            - name: DB_COUNT_ROWS
+            - name: STATS_TABLE_ESTIMATES
               value: "true"
           args:
-            - "--db.addr"
+            - "--db.address"
             - "$(DB_HOST):$(DB_PORT)"
-            - "--db.user"
+            - "--db.username"
             - "$(DB_USER)"
-            - "--db.pass"
+            - "--db.password"
             - "$(DB_PASSWORD)"
-            - "--db.count-rows"
-            - "$(DB_COUNT_ROWS)"
-            - "--clustername"
-            - "rethinkdb"
-
+            - "--stats.table-estimates"
+            - "$(STATS_TABLE_ESTIMATES)"

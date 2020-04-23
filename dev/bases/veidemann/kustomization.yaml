@@ -6,7 +6,7 @@ resources:
   - redis_distributed_lock.yaml
   - ../../../bases/dex
   - ../../../bases/rethinkdb
-  - ../../../bases/rethinkdb-exporter
+  - ../../../bases/prometheus-exporter
   - ../../../bases/veidemann-db-initializer
   - ../../../bases/veidemann-metrics
   - ../../../bases/veidemann-dns-resolver
@@ -30,30 +30,30 @@ resources:
 
 namespace: veidemann
 
-patches:
-  - path: cache-balancer_env_patch.yaml
-  - path: cache_env_patch.yaml
-  - path: contentexplorer_env_patch.yaml
-  - path: contentexplorer_volume_patch.yaml
-  - path: contentwriter_env_patch.yaml
-  - path: contentwriter_volume_patch.yaml
-  - path: controller_ca_patch.yaml
-  - path: controller_env_patch.yaml
-  - path: controller_volume_patch.yaml
-  - path: db-initializer_env_patch.yaml
-  - path: dnsresolver_env_patch.yaml
-  - path: frontier_env_patch.yaml
-  - path: harvester_env_patch.yaml
-  - path: health-check_env_patch.yaml
-  - path: metrics_env_patch.yaml
-  - path: ooshandler_volume_patch.yaml
-  - path: rethinkdb-exporter_env_patch.yaml
-  - path: rethinkdb_backup_env_patch.yaml
-  - path: rethinkdb_backup_volume_patch.yaml
-  - path: robotsevaluator_env_patch.yaml
-  - path: warcvalidator_api_env_patch.yaml
-  - path: warcvalidator_env_patch.yaml
-  - path: warcvalidator_volume_patch.yaml
+patchesStrategicMerge:
+  - cache-balancer_env_patch.yaml
+  - cache_env_patch.yaml
+  - contentexplorer_env_patch.yaml
+  - contentexplorer_volume_patch.yaml
+  - contentwriter_env_patch.yaml
+  - contentwriter_volume_patch.yaml
+  - controller_ca_patch.yaml
+  - controller_env_patch.yaml
+  - controller_volume_patch.yaml
+  - db-initializer_env_patch.yaml
+  - dnsresolver_env_patch.yaml
+  - frontier_env_patch.yaml
+  - harvester_env_patch.yaml
+  - health-check_env_patch.yaml
+  - metrics_env_patch.yaml
+  - ooshandler_volume_patch.yaml
+  - rethinkdb-exporter_env_patch.yaml
+  - rethinkdb_backup_env_patch.yaml
+  - rethinkdb_backup_volume_patch.yaml
+  - robotsevaluator_env_patch.yaml
+  - warcvalidator_api_env_patch.yaml
+  - warcvalidator_env_patch.yaml
+  - warcvalidator_volume_patch.yaml
 
 secretGenerator:
   - name: veidemann-env
