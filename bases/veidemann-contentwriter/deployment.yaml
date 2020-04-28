@@ -36,7 +36,7 @@ spec:
                 path: log4j2.xml
       containers:
         - name: veidemann-contentwriter
-          image: norsknettarkiv/veidemann-contentwriter:0.2.10
+          image: norsknettarkiv/veidemann-contentwriter:0.3.0
           ports:
             - name: grpc
               containerPort: 8082
