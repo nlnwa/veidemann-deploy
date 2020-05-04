@@ -41,8 +41,8 @@ spec:
             secretName: veidemann-cache
       terminationGracePeriodSeconds: 30
       containers:
-        - name: veidemann-harvester
-          image: norsknettarkiv/veidemann-harvester:0.5.3
+        - name: veidemann-browser-controller
+          image: norsknettarkiv/veidemann-browser-controller:v0.0.2
           imagePullPolicy: IfNotPresent
           ports:
             - name: proxy
@@ -61,15 +61,19 @@ spec:
                 fieldRef:
                   apiVersion: v1
                   fieldPath: status.hostIP
+            - name: PORT
+              value: "9999"
             - name: DB_HOST
               value: "rethinkdb-proxy"
             - name: DB_PORT
               value: "28015"
             - name: DB_NAME
               value: "veidemann"
-            - name: BROWSER_WS_ENDPOINT
-              value: ws://localhost:3000/?--proxy-server=localhost:8080
-            - name: MAX_OPEN_SESSIONS
+            - name: BROWSER_HOST
+              value: localhost
+            - name: BROWSER_PORT
+              value: "3000"
+            - name: PROXY_COUNT
               value: "2"
             - name: PROXY_HOST
               value: localhost
@@ -87,8 +91,10 @@ spec:
               value: "veidemann-robotsevaluator-service"
             - name: ROBOTS_EVALUATOR_PORT
               value: "7053"
+            - name: METRICS_PORT
+              value: "9301"
             - name: JAEGER_SERVICE_NAME
-              value: veidemann-harvester-controller
+              value: veidemann-browser-controller
             - name: JAEGER_AGENT_HOST
               value: localhost
             - name: JAEGER_AGENT_PORT
@@ -97,21 +103,18 @@ spec:
               value: probabilistic
             - name: JAEGER_SAMPLER_PARAM
               value: "0.1"
-            - name: JAVA_TOOL_OPTIONS
-              value: -Dfile.encoding=UTF-8
             - name: JAEGER_PROPAGATION
               value: jaeger,b3
+            - name: LOG_LEVEL
+              value: WARN
           volumeMounts:
-            - mountPath: /veidemann/config/log4j2.xml
-              name: veidemann-config
-              subPath: log4j2.xml
             - mountPath: /workdir
               name: workdir
             - mountPath: /ca-certificates
               name: cache-certificate
               readOnly: true
         - name: veidemann-harvester-proxy
-          image: norsknettarkiv/veidemann-recorderproxy:0.2.2
+          image: norsknettarkiv/veidemann-recorderproxy:v0.2.6
           imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 9900
@@ -120,6 +123,8 @@ spec:
           env:
             - name: PORT
               value: "9900"
+            - name: BROWSER_CONTROLLER_HOST
+              value: localhost
             - name: BROWSER_CONTROLLER_PORT
               value: "9999"
             - name: PROXY_COUNT
@@ -141,7 +146,7 @@ spec:
             - name: JAEGER_PROPAGATION
               value: jaeger,b3
         - name: veidemann-harvester-browser
-          image: browserless/chrome:1.18.1-puppeteer-1.20.0
+          image: browserless/chrome:1.33.1-puppeteer-3.0.0
           imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 3000

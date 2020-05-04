@@ -7,9 +7,9 @@ spec:
   template:
     spec:
       containers:
-        - name: veidemann-harvester
+        - name: veidemann-browser-controller
           env:
-            - name: MAX_OPEN_SESSIONS
+            - name: PROXY_COUNT
               value: "5"
             - name: DB_HOST
               value: $(DB_SERVICE_NAME)
