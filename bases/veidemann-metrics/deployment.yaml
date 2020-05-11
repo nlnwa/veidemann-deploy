@@ -23,7 +23,7 @@ spec:
 
       containers:
         - name: veidemann-metrics
-          image: norsknettarkiv/veidemann-metrics:0.2.0
+          image: norsknettarkiv/veidemann-metrics:0.2.1
           ports:
             - containerPort: 9301
               name: http-metrics
