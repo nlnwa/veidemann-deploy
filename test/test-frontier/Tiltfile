@@ -1,0 +1,48 @@
+print('Veidemann Frontier test')
+repository_locations = "../repos/"
+
+load('ext://restart_process', 'docker_build_with_restart')
+
+k8s_yaml(kustomize('.'))
+
+k8s_resource('rethinkdb-proxy', resource_deps=['rethinkdb-cluster'])
+k8s_resource('rethinkdb-admin', resource_deps=['rethinkdb-cluster'])
+
+local_resource(
+    'veidemann-commons',
+    cmd='cd ' + repository_locations + 'veidemann-commons; mvn -B -Dimage=$EXPECTED_REF -Dmaven.test.skip=true install',
+    deps=[repository_locations + 'src'])
+
+k8s_resource('veidemann-db-initializer', resource_deps=['rethinkdb-proxy'])
+custom_build(
+    'norsknettarkiv/veidemann-db-initializer',
+    'cd ' + repository_locations + 'veidemann-rethinkdbadapter; ./mvnw -B -Pdocker-build -Dimage=$EXPECTED_REF -Dmaven.test.skip=true install',
+    deps=[repository_locations + 'src'])
+
+
+k8s_resource('veidemann-frontier', resource_deps=['veidemann-db-initializer'])
+custom_build(
+    'norsknettarkiv/veidemann-frontier',
+    'cd ' + repository_locations + 'veidemann-frontier; ./mvnw -B -Pdocker-build -Dimage=$EXPECTED_REF -Dmaven.test.skip=true install',
+    deps=[repository_locations + 'src/'])
+
+local_resource(
+    'frontier-test-compile',
+    'CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -o build/frontier-test-go ./',
+    deps=['./main.go', './tests.go', 'pkg'])
+
+docker_build_with_restart(
+    'frontier-test-image',
+    '.',
+    entrypoint='/app/build/frontier-test-go',
+    dockerfile='Dockerfile',
+    only=[
+        './build',
+    ],
+    live_update=[
+        sync('./build', '/app/build'),
+    ])
+
+k8s_yaml('testpod.yaml')
+k8s_resource('frontier-test',
+             resource_deps=['veidemann-frontier', 'frontier-test-compile'])

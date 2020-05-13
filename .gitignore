@@ -4,3 +4,6 @@
 /dev/minikube/minikube-linux-amd64
 /dev/minikube/veidemannctl
 
+/test/test-frontier/tilt_modules/
+/test/repos/*
+!/test/repos/Makefile

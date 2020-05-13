@@ -2,11 +2,12 @@
 
 OPSYS=$(uname)
 KUSTOMIZE_VERSION=v3.5.4
-KIND_VERSION=0.7.0
+KIND_VERSION=0.8.1
 LINKERD_VERSION=stable-2.7.1
 KUBECTL_VERSION=v1.16.4
 MINIKUBE_VERSION=v1.7.2
 VEIDEMANNCTL_VERSION=0.3.3
+TILT_VERSION=0.13.5
 
 function check_cmd() {
   local CMD=$1
@@ -94,6 +95,15 @@ for CMD in "$@"; do
       curl -L#o veidemannctl https://github.com/nlnwa/veidemannctl/releases/download/${VEIDEMANNCTL_VERSION}/veidemannctl_${VEIDEMANNCTL_VERSION}_linux_amd64 &&
         sudo install veidemannctl /usr/local/bin/veidemannctl &&
         sudo sh -c "/usr/local/bin/veidemannctl completion > /etc/bash_completion.d/veidemannctl"
+    fi
+    ;;
+  tilt)
+    check_cmd tilt $TILT_VERSION 'version | cut -d, -f1 | cut -c2-'
+    INSTALL=$?
+    if [ $INSTALL -ne 0 ]; then
+      echo "Installing Tilt"
+      curl -L https://github.com/windmilleng/tilt/releases/download/v${TILT_VERSION}/tilt.${TILT_VERSION}.linux.x86_64.tar.gz | tar -xzv tilt &&
+        sudo mv tilt /usr/local/bin/tilt
     fi
     ;;
   esac

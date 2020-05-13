@@ -1,0 +1,46 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: frontier-test
+  labels:
+    app: frontier-test
+spec:
+  type: ClusterIP
+  ports:
+    - port: 7100
+      targetPort: 7100
+      name: a
+    - port: 7101
+      targetPort: 7101
+      name: b
+    - port: 7102
+      targetPort: 7102
+      name: c
+    - port: 7103
+      targetPort: 7103
+      name: d
+  selector:
+    app: frontier-test
+
+---
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: frontier-test
+  labels:
+    app: frontier-test
+spec:
+  selector:
+    matchLabels:
+      app: frontier-test
+  template:
+    metadata:
+      labels:
+        app: frontier-test
+    spec:
+      containers:
+        - name: frontier-test
+          image: frontier-test-image
+          ports:
+            - containerPort: 8000

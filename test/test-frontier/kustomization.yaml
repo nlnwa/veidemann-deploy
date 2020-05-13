@@ -1,0 +1,38 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+  - kustomizations/redis_distributed_lock.yaml
+  - ../../bases/rethinkdb
+  - ../../bases/veidemann-db-initializer
+  - ../../bases/veidemann-frontier
+
+patchesStrategicMerge:
+  - kustomizations/frontier_env_patch.yaml
+
+secretGenerator:
+  - name: veidemann-rethinkdb-env
+    literals:
+      - DB_USER=admin
+      - DB_PASSWORD=rethinkdb
+  - name: rethinkdb
+    behavior: replace
+    literals:
+      - rethinkdb-password=rethinkdb
+
+configMapGenerator:
+  - name: veidemann
+    files:
+      - log4j2.xml
+
+vars:
+  # Get service names.
+  - name: DB_SERVICE_NAME
+    objref:
+      kind: Service
+      apiVersion: v1
+      name: rethinkdb-proxy
+  - name: FRONTIER_SERVICE_NAME
+    objref:
+      kind: Service
+      apiVersion: v1
+      name: veidemann-frontier

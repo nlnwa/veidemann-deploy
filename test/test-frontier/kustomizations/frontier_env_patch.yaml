@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: veidemann-frontier
+spec:
+  template:
+    spec:
+      containers:
+        - name: veidemann-frontier
+          env:
+            - name: DB_HOST
+              value: $(DB_SERVICE_NAME)
+            - name: ROBOTS_EVALUATOR_HOST
+              value: frontier-test
+            - name: ROBOTS_EVALUATOR_PORT
+              value: "7100"
+            - name: DNS_RESOLVER_HOST
+              value: frontier-test
+            - name: DNS_RESOLVER_PORT
+              value: "7101"
+            - name: OOS_HANDLER_HOST
+              value: frontier-test
+            - name: OOS_HANDLER_PORT
+              value: "7102"
