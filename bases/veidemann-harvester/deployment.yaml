@@ -42,7 +42,7 @@ spec:
       terminationGracePeriodSeconds: 30
       containers:
         - name: veidemann-browser-controller
-          image: norsknettarkiv/veidemann-browser-controller:v0.0.2
+          image: norsknettarkiv/veidemann-browser-controller:v0.0.3
           imagePullPolicy: IfNotPresent
           ports:
             - name: proxy
@@ -107,6 +107,8 @@ spec:
               value: jaeger,b3
             - name: LOG_LEVEL
               value: WARN
+            - name: SCROLL_PAGES
+              value: "5"
           volumeMounts:
             - mountPath: /workdir
               name: workdir
