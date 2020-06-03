@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: tensorflow-jupyter
+  labels:
+    app.kubernetes.io/name: tensorflow-jupyter
+    app.kubernetes.io/component: tensorflow
+
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: tensorflow-jupyter
+      app.kubernetes.io/component: tensorflow
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: tensorflow-jupyter
+        app.kubernetes.io/component: tensorflow
+    spec:
+      volumes:
+        - name: logdir
+          emptyDir: {}
+        - name: notebooks
+          emptyDir: {}
+      containers:
+        - name: tensorflow-jupyter
+          image: tensorflow/tensorflow:nightly-py3-jupyter
+          ports:
+            - name: http
+              containerPort: 6060
+              protocol: TCP
+            - name: http-alt
+              containerPort: 8888
+              protocol: TCP
+          volumeMounts:
+            - name: logdir
+              mountPath: /logs
+            - name: notebooks
+              mountPath: /tf/notebooks
+
