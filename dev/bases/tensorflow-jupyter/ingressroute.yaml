@@ -1,0 +1,20 @@
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRoute
+metadata:
+  name: tensorflow-jupyter-ingressroute
+spec:
+  entryPoints:
+    - web
+    - websecure
+  routes:
+    - match: Host(`veidemann.local`) && PathPrefix(`/tensorboard`)
+      kind: Rule
+      services:
+        - name: tensorflow-jupyter
+          port: 6006
+    - match: Host(`veidemann.local`) && PathPrefix(`/jupyter`)
+      kind: Rule
+      services:
+        - name: tensorflow-jupyter
+          port: 8888
+  tls: {}

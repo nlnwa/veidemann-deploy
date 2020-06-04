@@ -18,14 +18,10 @@ spec:
         app.kubernetes.io/name: tensorflow-jupyter
         app.kubernetes.io/component: tensorflow
     spec:
-      volumes:
-        - name: logdir
-          emptyDir: {}
-        - name: notebooks
-          emptyDir: {}
       containers:
         - name: tensorflow-jupyter
-          image: tensorflow/tensorflow:nightly-py3-jupyter
+          image: tensorflow/tensorflow:nightly-jupyter
+          imagePullPolicy: Always
           ports:
             - name: http-tb
               containerPort: 6006
@@ -33,9 +29,4 @@ spec:
             - name: http-jupyter
               containerPort: 8888
               protocol: TCP
-          volumeMounts:
-            - name: logdir
-              mountPath: /logs
-            - name: notebooks
-              mountPath: /tf/notebooks
 
