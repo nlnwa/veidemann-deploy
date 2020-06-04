@@ -27,10 +27,10 @@ spec:
         - name: tensorflow-jupyter
           image: tensorflow/tensorflow:nightly-py3-jupyter
           ports:
-            - name: http
-              containerPort: 6060
+            - name: http-tensorboard
+              containerPort: 6006
               protocol: TCP
-            - name: http-alt
+            - name: http-jupyter
               containerPort: 8888
               protocol: TCP
           volumeMounts:

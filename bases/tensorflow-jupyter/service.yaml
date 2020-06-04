@@ -10,11 +10,11 @@ spec:
   ports:
     - port: 8888
       name: http-jupyter
-      targetPort: http-alt
+      targetPort: http-jupyter
       protocol: TCP
     - port: 6006
       name: http-tensorboard
-      targetPort: http
+      targetPort: http-tensorboard
       protocol: TCP
   selector:
     app.kubernetes.io/name: tensorflow-jupyter
