@@ -13,8 +13,8 @@ spec:
       targetPort: http-jupyter
       protocol: TCP
     - port: 6006
-      name: http-tensorboard
-      targetPort: http-tensorboard
+      name: http-tb
+      targetPort: http-tb
       protocol: TCP
   selector:
     app.kubernetes.io/name: tensorflow-jupyter
