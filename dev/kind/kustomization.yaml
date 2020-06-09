@@ -1,21 +1,36 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
-  - ../bases/kube-prometheus
   - ../bases/veidemann
 
 patches:
-  - path: kind_ip_patch.yaml
+  # Kind's pv provisioner doesn't support ReadWriteMany
+  # This patch updates all pvc's in namespace veidemann to ReadWriteOnce
   - patch: |-
+      kind: PersistentVolumeClaim
+      apiVersion: v1
+      metadata:
+        name: Name does not matter
+      spec:
+        accessModes:
+          - ReadWriteOnce
+    target:
+      kind: PersistentVolumeClaim
+      version: v1
+      namespace: veidemann
+
+patchesStrategicMerge:
+  - kind_ip_patch.yaml
+
+patchesJson6902:
+  - target:
+      kind: Deployment
+      name: veidemann-controller
+      version: v1
+      group: apps
+    patch: |-
       - op: add
         path: /spec/template/spec/containers/0/env/-
         value:
           name: SKIP_AUTHENTICATION
-          value: "true"
-    target:
-      kind: Deployment
-      name: veidemann-controller
-  - path: kind-pvc-patch.yaml
-    target:
-      kind: PersistentVolumeClaim
-      namespace: veidemann
+          value: "false"

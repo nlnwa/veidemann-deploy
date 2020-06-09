@@ -27,18 +27,31 @@ $UPDATE_HOSTS veidemann.local $LOCAL_IP
 
 set -e
 
-kind create cluster --config=kind-config.yaml
+KIND_CLUSTER=$(kind get clusters)
+if [ "$KIND_CLUSTER" != "kind" ]; then
+  kind create cluster --config=kind-config.yaml
+fi
 
 echo "waiting for cluster to be ready"
 kubectl wait --for=condition=Ready nodes --all --timeout=5m
 echo
 
+kubectl config set contexts.kind-kind.namespace veidemann
+
 # Install Service mesh
-linkerd install | kubectl apply -f -
+LINKERD_SERVER_VERSION=$(linkerd version | tail -1 | awk '{print $3}')
+if [ "$LINKERD_SERVER_VERSION" = "unavailable" ]; then
+  linkerd check --pre
+  linkerd install | kubectl apply -f -
+fi
 linkerd check
 
 # Install Ingress controller
+set +e
 kustomize build ${SCRIPT_DIR}/traefik | kubectl apply -f -
+sleep 1
+kustomize build ${SCRIPT_DIR}/traefik | kubectl apply -f -
+set -e
 
 # Install Redis operator
 kustomize build ${SCRIPT_DIR}/../../bases/redis-operator | kubectl apply -f -

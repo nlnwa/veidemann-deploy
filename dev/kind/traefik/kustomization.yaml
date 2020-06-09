@@ -3,5 +3,5 @@ kind: Kustomization
 resources:
   - ../../bases/traefik
 
-patches:
-  - path: traefik_nodeselector_patch.yaml
+patchesStrategicMerge:
+  - traefik_nodeselector_patch.yaml
