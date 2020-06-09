@@ -1,12 +1,12 @@
 #!/usr/bin/env bash
 
 OPSYS=$(uname)
-KUSTOMIZE_VERSION=v3.5.4
-KIND_VERSION=0.7.0
+KUSTOMIZE_VERSION=v3.6.1
+KIND_VERSION=0.8.1
 LINKERD_VERSION=stable-2.7.1
-KUBECTL_VERSION=v1.16.4
-MINIKUBE_VERSION=v1.7.2
-VEIDEMANNCTL_VERSION=0.3.3
+KUBECTL_VERSION=v1.18.3
+MINIKUBE_VERSION=v1.11.0
+VEIDEMANNCTL_VERSION=0.3.4
 
 function check_cmd() {
   local CMD=$1
@@ -44,8 +44,9 @@ for CMD in "$@"; do
     if [ $INSTALL -ne 0 ]; then
       echo "Installing Kubectl"
       curl -LO https://storage.googleapis.com/kubernetes-release/release/${KUBECTL_VERSION}/bin/linux/amd64/kubectl
-      chmod +x ./kubectl
-      sudo mv ./kubectl /usr/local/bin/kubectl
+      sudo install kubectl /usr/local/bin
+      sudo sh -c "/usr/local/bin/kubectl completion bash > /etc/bash_completion.d/kubectl"
+      rm kubectl
     fi
     ;;
   kind)
@@ -54,8 +55,9 @@ for CMD in "$@"; do
     if [ $INSTALL -ne 0 ]; then
       echo "Installing Kind"
       curl -Lo ./kind https://github.com/kubernetes-sigs/kind/releases/download/v${KIND_VERSION}/kind-${OPSYS}-amd64
-      chmod +x ./kind
-      sudo mv ./kind /usr/local/bin/kind
+      sudo install kind /usr/local/bin/kind
+      sudo sh -c "/usr/local/bin/kind completion bash > /etc/bash_completion.d/kind"
+      rm kind
     fi
     ;;
   kustomize)
@@ -65,8 +67,9 @@ for CMD in "$@"; do
       echo "Installing Kustomize"
       curl -L https://github.com/kubernetes-sigs/kustomize/releases/download/kustomize/${KUSTOMIZE_VERSION}/kustomize_${KUSTOMIZE_VERSION}_${OPSYS}_amd64.tar.gz |
         tar xz
-      chmod +x ./kustomize
-      sudo mv ./kustomize /usr/local/bin/kustomize
+      sudo install kustomize /usr/local/bin/kustomize
+      yes y | kustomize install-completion
+      rm kustomize
     fi
     ;;
   linkerd)
@@ -75,6 +78,9 @@ for CMD in "$@"; do
     if [ $INSTALL -ne 0 ]; then
       echo "Installing Linkerd"
       curl -sL https://run.linkerd.io/install | sh
+      echo "export PATH=$PATH:~/.linkerd2/bin" >> ~/.bashrc
+      echo "source <(linkerd completion bash)" >> ~/.bashrc
+      source ~/.bashrc
     fi
     ;;
   minikube)
@@ -82,8 +88,10 @@ for CMD in "$@"; do
     INSTALL=$?
     if [ $INSTALL -ne 0 ]; then
       echo "Installing Minikube"
-      curl -LO https://storage.googleapis.com/minikube/releases/${MINIKUBE_VERSION}/minikube-linux-amd64 &&
-        sudo install minikube-linux-amd64 /usr/local/bin/minikube
+      curl -Lo ./minikube https://storage.googleapis.com/minikube/releases/${MINIKUBE_VERSION}/minikube-linux-amd64 &&
+        sudo install minikube /usr/local/bin/minikube
+        sudo sh -c "/usr/local/bin/minikube completion bash > /etc/bash_completion.d/minikube"
+        rm minikube
     fi
     ;;
   veidemannctl)
@@ -91,9 +99,10 @@ for CMD in "$@"; do
     INSTALL=$?
     if [ $INSTALL -ne 0 ]; then
       echo "Installing Veidemannctl"
-      curl -L#o veidemannctl https://github.com/nlnwa/veidemannctl/releases/download/${VEIDEMANNCTL_VERSION}/veidemannctl_${VEIDEMANNCTL_VERSION}_linux_amd64 &&
+      curl -Lo veidemannctl https://github.com/nlnwa/veidemannctl/releases/download/${VEIDEMANNCTL_VERSION}/veidemannctl_${VEIDEMANNCTL_VERSION}_linux_amd64 &&
         sudo install veidemannctl /usr/local/bin/veidemannctl &&
         sudo sh -c "/usr/local/bin/veidemannctl completion > /etc/bash_completion.d/veidemannctl"
+        rm veidemannctl
     fi
     ;;
   esac
