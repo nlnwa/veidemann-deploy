@@ -9,7 +9,6 @@ namespace: ingress-traefik
 
 configMapGenerator:
   - name: traefik-dynamic-config
-    namespace: ingress-traefik
     behavior: replace
     files:
       - traefik.yaml=traefik-dynamic-config.yaml
