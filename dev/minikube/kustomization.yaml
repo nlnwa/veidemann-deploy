@@ -1,17 +1,20 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
-  - ../bases/kube-prometheus
   - ../bases/veidemann
 
-patches:
-  - path: minikube_ip_patch.yaml
-  - patch: |-
+patchesStrategicMerge:
+  - minikube_ip_patch.yaml
+
+patchesJson6902:
+  - target:
+      kind: Deployment
+      name: veidemann-controller
+      version: v1
+      group: apps
+    patch: |-
       - op: add
         path: /spec/template/spec/containers/0/env/-
         value:
           name: SKIP_AUTHENTICATION
-          value: "true"
-    target:
-      kind: Deployment
-      name: veidemann-controller
+          value: "false"

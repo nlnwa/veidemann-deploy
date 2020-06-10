@@ -6,15 +6,9 @@ UPDATE_HOSTS=${SCRIPT_DIR}/../../scripts/update_hosts.sh
 
 source $PREREQUISITES kubectl minikube linkerd kustomize veidemannctl
 
-EXISTS=$(minikube status --format='{{.Host}}')
-if [ "$EXISTS" != Nonexistent ]; then
-  echo "Cluster is already set up and has status: ${EXISTS}"
-  exit
-fi
-
 set -e
 
-minikube start # --cpus 2 --memory 8096 --vm-driver kvm2
+minikube start # --cpus 4 --memory 12000 --driver docker
 
 # Create patch and update /etc/hosts for local cluster ip
 LOCAL_IP=$(minikube ip)
@@ -35,18 +29,26 @@ EOF
 
 $UPDATE_HOSTS veidemann.local $LOCAL_IP
 
-
 echo "Waiting for nodes to be ready"
-until [[ $(kubectl describe nodes | grep "Taints:.*<none>") ]]; do
-  echo -n "."; sleep 2s;
-done
+kubectl wait --for=condition=Ready nodes --all --timeout=5m
+echo
+
+kubectl config set contexts.minikube.namespace veidemann
 
 # Install Service mesh
-linkerd install | kubectl apply -f -
+LINKERD_SERVER_VERSION=$(linkerd version | tail -1 | awk '{print $3}')
+if [ "$LINKERD_SERVER_VERSION" = "unavailable" ]; then
+  linkerd check --pre
+  linkerd install | kubectl apply -f -
+fi
 linkerd check
 
 # Install Ingress controller
+set +e
 kustomize build ${SCRIPT_DIR}/../bases/traefik | kubectl apply -f -
+sleep 1
+kustomize build ${SCRIPT_DIR}/../bases/traefik | kubectl apply -f -
+set -e
 
 # Install Redis operator
 kustomize build ${SCRIPT_DIR}/../../bases/redis-operator | kubectl apply -f -

@@ -13,7 +13,6 @@ resources:
   - ../../../bases/veidemann-controller
   - ../../../bases/veidemann-frontier
   - ../../../bases/veidemann-contentwriter
-  - ../../../bases/veidemann-contentexplorer
   - ../../../bases/veidemann-cache
   - ../../../bases/veidemann-robotsevaluator
   - ../../../bases/veidemann-harvester
@@ -33,8 +32,6 @@ namespace: veidemann
 patchesStrategicMerge:
   - cache-balancer_env_patch.yaml
   - cache_env_patch.yaml
-  - contentexplorer_env_patch.yaml
-  - contentexplorer_volume_patch.yaml
   - contentwriter_env_patch.yaml
   - contentwriter_volume_patch.yaml
   - controller_ca_patch.yaml

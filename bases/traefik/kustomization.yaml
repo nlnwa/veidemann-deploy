@@ -15,10 +15,8 @@ commonLabels:
 
 configMapGenerator:
   - name: traefik-static-config
-    namespace: ingress-traefik
     files:
       - traefik.yaml=traefik-static-config.yaml
   - name: traefik-dynamic-config
-    namespace: ingress-traefik
     files:
       - default.yaml=traefik-dynamic-config.yaml
