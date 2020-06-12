@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: tensorflow-jupyter
+  labels:
+    app.kubernetes.io/name: tensorflow-jupyter
+    app.kubernetes.io/component: tensorflow
+
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: tensorflow-jupyter
+      app.kubernetes.io/component: tensorflow
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: tensorflow-jupyter
+        app.kubernetes.io/component: tensorflow
+    spec:
+      containers:
+        - name: tensorflow-jupyter
+          image: tensorflow/tensorflow:nightly-jupyter
+          imagePullPolicy: Always
+          ports:
+            - name: http-tb
+              containerPort: 6006
+              protocol: TCP
+            - name: http-jupyter
+              containerPort: 8888
+              protocol: TCP
+

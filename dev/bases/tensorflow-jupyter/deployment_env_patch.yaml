@@ -1,0 +1,12 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: tensorflow-jupyter
+spec:
+  template:
+    spec:
+      containers:
+        - name: tensorflow-jupyter
+          env:
+            - name: TENSORBOARD_PROXY_URL
+              value: https://veidemann.local/tensorboard/
