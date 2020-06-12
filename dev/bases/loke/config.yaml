@@ -3,24 +3,21 @@
 #
 
 collections:
-  all: $all
-  ia: memento+https://web.archive.org/web/
-  nb:
+  veidemann:
     index:
       type: cdx
-      api_url: http://gowarc-server:9999/warcserver/all/index?url={url}&closest={closest}
-      replay_url: http://gowarc-server:9999/warcserver/all/resource?url={url}&closest={timestamp}&output=content
+      api_url: http://loke-gowarc-server:9999/warcserver/all/index?url={url}&closest={closest}
+      replay_url: http://loke-gowarc-server:9999/warcserver/all/resource?url={url}&closest={timestamp}&output=content
 
 # Settings for each collection
 use_js_obj_proxy: true
 
 # Memento support, enable
-enable_memento: true
+enable_memento: false
 
 # Replay content in an iframe
 framed_replay: true
 
-autoindex: 30
 
 # defaults
 

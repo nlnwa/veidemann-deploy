@@ -6,11 +6,15 @@ spec:
   template:
     spec:
       volumes:
-        - name: collections
+        - name: warcfiles
           persistentVolumeClaim:
             claimName: veidemann-validwarcs
+        - name: warcindex
+          emptyDir: {}
       containers:
         - name: gowarc-server
           volumeMounts:
-            - name: collections
+            - name: warcfiles
               mountPath: /warcfiles
+            - name: warcindex
+              mountPath: /warcindex
