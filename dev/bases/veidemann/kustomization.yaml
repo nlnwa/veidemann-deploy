@@ -24,8 +24,7 @@ resources:
   - ../../../bases/rethinkdb-backup
   - ingressroute.yaml
   - persistence/
-  - ../pywb
-  - ../gowarc-server
+  - ../loke
 
 namespace: veidemann
 

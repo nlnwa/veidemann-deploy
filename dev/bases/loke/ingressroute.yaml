@@ -1,7 +1,7 @@
 apiVersion: traefik.containo.us/v1alpha1
 kind: IngressRoute
 metadata:
-  name: pywb-ingressroute
+  name: loke-ingressroute
 spec:
   entryPoints:
     - web
@@ -12,5 +12,10 @@ spec:
       services:
         - name: pywb
           port: 80
+    - match: Host(`veidemann.local`) && PathPrefix(`/warcserver`)
+      kind: Rule
+      services:
+        - name: gowarc-server
+          port: 9999
 
   tls: {}
