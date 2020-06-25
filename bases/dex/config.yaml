@@ -25,7 +25,7 @@ staticClients:
   - id: veidemann-dashboard
     name: Veidemann Admin Dashboard
     redirectURIs:
-      - https://veidemann.local/veidemann
+      - https://veidemann.local/veidemann/
       - https://localhost:4200/veidemann
     secret: ZXhhbXBsZS1hcHAtc2VjcmV0
   - id: veidemann-cli
