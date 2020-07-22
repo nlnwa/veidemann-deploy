@@ -27,7 +27,7 @@ spec:
             name: nginx-config
       containers:
         - name: pywb
-          image: webrecorder/pywb:2.3.1
+          image: webrecorder/pywb:2.4.2
           ports:
             - name: http-socket
               containerPort: 8080
@@ -39,7 +39,7 @@ spec:
               subPath: config.yaml
 
         - name: nginx
-          image: norsknettarkiv/nginx-pywb-static:2.3.1
+          image: norsknettarkiv/nginx-pywb-static:2.4.2
           ports:
             - name: http
               containerPort: 80
