@@ -16,7 +16,7 @@ spec:
       restartPolicy: Never
       containers:
         - name: veidemann-db-initializer
-          image: norsknettarkiv/veidemann-db-initializer:0.4.5
+          image: norsknettarkiv/veidemann-db-initializer:0.4.8
           imagePullPolicy: IfNotPresent
           envFrom:
             - secretRef:
