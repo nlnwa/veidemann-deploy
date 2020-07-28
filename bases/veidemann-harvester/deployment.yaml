@@ -42,7 +42,7 @@ spec:
       terminationGracePeriodSeconds: 30
       containers:
         - name: veidemann-browser-controller
-          image: norsknettarkiv/veidemann-browser-controller:v0.0.3
+          image: norsknettarkiv/veidemann-browser-controller:v0.1.1
           imagePullPolicy: IfNotPresent
           ports:
             - name: proxy
