@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: veidemann-health-check-api
+  name: veidemann-dashboard
 spec:
   template:
     spec:
@@ -12,14 +12,10 @@ spec:
             items:
               - key: versions.json
                 path: versions.json
+
       containers:
-        - name: veidemann-health-check-api
-          env:
-            - name: CONTROLLER_HOST
-              value: $(CONTROLLER_SERVICE_NAME)
-            - name: VEIDEMANN_DASHBOARD_URL
-              value: "http://$(DASHBOARD_SERVICE_NAME)/veidemann"
+        - name: veidemann-dashboard
           volumeMounts:
-            - mountPath: /versions.json
+            - mountPath: /usr/share/nginx/html/veidemann/assets/versions.json
               subPath: versions.json
               name: versions

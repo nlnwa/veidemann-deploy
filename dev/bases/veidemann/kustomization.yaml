@@ -51,6 +51,7 @@ patchesStrategicMerge:
   - warcvalidator_env_patch.yaml
   - warcvalidator_volume_patch.yaml
   - harvester_log_level_patch.yaml
+  - dashboard_patch.yaml
 
 secretGenerator:
   - name: veidemann-env

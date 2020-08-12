@@ -34,3 +34,9 @@ patchesJson6902:
         value:
           name: SKIP_AUTHENTICATION
           value: "false"
+
+configMapGenerator:
+  - name: veidemann
+    behavior: merge
+    files:
+      - versions.json
