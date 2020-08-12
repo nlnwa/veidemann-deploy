@@ -18,6 +18,7 @@ spec:
         app.kubernetes.io/name: rethinkdb
         app.kubernetes.io/component: cluster
     spec:
+      priorityClassName: rethinkdb-priority
       serviceAccountName: rethinkdb
       containers:
         - name: rethinkdb-cluster

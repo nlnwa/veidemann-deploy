@@ -14,22 +14,6 @@ resources:
   - serviceaccount.yaml
   - priorityclass.yaml
 
-patches:
-  - patch: |-
-      - op: add
-        path: /spec/template/spec/priorityClassName
-        value: rethinkdb-priority
-    target:
-      kind: DaemonSet
-      name: rethinkdb-proxy
-  - patch: |-
-      - op: add
-        path: /spec/template/spec/priorityClassName
-        value: rethinkdb-priority
-    target:
-      kind: StatefulSet
-      name: rethinkdb-cluster
-
 vars:
   - name: RETHINK_CLUSTER_SERVICE_NAME
     objref:

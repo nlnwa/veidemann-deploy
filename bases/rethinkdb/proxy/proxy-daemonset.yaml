@@ -17,6 +17,7 @@ spec:
         app.kubernetes.io/name: rethinkdb
         app.kubernetes.io/component: proxy
     spec:
+      priorityClassName: rethinkdb-priority
       serviceAccountName: rethinkdb
       containers:
         - name: rethinkdb-proxy
