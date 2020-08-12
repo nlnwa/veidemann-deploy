@@ -105,6 +105,10 @@ spec:
               value: "0.1"
             - name: JAEGER_PROPAGATION
               value: jaeger,b3
+            - name: LOG_LEVEL
+              value: WARN
+            - name: SCROLL_PAGES
+              value: "5"
           volumeMounts:
             - mountPath: /workdir
               name: workdir
