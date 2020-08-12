@@ -1,0 +1,40 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: veidemann-util-pod
+  namespace: veidemann
+spec:
+  volumes:
+    - name: delivery
+      persistentVolumeClaim:
+        claimName: veidemann-delivery
+    - name: warcs
+      persistentVolumeClaim:
+        claimName: veidemann-warcs
+    - name: validwarcs
+      persistentVolumeClaim:
+        claimName: veidemann-validwarcs
+    - name: invalidwarcs
+      persistentVolumeClaim:
+        claimName: veidemann-invalidwarcs
+    - name: backup
+      persistentVolumeClaim:
+        claimName: veidemann-backup
+  containers:
+    - name: busybox
+      image: busybox
+      args:
+        - "sh"
+        - "-c"
+        - "trap : TERM INT; (while true; do sleep 1000; done) & wait"
+      volumeMounts:
+        - mountPath: "/backup"
+          name: backup
+        - mountPath: "/warcs"
+          name: warcs
+        - mountPath: "/invalidwarcs"
+          name: invalidwarcs
+        - mountPath: "/validwarcs"
+          name: validwarcs
+        - mountPath: "/delivery"
+          name: delivery
