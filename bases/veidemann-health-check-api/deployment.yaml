@@ -18,7 +18,7 @@ spec:
     spec:
       containers:
         - name: veidemann-health-check-api
-          image: norsknettarkiv/veidemann-health-check-api:0.4.0
+          image: norsknettarkiv/veidemann-health-check-api:v0.5.0
           ports:
             - name: http
               containerPort: 8080
@@ -26,21 +26,7 @@ spec:
             httpGet:
               path: /healthz
               port: http
-          envFrom:
-            - secretRef:
-                name: veidemann-rethinkdb-env
-                optional: false
           env:
-            - name: NODE_NAME
-              valueFrom:
-                fieldRef:
-                  fieldPath: status.hostIP
-            - name: DB_HOST
-              value: "rethinkdb-proxy"
-            - name: DB_PORT
-              value: "28015"
-            - name: DB_NAME
-              value: "veidemann"
             - name: CONTROLLER_HOST
               value: "veidemann-controller"
             - name: CONTROLLER_PORT
