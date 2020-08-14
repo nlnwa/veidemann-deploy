@@ -21,7 +21,7 @@ spec:
         app.kubernetes.io/component: harvester
       annotations:
         linkerd.io/inject: enabled
-        config.linkerd.io/skip-inbound-ports: "9301"
+        config.linkerd.io/skip-inbound-ports: "9301,9900"
         config.linkerd.io/skip-outbound-ports: 3128,14250
     spec:
       volumes:
@@ -45,8 +45,7 @@ spec:
           image: norsknettarkiv/veidemann-browser-controller:v0.0.4
           imagePullPolicy: IfNotPresent
           ports:
-            - name: proxy
-              containerPort: 8080
+            - containerPort: 9999
               protocol: TCP
             - name: http-metrics
               containerPort: 9301
@@ -120,7 +119,7 @@ spec:
           imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 9900
-              name: http
+              name: proxy
               protocol: TCP
           env:
             - name: PORT
