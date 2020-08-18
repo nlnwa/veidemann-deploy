@@ -8,7 +8,7 @@ spec:
       volumes:
         - name: versions
           configMap:
-            name: veidemann
+            name: veidemann-version
             items:
               - key: versions.json
                 path: versions.json

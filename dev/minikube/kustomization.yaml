@@ -20,7 +20,7 @@ patchesJson6902:
           value: "false"
 
 configMapGenerator:
-  - name: veidemann
-    behavior: merge
+  - name: veidemann-version
+    behavior: replace
     files:
       - versions.json

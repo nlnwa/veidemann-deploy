@@ -73,6 +73,9 @@ configMapGenerator:
       - log4j2.xml
     literals:
       - openidConnectIssuer=https://veidemann.local/dex
+  - name: veidemann-version
+    literals:
+      - versions.json={"veidemann":"dev"}
   - name: veidemann-dashboard-environment
     behavior: replace
     files:
