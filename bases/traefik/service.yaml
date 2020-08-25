@@ -6,7 +6,7 @@ metadata:
   labels:
     app.kubernetes.io/name: traefik
 spec:
-  type: NodePort
+  type: ClusterIP
   ports:
     - protocol: TCP
       name: web

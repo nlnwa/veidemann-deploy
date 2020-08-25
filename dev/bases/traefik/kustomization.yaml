@@ -11,7 +11,12 @@ configMapGenerator:
   - name: traefik-dynamic-config
     behavior: replace
     files:
-      - traefik.yaml=traefik-dynamic-config.yaml
+      - default.yaml=traefik-dynamic-config.yaml
+  - name: traefik-static-config
+    behavior: replace
+    files:
+      - traefik.yaml=traefik-static-config.yaml
 
 patchesStrategicMerge:
   - traefik-deployment-patch.yaml
+  - traefik-service-patch.yaml

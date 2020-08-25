@@ -4,7 +4,6 @@ metadata:
   name: jaeger-ingressroute
 spec:
   entryPoints:
-    - web
     - websecure
   routes:
     - match: Host(`veidemann.local`) && PathPrefix(`/jaeger`)

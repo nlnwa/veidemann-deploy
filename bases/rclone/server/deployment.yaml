@@ -1,0 +1,55 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: rclone
+  labels:
+    app.kubernetes.io/name: rclone
+    app.kubernetes.io/component: sftp-server
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: rclone
+      app.kubernetes.io/component: sftp-server
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: rclone
+        app.kubernetes.io/component: sftp-server
+    spec:
+      volumes:
+        - name: data
+          emptyDir: {}
+        - name: secret
+          secret:
+            defaultMode: 0700
+            secretName: ssh-public-key
+            items:
+              - key: authorized_keys
+                path: authorized_keys
+      containers:
+        - name: rclone
+          image: rclone/rclone:latest
+          imagePullPolicy: IfNotPresent
+          args:
+            - "serve"
+            - "sftp"
+            - "/data"
+            - "--addr"
+            - "$(POD_IP):2022"
+            - "--authorized-keys"
+            - "/secret/authorized_keys"
+          ports:
+            - containerPort: 2022
+              name: ssh
+              protocol: TCP
+          env:
+            - name: "POD_IP"
+              valueFrom:
+                fieldRef:
+                  fieldPath: status.podIP
+          volumeMounts:
+            - name: data
+              mountPath: /data
+            - name: secret
+              mountPath: /secret

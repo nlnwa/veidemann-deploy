@@ -8,6 +8,10 @@ spec:
     spec:
       containers:
         - name: traefik
+          ports:
+            - name: sftp
+              containerPort: 2022
+              hostPort: 2022
           volumeMounts:
             - mountPath: /run/secrets/certificates
               name: certs

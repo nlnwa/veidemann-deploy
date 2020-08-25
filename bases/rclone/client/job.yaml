@@ -1,0 +1,43 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: rclone-client
+  labels:
+    app.kubernetes.io/name: rclone-client
+spec:
+  ttlSecondsAfterFinished: 60
+  backoffLimit: 1
+  template:
+    metadata:
+      name: rclone-client
+      labels:
+        app.kubernetes.io/name: rclone-client
+    spec:
+      restartPolicy: Never
+      volumes:
+        - name: data
+          emptyDir: {}
+        - name: config
+          configMap:
+            name: rclone-config
+        - name: secret
+          secret:
+            secretName: ssh-private-key
+      containers:
+        - name: rclone
+          image: rclone/rclone:latest
+          imagePullPolicy: IfNotPresent
+          args:
+            - "move"
+            - "remote:"
+            - "/data"
+          envFrom:
+            - configMapRef:
+                name: rclone-config
+          volumeMounts:
+            - mountPath: /config/rclone/
+              name: config
+            - mountPath: /data
+              name: data
+            - mountPath: /secret
+              name: secret

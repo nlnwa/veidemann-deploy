@@ -1,0 +1,12 @@
+apiVersion: traefik.containo.us/v1alpha1
+kind: IngressRouteTCP
+metadata:
+  name: rclone-ingressroute-tcp
+spec:
+  entryPoints:
+    - sftp
+  routes:
+    - match: HostSNI(`*`)
+      services:
+        - name: rclone
+          port: 2022

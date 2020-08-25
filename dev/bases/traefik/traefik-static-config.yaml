@@ -1,0 +1,13 @@
+api:
+  dashboard: true
+  insecure: true
+accessLog: {}
+entrypoints:
+  websecure:
+    address: ":443"
+  sftp:
+    address: ":2022"
+providers:
+  kubernetescrd: {}
+  file:
+    directory: /config
