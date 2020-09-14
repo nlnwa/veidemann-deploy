@@ -5,7 +5,7 @@ KUSTOMIZE_VERSION=v3.7.0
 KIND_VERSION=0.8.1
 LINKERD_VERSION=stable-2.8.1
 KUBECTL_VERSION=v1.18.6
-MINIKUBE_VERSION=v1.12.3
+MINIKUBE_VERSION=v1.13.0
 VEIDEMANNCTL_VERSION=0.3.5
 
 function check_cmd() {
@@ -78,9 +78,7 @@ for CMD in "$@"; do
     if [ $INSTALL -ne 0 ]; then
       echo "Installing Linkerd"
       curl -sL https://run.linkerd.io/install | sh
-      echo "export PATH=$PATH:~/.linkerd2/bin" >> ~/.bashrc
-      echo "source <(linkerd completion bash)" >> ~/.bashrc
-      source ~/.bashrc
+      sudo sh -c "~/.linkerd2/bin/linkerd completion bash  > /etc/bash_completion.d/linkerd"
     fi
     ;;
   minikube)
