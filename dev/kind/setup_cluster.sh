@@ -29,7 +29,7 @@ set -e
 
 KIND_CLUSTER=$(kind get clusters)
 if [ "$KIND_CLUSTER" != "kind" ]; then
-  kind create cluster --config=kind-config.yaml
+  kind create cluster --config=kind-config.yaml --image kindest/node:v1.18.8@sha256:f4bcc97a0ad6e7abaf3f643d890add7efe6ee4ab90baeb374b4f41a4c95567eb
 fi
 
 echo "waiting for cluster to be ready"
