@@ -9,6 +9,7 @@ patchesStrategicMerge:
 
 configMapGenerator:
   - name: grafana-dashboards-veidemann
+    namespace: monitoring
     files:
       - dashboards/rethinkdb.json
       - dashboards/veidemann-cache.json
@@ -19,5 +20,6 @@ configMapGenerator:
       - dashboards/veidemann-job-status.json
       - dashboards/veidemann-overview.json
   - name: grafana-dashboards-redis
+    namespace: monitoring
     files:
       - dashboards/redis.json
