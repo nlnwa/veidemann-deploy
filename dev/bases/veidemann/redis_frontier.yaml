@@ -3,7 +3,7 @@ kind: Redis
 metadata:
   # the name of the Redis resource will be used as a label for all generated resources,
   # and as the infix or suffix for them.
-  name: distributed-lock
+  name: veidemann-frontier
 spec:
   # required field. Minimum value is 3
   replicas: 3
