@@ -21,7 +21,7 @@ spec:
         - containerPort: 8383
           name: metrics
         args: ["start"]
-        imagePullPolicy: Always
+        imagePullPolicy: IfNotPresent
         env:
         - name: WATCH_NAMESPACE
           value: ""

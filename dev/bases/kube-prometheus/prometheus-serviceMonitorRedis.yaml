@@ -13,4 +13,4 @@ spec:
     - veidemann
   selector:
     matchLabels:
-      redis: distributed-lock
+      redis: veidemann-frontier

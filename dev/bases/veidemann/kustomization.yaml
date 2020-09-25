@@ -3,7 +3,7 @@ kind: Kustomization
 resources:
   - namespace.yaml
   - ../cert
-  - redis_distributed_lock.yaml
+  - redis_frontier.yaml
   - ../../../bases/dex
   - ../../../bases/rethinkdb
   - ../../../bases/prometheus-exporter
