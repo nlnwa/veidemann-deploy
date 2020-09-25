@@ -37,7 +37,7 @@ spec:
 
       containers:
         - name: veidemann-frontier
-          image: norsknettarkiv/veidemann-frontier:0.4.8
+          image: norsknettarkiv/veidemann-frontier:0.5.0
           imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 7700
@@ -69,9 +69,9 @@ spec:
               value: "28015"
             - name: DB_NAME
               value: "veidemann"
-            - name: LOCK_REDIS_HOST
-              value: redis-distributed-lock-master
-            - name: LOCK_REDIS_PORT
+            - name: REDIS_HOST
+              value: redis-veidemann-frontier-master
+            - name: REDIS_PORT
               value: "6379"
             - name: API_PORT
               value: "7700"
@@ -112,3 +112,15 @@ spec:
             - mountPath: /veidemann/config/log4j2.xml
               name: veidemann-config
               subPath: log4j2.xml
+          readinessProbe:
+            exec:
+              command: ["/grpc_health_probe", "-addr=:7700"]
+            initialDelaySeconds: 1
+            periodSeconds: 1
+            failureThreshold: 3
+          livenessProbe:
+            exec:
+              command: ["/grpc_health_probe", "-addr=:7700"]
+            initialDelaySeconds: 10
+            periodSeconds: 10
+            failureThreshold: 3
