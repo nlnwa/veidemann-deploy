@@ -23,14 +23,13 @@ spec:
         app.kubernetes.io/name: dex
         app.kubernetes.io/component: idp
     spec:
-      serviceAccount: dex
       serviceAccountName: dex
       nodeSelector: {}
       terminationGracePeriodSeconds: 30
 
       containers:
       - name: main
-        image: quay.io/dexidp/dex:v2.19.0
+        image: quay.io/dexidp/dex:v2.25.0
         imagePullPolicy: IfNotPresent
         command:
         - /usr/local/bin/dex
