@@ -56,5 +56,8 @@ kustomize build ${SCRIPT_DIR}/../../bases/redis-operator | kubectl apply -f -
 # Install jager operator
 kustomize build ${SCRIPT_DIR}/../../bases/jaeger-operator | kubectl apply -f -
 
+# Give kubernetes time to initilaze jaeger operator CRDs before installing jaeger
+sleep 1
+
 # Install jaeger
 kustomize build ${SCRIPT_DIR}/../bases/jaeger | kubectl apply -f -
