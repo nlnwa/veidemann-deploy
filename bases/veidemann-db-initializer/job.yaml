@@ -6,6 +6,7 @@ metadata:
     app.kubernetes.io/name: veidemann-db-initializer
     app.kubernetes.io/component: db-initializer
 spec:
+  ttlSecondsAfterFinished: 60
   template:
     metadata:
       name: veidemann-db-initializer
