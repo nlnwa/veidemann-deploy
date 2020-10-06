@@ -10,5 +10,5 @@ secretGenerator:
     literals:
       - RETHINKDB_PASSWORD=rethinkdb
 
-patches:
-  - path: job_ttl_patch.yaml
+patchesStrategicMerge:
+  - job_ttl_patch.yaml

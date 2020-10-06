@@ -7,8 +7,8 @@ resources:
   - statefulset.yaml
   - service.yaml
 
-patches:
-  - path: statefulset_env_patch.yaml
+patchesStrategicMerge:
+  - statefulset_env_patch.yaml
 
 vars:
   - name: NAME

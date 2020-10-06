@@ -6,6 +6,7 @@ metadata:
     app.kubernetes.io/name: veidemann-db-initializer
     app.kubernetes.io/component: db-initializer
 spec:
+  ttlSecondsAfterFinished: 60
   template:
     metadata:
       name: veidemann-db-initializer
@@ -16,7 +17,7 @@ spec:
       restartPolicy: Never
       containers:
         - name: veidemann-db-initializer
-          image: norsknettarkiv/veidemann-db-initializer:0.4.12
+          image: norsknettarkiv/veidemann-db-initializer:0.4.13
           imagePullPolicy: IfNotPresent
           envFrom:
             - secretRef:
