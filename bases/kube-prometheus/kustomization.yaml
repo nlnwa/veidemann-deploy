@@ -2,7 +2,7 @@ kind: Kustomization
 apiVersion: kustomize.config.k8s.io/v1beta1
 
 resources:
-  - github.com/coreos/kube-prometheus
+  - vendor
 
 patchesStrategicMerge:
   - grafana_deployment_patch.yaml
