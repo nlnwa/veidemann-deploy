@@ -1,7 +1,7 @@
 apiVersion: monitoring.coreos.com/v1
 kind: ServiceMonitor
 metadata:
-  name: veidemann-servicemonitor
+  name: veidemann
   namespace: monitoring
 spec:
   endpoints:
