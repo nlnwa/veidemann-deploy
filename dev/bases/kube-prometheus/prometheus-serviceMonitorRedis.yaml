@@ -14,3 +14,12 @@ spec:
   selector:
     matchLabels:
       redis: veidemann-frontier
+    matchExpressions:
+      - key: role
+        operator: NotIn
+        values:
+          - master
+      - key: service-type
+        operator: NotIn
+        values:
+          - headless
