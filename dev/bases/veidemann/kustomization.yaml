@@ -17,7 +17,6 @@ resources:
   - ../../../bases/veidemann-robotsevaluator
   - ../../../bases/veidemann-harvester
   - ../../../bases/veidemann-dashboard
-  - ../../../bases/veidemann-warcvalidator-api
   - ../../../bases/veidemann-warcvalidator
   - ../../../bases/veidemann-ooshandler
   - ../../../bases/veidemann-health-check-api
@@ -47,7 +46,6 @@ patchesStrategicMerge:
   - rethinkdb_backup_env_patch.yaml
   - rethinkdb_backup_volume_patch.yaml
   - robotsevaluator_env_patch.yaml
-  - warcvalidator_api_env_patch.yaml
   - warcvalidator_env_patch.yaml
   - warcvalidator_volume_patch.yaml
   - harvester_log_level_patch.yaml
