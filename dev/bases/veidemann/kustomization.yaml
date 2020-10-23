@@ -6,7 +6,7 @@ resources:
   - redis_frontier.yaml
   - ../../../bases/dex
   - ../../../bases/rethinkdb
-  - ../../../bases/prometheus-exporter
+  - ../../../bases/rethinkdb-exporter
   - ../../../bases/veidemann-db-initializer
   - ../../../bases/veidemann-metrics
   - ../../../bases/veidemann-dns-resolver
