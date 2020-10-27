@@ -1,4 +1,0 @@
-autoindex: true
-indexdir: /warcindex
-warcdir:
-  - /warcfiles
