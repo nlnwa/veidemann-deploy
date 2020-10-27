@@ -33,7 +33,7 @@ spec:
                 path: log4j2.xml
       containers:
         - name: veidemann-warcvalidator
-          image: norsknettarkiv/veidemann-warcvalidator:0.1.0
+          image: norsknettarkiv/veidemann-warcvalidator:0.2.0
           volumeMounts:
             - name: warcs
               mountPath: /warcs
@@ -46,20 +46,6 @@ spec:
             - name: veidemann-config
               mountPath: /app/resources/log4j2.xml
               subPath: log4j2.xml
-          envFrom:
-            - secretRef:
-                name: veidemann-rethinkdb-env
-                optional: false
           env:
-            - name: NODE_NAME
-              valueFrom:
-                fieldRef:
-                  fieldPath: status.hostIP
-            - name: DB_HOST
-              value: "rethinkdb-proxy"
-            - name: DB_PORT
-              value: "28015"
-            - name: DB_NAME
-              value: "veidemann"
             - name: SLEEP_TIME
               value: "5"
