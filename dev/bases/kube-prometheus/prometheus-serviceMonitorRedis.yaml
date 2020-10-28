@@ -1,7 +1,7 @@
 apiVersion: monitoring.coreos.com/v1
 kind: ServiceMonitor
 metadata:
-  name: redis-servicemonitor
+  name: redis
   namespace: monitoring
 spec:
   endpoints:
@@ -14,3 +14,12 @@ spec:
   selector:
     matchLabels:
       redis: veidemann-frontier
+    matchExpressions:
+      - key: role
+        operator: NotIn
+        values:
+          - master
+      - key: service-type
+        operator: NotIn
+        values:
+          - headless
