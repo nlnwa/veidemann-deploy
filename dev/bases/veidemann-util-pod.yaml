@@ -22,7 +22,7 @@ spec:
         claimName: veidemann-backup
   containers:
     - name: busybox
-      image: busybox
+      image: norsknettarkiv/veidemann-warc-inspector-image:1.1.0
       args:
         - "sh"
         - "-c"
