@@ -57,17 +57,20 @@ spec:
               valueFrom:
                 fieldRef:
                   fieldPath: metadata.name
+          startupProbe:
+            exec:
+              command:
+                - /rethinkdb-probe
+            failureThreshold: 10
           livenessProbe:
             exec:
               command:
                 - /rethinkdb-probe
-            initialDelaySeconds: 10
             timeoutSeconds: 5
           readinessProbe:
             exec:
               command:
                 - /rethinkdb-probe
-            initialDelaySeconds: 10
             timeoutSeconds: 5
       volumes:
         - name: datadir
