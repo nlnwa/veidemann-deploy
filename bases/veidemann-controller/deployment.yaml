@@ -51,10 +51,6 @@ spec:
                 name: veidemann-rethinkdb-env
                 optional: false
           env:
-            - name: NODE_NAME
-              valueFrom:
-                fieldRef:
-                  fieldPath: status.hostIP
             - name: API_PORT
               value: "7700"
             - name: DB_HOST
