@@ -33,6 +33,9 @@ spec:
             - name: admin
               containerPort: 8080
               hostPort: 8080
+            - name: sftp
+              containerPort: 2022
+              hostPort: 2022
           volumeMounts:
             - mountPath: /etc/traefik
               name: traefik-static-config
