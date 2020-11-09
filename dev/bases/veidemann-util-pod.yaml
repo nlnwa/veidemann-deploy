@@ -5,9 +5,6 @@ metadata:
   namespace: veidemann
 spec:
   volumes:
-    - name: delivery
-      persistentVolumeClaim:
-        claimName: veidemann-delivery
     - name: warcs
       persistentVolumeClaim:
         claimName: veidemann-warcs
@@ -36,5 +33,3 @@ spec:
           name: invalidwarcs
         - mountPath: "/validwarcs"
           name: validwarcs
-        - mountPath: "/delivery"
-          name: delivery
