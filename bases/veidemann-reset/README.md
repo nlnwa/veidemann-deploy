@@ -15,7 +15,6 @@ Tries to remove all files in (cannot remove open files):
 /warcs
 /validwarcs
 /invalidwarcs
-/delivery
 /backup/oos
 ``` 
 
@@ -28,16 +27,10 @@ veidemann:
     "crawled_content"
     "events"
     "executions"
-    "extracted_text"
     "job_executions"
-    "locks"
     "page_log"
     "storage_ref"
     "uri_queue"
-
-report:
-    "invalid_warcs"
-    "valid_warcs"
 ```
 
 ## Clean up after veidemann-reset

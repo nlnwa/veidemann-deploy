@@ -23,8 +23,6 @@ spec:
           emptyDir: {}
         - name: invalidwarcs
           emptyDir: {}
-        - name: delivery
-          emptyDir: {}
         - name: veidemann-config
           configMap:
             name: veidemann
@@ -33,7 +31,7 @@ spec:
                 path: log4j2.xml
       containers:
         - name: veidemann-warcvalidator
-          image: norsknettarkiv/veidemann-warcvalidator:0.2.0
+          image: norsknettarkiv/veidemann-warcvalidator:0.3.1
           volumeMounts:
             - name: warcs
               mountPath: /warcs
@@ -41,8 +39,6 @@ spec:
               mountPath: /validwarcs
             - name: invalidwarcs
               mountPath: /invalidwarcs
-            - name: delivery
-              mountPath: /delivery
             - name: veidemann-config
               mountPath: /app/resources/log4j2.xml
               subPath: log4j2.xml

@@ -24,9 +24,6 @@ spec:
         - name: invalidwarcs
           persistentVolumeClaim:
             claimName: veidemann-invalidwarcs
-        - name: delivery
-          persistentVolumeClaim:
-            claimName: veidemann-delivery
         - name: backup
           persistentVolumeClaim:
             claimName: veidemann-backup
@@ -40,8 +37,6 @@ spec:
               mountPath: /validwarcs
             - name: invalidwarcs
               mountPath: /invalidwarcs
-            - name: delivery
-              mountPath: /delivery
             - name: backup
               mountPath: /backup
           envFrom:

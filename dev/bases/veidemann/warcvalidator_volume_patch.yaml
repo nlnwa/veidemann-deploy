@@ -18,7 +18,3 @@ spec:
           persistentVolumeClaim:
             claimName: veidemann-invalidwarcs
           emptyDir: # unset emptyDir from base
-        - name: delivery
-          persistentVolumeClaim:
-            claimName: veidemann-delivery
-          emptyDir: # unset emptyDir from base
