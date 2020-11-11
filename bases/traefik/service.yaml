@@ -20,6 +20,10 @@ spec:
       name: websecure
       port: 443
       targetPort: 443
+    - protocol: TCP
+      name: sftp
+      port: 2022
+      targetPort: sftp
   selector:
     app: traefik
     app.kubernetes.io/name: traefik
