@@ -45,7 +45,6 @@ patchesStrategicMerge:
   - rethinkdb_backup_env_patch.yaml
   - rethinkdb_backup_volume_patch.yaml
   - robotsevaluator_env_patch.yaml
-  - warcvalidator_env_patch.yaml
   - warcvalidator_volume_patch.yaml
   - harvester_log_level_patch.yaml
   - dashboard_patch.yaml
