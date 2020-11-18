@@ -19,10 +19,6 @@ spec:
       volumes:
         - name: warcs
           emptyDir: {}
-        - name: validwarcs
-          emptyDir: {}
-        - name: invalidwarcs
-          emptyDir: {}
         - name: veidemann-config
           configMap:
             name: veidemann
@@ -35,10 +31,13 @@ spec:
           volumeMounts:
             - name: warcs
               mountPath: /warcs
-            - name: validwarcs
+              subPath: warcs
+            - name: warcs
               mountPath: /validwarcs
-            - name: invalidwarcs
+              subPath: validwarcs
+            - name: warcs
               mountPath: /invalidwarcs
+              subPath: invalidwarcs
             - name: veidemann-config
               mountPath: /app/resources/log4j2.xml
               subPath: log4j2.xml
