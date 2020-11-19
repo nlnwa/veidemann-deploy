@@ -6,6 +6,4 @@ commonLabels:
 
 resources:
   - backup-pvc.yaml
-  - invalidwarcs-pvc.yaml
-  - validwarcs-pvc.yaml
   - warcs-pvc.yaml

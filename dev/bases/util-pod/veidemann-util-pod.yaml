@@ -8,28 +8,25 @@ spec:
     - name: warcs
       persistentVolumeClaim:
         claimName: veidemann-warcs
-    - name: validwarcs
-      persistentVolumeClaim:
-        claimName: veidemann-validwarcs
-    - name: invalidwarcs
-      persistentVolumeClaim:
-        claimName: veidemann-invalidwarcs
     - name: backup
       persistentVolumeClaim:
         claimName: veidemann-backup
   containers:
     - name: busybox
-      image: norsknettarkiv/veidemann-warc-inspector-image:1.1.0
+      image: norsknettarkiv/veidemann-warc-inspector-image:1.2.0
       args:
         - "sh"
         - "-c"
         - "trap : TERM INT; (while true; do sleep 1000; done) & wait"
       volumeMounts:
-        - mountPath: "/backup"
+        - mountPath: "/veidemann/backup"
           name: backup
-        - mountPath: "/warcs"
+        - mountPath: "/veidemann/warcs"
           name: warcs
-        - mountPath: "/invalidwarcs"
+          subPath: warcs
+        - mountPath: "/veidemann/invalidwarcs"
           name: invalidwarcs
-        - mountPath: "/validwarcs"
+          subPath: invalidwarcs
+        - mountPath: "/veidemann/validwarcs"
           name: validwarcs
+          subPath: validwarcs
