@@ -23,7 +23,7 @@ spec:
 
       containers:
         - name: veidemann-metrics
-          image: norsknettarkiv/veidemann-metrics:0.2.1
+          image: norsknettarkiv/veidemann-metrics:v0.2.2
           ports:
             - containerPort: 9301
               name: http-metrics
@@ -40,6 +40,10 @@ spec:
               value: "28015"
             - name: DB_NAME
               value: "veidemann"
+            - name: FRONTIER_HOST
+              value: "veidemann-frontier"
+            - name: FRONTIER_PORT
+              value: "7700"
 
           args:
             - "-listen"
@@ -54,3 +58,7 @@ spec:
             - "$(DB_USER)"
             - "-dbpassword"
             - "$(DB_PASSWORD)"
+            - "-frontierhostname"
+            - "$(FRONTIER_HOST)"
+            - "-frontier-port"
+            - "$(FRONTIER_PORT)"
