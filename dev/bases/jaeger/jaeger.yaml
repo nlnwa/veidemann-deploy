@@ -15,3 +15,8 @@ spec:
         max-traces: 1000
   ingress:
     enabled: false
+  sampling:
+    options:
+      default_strategy:
+        type: probabilistic
+        param: 0.1
