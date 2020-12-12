@@ -17,7 +17,8 @@ spec:
   # replica-announce-port, replicaof, masterauth, requirepass, rename-command
   config:
     repl-ping-replica-period: "10"
-#    protected-mode: "no"
+    stop-writes-on-bgsave-error no
+  #    protected-mode: "no"
 
   # Password allows to refer to a Secret containing password for Redis. (optional)
   # Password should be strong enough. Passwords shorter than 8 characters
