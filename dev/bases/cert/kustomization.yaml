@@ -5,5 +5,5 @@ secretGenerator:
   - name: veidemann-ingress-tls-cert
     type: kubernetes.io/tls
     files:
-      - tls.key=veidemann-local_key.pem
-      - tls.crt=veidemann-local_cert.pem
+      - tls.key=veidemann.local/key.pem
+      - tls.crt=veidemann.local/cert.pem
