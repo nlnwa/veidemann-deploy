@@ -23,7 +23,7 @@ cat <<EOF >kind_ip_patch.yaml
                 - veidemann.local
 EOF
 
-$UPDATE_HOSTS veidemann.local $LOCAL_IP
+$UPDATE_HOSTS $LOCAL_IP veidemann.local linkerd.veidemann.local
 
 set -e
 
@@ -47,11 +47,7 @@ fi
 linkerd check
 
 # Install Ingress controller
-set +e
 kustomize build ${SCRIPT_DIR}/traefik | kubectl apply -f -
-sleep 1
-kustomize build ${SCRIPT_DIR}/traefik | kubectl apply -f -
-set -e
 
 # Install Redis operator
 kustomize build ${SCRIPT_DIR}/../../bases/redis-operator | kubectl apply -f -

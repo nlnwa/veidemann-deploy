@@ -26,7 +26,7 @@ spec:
       terminationGracePeriodSeconds: 10
       containers:
         - name: veidemann-scopeservice
-          image: ghcr.io/nlnwa/veidemann-scopeservice:v0.1.0
+          image: ghcr.io/nlnwa/veidemann-scopeservice:0.1.1
           imagePullPolicy: IfNotPresent
           ports:
             - name: grpc

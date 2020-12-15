@@ -8,7 +8,7 @@ source $PREREQUISITES kubectl minikube linkerd kustomize veidemannctl
 
 set -e
 
-minikube start --kubernetes-version=v1.18.12 # --cpus 4 --memory 12000 --driver docker
+minikube start --kubernetes-version=v1.18.13 # --cpus 4 --memory 12000 --driver docker
 
 # Create patch and update /etc/hosts for local cluster ip
 LOCAL_IP=$(minikube ip)
@@ -27,7 +27,7 @@ cat <<EOF >minikube_ip_patch.yaml
                 - veidemann.local
 EOF
 
-$UPDATE_HOSTS veidemann.local $LOCAL_IP
+$UPDATE_HOSTS $LOCAL_IP veidemann.local linkerd.veidemann.local
 
 echo "Waiting for nodes to be ready"
 kubectl wait --for=condition=Ready nodes --all --timeout=5m
@@ -44,16 +44,12 @@ fi
 linkerd check
 
 # Install Ingress controller
-set +e
 kustomize build ${SCRIPT_DIR}/../bases/traefik | kubectl apply -f -
-sleep 1
-kustomize build ${SCRIPT_DIR}/../bases/traefik | kubectl apply -f -
-set -e
 
 # Install Redis operator
 kustomize build ${SCRIPT_DIR}/../../bases/redis-operator | kubectl apply -f -
 
-# Install jager operator
+# Install jaeger operator
 kustomize build ${SCRIPT_DIR}/../../bases/jaeger-operator | kubectl apply -f -
 
 # Give kubernetes time to initilaze jaeger operator CRDs before installing jaeger
