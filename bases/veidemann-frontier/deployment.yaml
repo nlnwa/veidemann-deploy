@@ -37,7 +37,7 @@ spec:
 
       containers:
         - name: veidemann-frontier
-          image: norsknettarkiv/veidemann-frontier:0.6.0
+          image: norsknettarkiv/veidemann-frontier:0.6.1
           imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 7700
