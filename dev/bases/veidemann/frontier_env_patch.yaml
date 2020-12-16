@@ -17,4 +17,4 @@ spec:
             - name: OOS_HANDLER_HOST
               value: $(OOS_HANDLER_SERVICE_NAME)
             - name: SCOPESERVICE_HOST
-              value: $(SCOPESERVICE_NAME)
+              value: $(SCOPESERVICE_SERVICE_NAME)

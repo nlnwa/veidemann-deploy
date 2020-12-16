@@ -15,4 +15,4 @@ spec:
             - name: FRONTIER_HOST
               value: $(FRONTIER_SERVICE_NAME)
             - name: SCOPESERVICE_HOST
-              value: $(SCOPESERVICE_NAME)
+              value: $(SCOPESERVICE_SERVICE_NAME)

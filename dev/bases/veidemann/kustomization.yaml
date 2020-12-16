@@ -135,7 +135,7 @@ vars:
       kind: Service
       apiVersion: v1
       name: veidemann-dashboard
-  - name: SCOPESERVICE_NAME
+  - name: SCOPESERVICE_SERVICE_NAME
     objref:
       kind: Service
       apiVersion: v1
