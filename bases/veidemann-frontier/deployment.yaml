@@ -78,9 +78,9 @@ spec:
               value: "veidemann-dns-resolver"
             - name: DNS_RESOLVER_PORT
               value: "8053"
-            - name: SCOPESRVICE_HOST
+            - name: SCOPESERVICE_HOST
               value: "veidemann-scopeservice"
-            - name: SCOPESRVICE_PORT
+            - name: SCOPESERVICE_PORT
               value: "8080"
             - name: OOS_HANDLER_HOST
               value: "veidemann-ooshandler"

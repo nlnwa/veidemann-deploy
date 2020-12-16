@@ -63,9 +63,9 @@ spec:
               value: "veidemann-frontier"
             - name: FRONTIER_PORT
               value: "7700"
-            - name: SCOPESRVICE_HOST
+            - name: SCOPESERVICE_HOST
               value: "veidemann-scopeservice"
-            - name: SCOPESRVICE_PORT
+            - name: SCOPESERVICE_PORT
               value: "8080"
             - name: OPENID_CONNECT_ISSUER
               value: "https://veidemann/dex"
