@@ -19,8 +19,6 @@ spec:
         app.kubernetes.io/name: veidemann-scopeservice
         app.kubernetes.io/component: scopeservice
       annotations:
-        config.linkerd.io/skip-inbound-ports: "9153"
-        config.linkerd.io/skip-outbound-ports: "14250"
         linkerd.io/inject: enabled
     spec:
       terminationGracePeriodSeconds: 10

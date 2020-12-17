@@ -20,7 +20,6 @@ spec:
         app.kubernetes.io/component: robotsevaluator
       annotations:
         linkerd.io/inject: enabled
-        config.linkerd.io/skip-outbound-ports: "8080"
     spec:
       volumes:
         - name: veidemann-config

@@ -19,8 +19,6 @@ spec:
         app.kubernetes.io/name: veidemann-frontier
         app.kubernetes.io/component: frontier
       annotations:
-        config.linkerd.io/skip-inbound-ports: "9301"
-        config.linkerd.io/skip-outbound-ports: "14250"
         linkerd.io/inject: enabled
     spec:
       volumes:

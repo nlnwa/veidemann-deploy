@@ -16,6 +16,8 @@ spec:
       labels:
         app.kubernetes.io/name: veidemann-dashboard
         app.kubernetes.io/component: dashboard
+      annotations:
+        linkerd.io/inject: enabled
     spec:
       volumes:
         - name: config
