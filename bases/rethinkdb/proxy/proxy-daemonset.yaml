@@ -16,6 +16,8 @@ spec:
       labels:
         app.kubernetes.io/name: rethinkdb
         app.kubernetes.io/component: proxy
+      annotations:
+        linkerd.io/inject: enabled
     spec:
       priorityClassName: rethinkdb-priority
       serviceAccountName: rethinkdb
