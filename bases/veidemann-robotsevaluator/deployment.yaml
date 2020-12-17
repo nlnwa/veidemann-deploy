@@ -33,7 +33,7 @@ spec:
       terminationGracePeriodSeconds: 30
       containers:
         - name: veidemann-robotsevaluator-service
-          image: norsknettarkiv/veidemann-robotsevaluator-service:0.3.8
+          image: norsknettarkiv/veidemann-robotsevaluator-service:0.4.0
           imagePullPolicy: IfNotPresent
           ports:
             - name: grpc
