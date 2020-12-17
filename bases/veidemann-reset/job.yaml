@@ -18,6 +18,9 @@ spec:
         - name: warcs
           persistentVolumeClaim:
             claimName: veidemann-warcs
+        - name: backup
+          persistentVolumeClaim:
+            claimName: veidemann-backup
       containers:
         - name: veidemann-reset
           image: norsknettarkiv/veidemann-reset:v0.1.2
