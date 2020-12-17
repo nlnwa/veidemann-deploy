@@ -110,7 +110,7 @@ spec:
               name: cache-certificate
               readOnly: true
         - name: veidemann-harvester-proxy
-          image: norsknettarkiv/veidemann-recorderproxy:v0.2.6
+          image: norsknettarkiv/veidemann-recorderproxy:v0.2.8
           imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 9900
