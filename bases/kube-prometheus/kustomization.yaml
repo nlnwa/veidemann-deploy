@@ -15,7 +15,6 @@ configMapGenerator:
       - dashboards/veidemann-cache.json
       - dashboards/veidemann-dns.json
       - dashboards/veidemann-frontier-jvm.json
-      - dashboards/veidemann-harvester-jvm.json
       - dashboards/veidemann-harvesters.json
       - dashboards/veidemann-job-status.json
       - dashboards/veidemann-overview.json
