@@ -20,8 +20,6 @@ spec:
         app.kubernetes.io/name: veidemann-controller
         app.kubernetes.io/component: controller
       annotations:
-        config.linkerd.io/skip-inbound-ports: "7700"
-        config.linkerd.io/skip-outbound-ports: "14250,443"
         linkerd.io/inject: enabled
 
     spec:
