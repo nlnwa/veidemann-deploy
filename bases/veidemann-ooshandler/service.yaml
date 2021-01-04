@@ -5,6 +5,7 @@ metadata:
   labels:
     app.kubernetes.io/name: veidemann-ooshandler
     app.kubernetes.io/component: ooshandler
+    metrics: prometheus
 spec:
   type: ClusterIP
   ports:
