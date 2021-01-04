@@ -21,7 +21,9 @@ spec:
         app.kubernetes.io/component: harvester
       annotations:
         linkerd.io/inject: enabled
-        # skip veidemann-cache (squid)
+        # skip inbound proxy port
+        config.linkerd.io/skip-inbound-ports: "9900"
+        # skip outbound to cache (squid)
         config.linkerd.io/skip-outbound-ports: "3128"
     spec:
       volumes:

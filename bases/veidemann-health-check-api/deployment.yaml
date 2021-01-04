@@ -15,8 +15,6 @@ spec:
       labels:
         app.kubernetes.io/name: veidemann-health-check-api
         app.kubernetes.io/component: health-check
-      annotations:
-        linkerd.io/inject: enabled
     spec:
       containers:
         - name: veidemann-health-check-api
