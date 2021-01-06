@@ -25,8 +25,8 @@ spec:
           name: warcs
           subPath: warcs
         - mountPath: "/veidemann/invalidwarcs"
-          name: invalidwarcs
+          name: warcs
           subPath: invalidwarcs
         - mountPath: "/veidemann/validwarcs"
-          name: validwarcs
+          name: warcs
           subPath: validwarcs
