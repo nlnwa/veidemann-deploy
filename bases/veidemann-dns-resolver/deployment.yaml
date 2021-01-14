@@ -21,7 +21,7 @@ spec:
     spec:
       containers:
         - name: veidemann-dns-resolver
-          image: norsknettarkiv/veidemann-dns-resolver:0.2.6
+          image: norsknettarkiv/veidemann-dns-resolver:0.2.7
           imagePullPolicy: IfNotPresent
           envFrom:
             - secretRef:

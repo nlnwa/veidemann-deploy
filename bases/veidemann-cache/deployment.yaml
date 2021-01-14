@@ -24,7 +24,7 @@ spec:
           name: dshm
       containers:
         - name: veidemann-cache-balancer
-          image: norsknettarkiv/veidemann-cache:0.2.2
+          image: norsknettarkiv/veidemann-cache:0.2.3
           imagePullPolicy: IfNotPresent
           args:
             - squid
