@@ -21,7 +21,7 @@ spec:
     spec:
       containers:
         - name: veidemann-cache
-          image: norsknettarkiv/veidemann-cache:0.2.2
+          image: norsknettarkiv/veidemann-cache:0.2.3
           imagePullPolicy: IfNotPresent
           ports:
             - name: http
