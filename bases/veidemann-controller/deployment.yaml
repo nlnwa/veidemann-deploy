@@ -40,7 +40,7 @@ spec:
 
       containers:
         - name: veidemann-controller
-          image: norsknettarkiv/veidemann-controller:0.6.6
+          image: norsknettarkiv/veidemann-controller:0.6.7
           imagePullPolicy: IfNotPresent
           ports:
             - name: grpc
