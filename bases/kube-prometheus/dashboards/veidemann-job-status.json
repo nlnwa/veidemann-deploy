@@ -530,7 +530,7 @@
         "datasource": "$datasource",
         "definition": "",
         "hide": 0,
-        "includeAll": false,
+        "includeAll": true,
         "label": "Job Name",
         "multi": false,
         "name": "job_name",
