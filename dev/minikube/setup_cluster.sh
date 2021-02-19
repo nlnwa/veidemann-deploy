@@ -8,7 +8,7 @@ source $PREREQUISITES kubectl minikube linkerd kustomize veidemannctl
 
 set -e
 
-minikube start --kubernetes-version=v1.18.13 # --cpus 4 --memory 12000 --driver docker
+minikube start # --cpus 4 --memory 12000 --driver docker
 
 # Create patch and update /etc/hosts for local cluster ip
 LOCAL_IP=$(minikube ip)
