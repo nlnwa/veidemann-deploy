@@ -77,8 +77,10 @@ for CMD in "$@"; do
     INSTALL=$?
     if [ $INSTALL -ne 0 ]; then
       echo "Installing Linkerd"
-      curl -sL https://run.linkerd.io/install | sh
-      sudo sh -c "~/.linkerd2/bin/linkerd completion bash  > /etc/bash_completion.d/linkerd"
+      curl -Lo ./linkerd https://github.com/linkerd/linkerd2/releases/download/${LINKERD_VERSION}/linkerd2-cli-${LINKERD_VERSION}-linux-amd64 &&
+        sudo install linkerd /usr/local/bin/linkerd
+      sudo sh -c "/usr/local/bin/linkerd completion bash  > /etc/bash_completion.d/linkerd"
+      rm linkerd
     fi
     ;;
   minikube)
@@ -88,8 +90,8 @@ for CMD in "$@"; do
       echo "Installing Minikube"
       curl -Lo ./minikube https://storage.googleapis.com/minikube/releases/${MINIKUBE_VERSION}/minikube-linux-amd64 &&
         sudo install minikube /usr/local/bin/minikube
-        sudo sh -c "/usr/local/bin/minikube completion bash > /etc/bash_completion.d/minikube"
-        rm minikube
+      sudo sh -c "/usr/local/bin/minikube completion bash > /etc/bash_completion.d/minikube"
+      rm minikube
     fi
     ;;
   veidemannctl)
