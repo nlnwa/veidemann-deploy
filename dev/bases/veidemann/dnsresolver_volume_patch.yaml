@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: veidemann-dns-resolver
+spec:
+  template:
+    spec:
+      volumes:
+        - name: corefile
+          configMap:
+            name: veidemann-dns-resolver
+            items:
+              - key: Corefile
+                path: Corefile
+      containers:
+        - name: veidemann-dns-resolver
+          volumeMounts:
+            - name: corefile
+              mountPath: /Corefile
+              subPath: Corefile
+          env:
+            - name: DB_HOST
+              value: $(DB_SERVICE_NAME)
+            - name: CONTENT_WRITER_HOST
+              value: $(CONTENT_WRITER_SERVICE_NAME)

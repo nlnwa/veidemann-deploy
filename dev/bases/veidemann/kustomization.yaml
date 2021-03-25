@@ -37,6 +37,7 @@ patchesStrategicMerge:
   - controller_volume_patch.yaml
   - db-initializer_env_patch.yaml
   - dnsresolver_env_patch.yaml
+  - dnsresolver_volume_patch.yaml
   - frontier_env_patch.yaml
   - harvester_env_patch.yaml
   - health-check_env_patch.yaml
@@ -77,6 +78,10 @@ configMapGenerator:
     behavior: replace
     files:
       - environment.json
+  - name: "veidemann-dns-resolver"
+    namespace: "veidemann"
+    files:
+      - Corefile
 
 vars:
   # Get service names.
