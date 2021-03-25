@@ -21,8 +21,7 @@ spec:
     spec:
       containers:
         - name: veidemann-dns-resolver
-          image: norsknettarkiv/veidemann-dns-resolver:0.2.7
-          imagePullPolicy: IfNotPresent
+          image: norsknettarkiv/veidemann-dns-resolver:v0.2.8
           envFrom:
             - secretRef:
                 name: veidemann-rethinkdb-env
@@ -59,7 +58,7 @@ spec:
           livenessProbe:
             failureThreshold: 3
             httpGet:
-              path: /health
+              path: /ready
               port: http-health
               scheme: HTTP
             initialDelaySeconds: 15
@@ -69,7 +68,7 @@ spec:
           readinessProbe:
             failureThreshold: 3
             httpGet:
-              path: /health
+              path: /ready
               port: http-health
               scheme: HTTP
             initialDelaySeconds: 15
