@@ -20,47 +20,14 @@ spec:
       annotations:
         linkerd.io/inject: enabled
     spec:
-
-      terminationGracePeriodSeconds: 30
-
       containers:
         - name: veidemann-metrics
-          image: norsknettarkiv/veidemann-metrics:v0.2.2
+          image: norsknettarkiv/veidemann-metrics:v0.3.0
           ports:
             - containerPort: 9301
               name: http-metrics
               protocol: TCP
-
           envFrom:
             - secretRef:
                 name: veidemann-rethinkdb-env
                 optional: false
-          env:
-            - name: DB_HOST
-              value: "rethinkdb-cluster"
-            - name: DB_PORT
-              value: "28015"
-            - name: DB_NAME
-              value: "veidemann"
-            - name: FRONTIER_HOST
-              value: "veidemann-frontier"
-            - name: FRONTIER_PORT
-              value: "7700"
-
-          args:
-            - "-listen"
-            - "0.0.0.0:9301"
-            - "-dbhostname"
-            - "$(DB_HOST)"
-            - "-dbport"
-            - "$(DB_PORT)"
-            - "-dbname"
-            - "$(DB_NAME)"
-            - "-dbuser"
-            - "$(DB_USER)"
-            - "-dbpassword"
-            - "$(DB_PASSWORD)"
-            - "-frontierhostname"
-            - "$(FRONTIER_HOST)"
-            - "-frontier-port"
-            - "$(FRONTIER_PORT)"
