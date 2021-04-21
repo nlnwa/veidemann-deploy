@@ -1,0 +1,30 @@
+kind: Kustomization
+apiVersion: kustomize.config.k8s.io/v1beta1
+
+namespace: veidemann
+
+resources:
+  - service.yaml
+  - statefulset.yaml
+
+configMapGenerator:
+  - name: scylla
+    files:
+      - ready-probe.sh
+      - cassandra-rackdc.properties
+
+vars:
+  - name: NAME
+    objref:
+      kind: StatefulSet
+      name: scylla
+      apiVersion: apps/v1
+    fieldref:
+      fieldpath: metadata.name
+  - name: NAMESPACE
+    objref:
+      kind: StatefulSet
+      name: scylla
+      apiVersion: apps/v1
+    fieldref:
+      fieldpath: metadata.namespace
