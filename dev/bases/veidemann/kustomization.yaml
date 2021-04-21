@@ -7,6 +7,9 @@ resources:
   - ../dex
   - ../../../bases/rethinkdb
   - ../../../bases/rethinkdb-exporter
+  - ../../../bases/scylla
+  - ../../../bases/veidemann-log-service-schema-job
+  - ../../../bases/veidemann-log-service
   - ../../../bases/veidemann-db-initializer
   - ../../../bases/veidemann-metrics
   - ../../../bases/veidemann-dns-resolver
