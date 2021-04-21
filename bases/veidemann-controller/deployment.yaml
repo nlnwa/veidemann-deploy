@@ -40,8 +40,7 @@ spec:
 
       containers:
         - name: veidemann-controller
-          image: norsknettarkiv/veidemann-controller:0.7.0
-          imagePullPolicy: IfNotPresent
+          image: norsknettarkiv/veidemann-controller:0.8.0
           ports:
             - name: grpc
               containerPort: 7700
@@ -66,6 +65,10 @@ spec:
             - name: SCOPESERVICE_HOST
               value: "veidemann-scopeservice"
             - name: SCOPESERVICE_PORT
+              value: "8080"
+            - name: LOG_SERVICE_HOST
+              value: "veidemann-log-service"
+            - name: LOG_SERVICE_PORT
               value: "8080"
             - name: OPENID_CONNECT_ISSUER
               value: "https://veidemann/dex"
