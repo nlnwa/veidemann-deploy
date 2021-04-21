@@ -3,6 +3,7 @@ kind: Kustomization
 resources:
   - service.yaml
   - deployment.yaml
+  - schema-job.yaml
 
 commonLabels:
   app.kubernetes.io/instance: veidemann-log-service
