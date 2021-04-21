@@ -31,3 +31,16 @@ spec:
             - secretRef:
                 name: veidemann-rethinkdb-env
                 optional: false
+          env:
+            - name: PORT
+              value: "9301"
+            - name: DB_HOST
+              value: "rethinkdb-proxy"
+            - name: DB_PORT
+              value: "28015"
+            - name: DB_NAME
+              value: "veidemann"
+            - name: FRONTIER_HOST
+              value: "veidemann-frontier"
+            - name: FRONTIER_PORT
+              value: "7700"
