@@ -44,7 +44,7 @@ spec:
       terminationGracePeriodSeconds: 30
       containers:
         - name: veidemann-browser-controller
-          image: norsknettarkiv/veidemann-browser-controller:v0.1.6
+          image: norsknettarkiv/veidemann-browser-controller:v0.2.0
           imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 9999
@@ -87,6 +87,10 @@ spec:
               value: "veidemann-robotsevaluator-service"
             - name: ROBOTS_EVALUATOR_PORT
               value: "7053"
+            - name: LOG_SERVICE_HOST
+              value: "veidemann-log-service"
+            - name: LOG_SERVICE_PORT
+              value: "8080"
             - name: METRICS_PORT
               value: "9301"
             - name: JAEGER_SERVICE_NAME
@@ -110,7 +114,7 @@ spec:
               name: cache-certificate
               readOnly: true
         - name: veidemann-harvester-proxy
-          image: norsknettarkiv/veidemann-recorderproxy:v0.2.8
+          image: norsknettarkiv/veidemann-recorderproxy:v0.3.0
           imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 9900

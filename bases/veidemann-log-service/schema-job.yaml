@@ -1,0 +1,24 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: veidemann-log-schema-job
+  labels:
+    app.kubernetes.io/name: veidemann-log-schema-job
+spec:
+  ttlSecondsAfterFinished: 60
+  backoffLimit: 1
+  template:
+    metadata:
+      name: veidemann-log-schema-job
+      labels:
+        app.kubernetes.io/name: veidemann-log-schema-job
+    spec:
+      restartPolicy: Never
+      containers:
+        - name: veidemann-log-schema-job
+          image: norsknettarkiv/veidemann-log-schema:v0.1.0
+          env:
+            - name: SCYLLA_HOST
+              value: scylla
+            - name: TEMPLATE
+              value: /schema/v001.cql.tmpl

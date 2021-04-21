@@ -37,8 +37,7 @@ spec:
 
       containers:
         - name: veidemann-frontier
-          image: norsknettarkiv/veidemann-frontier:0.7.0
-          imagePullPolicy: IfNotPresent
+          image: norsknettarkiv/veidemann-frontier:0.8.0
           ports:
             - containerPort: 7700
               name: grpc
@@ -86,6 +85,10 @@ spec:
               value: "veidemann-ooshandler"
             - name: OOS_HANDLER_PORT
               value: "50052"
+            - name: LOG_SERVICE_HOST
+              value: "veidemann-log-service"
+            - name: LOG_SERVICE_PORT
+              value: "8080"
             - name: TERMINATION_GRACE_PERIOD_SECONDS
               value: "300"
             - name: JAVA_OPTS

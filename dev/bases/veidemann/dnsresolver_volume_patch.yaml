@@ -18,8 +18,3 @@ spec:
             - name: corefile
               mountPath: /Corefile
               subPath: Corefile
-          env:
-            - name: DB_HOST
-              value: $(DB_SERVICE_NAME)
-            - name: CONTENT_WRITER_HOST
-              value: $(CONTENT_WRITER_SERVICE_NAME)

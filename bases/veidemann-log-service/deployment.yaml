@@ -1,0 +1,41 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: veidemann-log-service
+  labels:
+    app.kubernetes.io/name: veidemann-log-service
+    app.kubernetes.io/component: log-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: veidemann-log-service
+      app.kubernetes.io/component: log-service
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: veidemann-log-service
+        app.kubernetes.io/component: log-service
+      annotations:
+        linkerd.io/inject: enabled
+        linkerd.io/skip-outbound-ports: "19042"
+    spec:
+      containers:
+        - name: veidemann-log-service
+          image: norsknettarkiv/veidemann-log-service:v0.1.0
+          ports:
+            - name: grpc
+              containerPort: 8080
+              protocol: TCP
+            - name: http-metrics
+              containerPort: 9153
+              protocol: TCP
+          env:
+            - name: PORT
+              value: "8080"
+            - name: LOG_LEVEL
+              value: "debug"
+            - name: DB_HOST
+              value: "scylla"
+            - name: DB_KEYSPACE
+              value: "v7n_v1_dc1"
