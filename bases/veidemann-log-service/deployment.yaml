@@ -22,7 +22,7 @@ spec:
     spec:
       containers:
         - name: veidemann-log-service
-          image: norsknettarkiv/veidemann-log-service:v0.1.0
+          image: norsknettarkiv/veidemann-log-service:v0.1.1
           ports:
             - name: grpc
               containerPort: 8080
