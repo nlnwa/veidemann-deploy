@@ -15,7 +15,6 @@ spec:
       labels:
         app.kubernetes.io/name: scylla
     spec:
-      terminationGracePeriodSeconds: 30
       containers:
         - name: scylla
           image: scylladb/scylla:4.4.1
@@ -32,7 +31,9 @@ spec:
             - containerPort: 9042
               name: cql
             - containerPort: 19042
-              name: cluster-shard
+              name: cql-shard-aware
+            - containerPort: 9180
+              name: http-metrics
           resources:
             limits:
               cpu: 500m
@@ -64,7 +65,7 @@ spec:
             initialDelaySeconds: 15
             timeoutSeconds: 5
           volumeMounts:
-            - name: scylla
+            - name: scylla-data
               mountPath: /var/lib/scylla
             - name: scylla-ready-probe
               mountPath: /opt/ready-probe.sh
@@ -73,7 +74,7 @@ spec:
               mountPath: /etc/scylla/cassandra-rackdc.properties
               subPath: cassandra-rackdc.properties
       volumes:
-        - name: scylla
+        - name: scylla-data
           emptyDir: {}
         - name: scylla-snitch-config
           configMap:
