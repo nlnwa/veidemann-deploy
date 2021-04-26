@@ -17,12 +17,12 @@ spec:
         app.kubernetes.io/name: veidemann-log-service
         app.kubernetes.io/component: log-service
       annotations:
-        linkerd.io/inject: enabled
-        linkerd.io/skip-outbound-ports: "19042"
+        linkerd.io/inject: disabled
+        linkerd.io/skip-outbound-ports: "9042,19042"
     spec:
       containers:
         - name: veidemann-log-service
-          image: norsknettarkiv/veidemann-log-service:v0.1.1
+          image: norsknettarkiv/veidemann-log-service:v0.1.3
           ports:
             - name: grpc
               containerPort: 8080
@@ -36,6 +36,6 @@ spec:
             - name: LOG_LEVEL
               value: "debug"
             - name: DB_HOST
-              value: "scylla"
+              value: "scylla-0.scylla"
             - name: DB_KEYSPACE
               value: "v7n_v1_dc1"
