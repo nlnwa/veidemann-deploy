@@ -8,9 +8,7 @@ spec:
   clusterIP: None
   ports:
     - port: 9042
-      name: cluster
-    - port: 19042
-      name: cluster-shard
+      name: cql
     - port: 9180
       name: http-metrics
   selector:
