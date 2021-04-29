@@ -37,7 +37,7 @@ spec:
 
       containers:
         - name: veidemann-frontier
-          image: norsknettarkiv/veidemann-frontier:0.8.0
+          image: norsknettarkiv/veidemann-frontier:v0.8.1
           ports:
             - containerPort: 7700
               name: grpc
