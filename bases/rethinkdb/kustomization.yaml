@@ -9,8 +9,8 @@ resources:
   - cluster/
   - admin/
   - proxy/
-  - clusterrole.yaml
-  - clusterrolebinding.yaml
+  - role.yaml
+  - rolebinding.yaml
   - serviceaccount.yaml
   - priorityclass.yaml
 
@@ -24,6 +24,9 @@ vars:
       fieldpath: metadata.name
 
 secretGenerator:
-  - name: rethinkdb
+  - name: rethinkdb-env
+    options:
+      disableNameSuffixHash: true
     literals:
-      - rethinkdb-password=rethinkdb
+      - DB_USER=admin
+      - DB_PASSWORD=rethinkdb

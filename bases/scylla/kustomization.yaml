@@ -1,8 +1,6 @@
 kind: Kustomization
 apiVersion: kustomize.config.k8s.io/v1beta1
 
-namespace: veidemann
-
 resources:
   - service.yaml
   - statefulset.yaml
@@ -16,15 +14,16 @@ configMapGenerator:
 vars:
   - name: NAME
     objref:
-      kind: StatefulSet
+      kind: Service
       name: scylla
-      apiVersion: apps/v1
+      apiVersion: v1
     fieldref:
-      fieldpath: metadata.name
+       fieldpath: metadata.name
   - name: NAMESPACE
     objref:
       kind: StatefulSet
       name: scylla
-      apiVersion: apps/v1
+      apiVersion: v1
+      group: apps
     fieldref:
       fieldpath: metadata.namespace

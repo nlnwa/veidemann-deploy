@@ -7,3 +7,8 @@ resources:
 commonLabels:
   app.kubernetes.io/instance: veidemann-contentwriter
   app.kubernetes.io/part-of: veidemann
+
+configMapGenerator:
+  - name: veidemann-contentwriter
+    files:
+      - log4j2.xml

@@ -1,9 +1,8 @@
 kind: Kustomization
 apiVersion: kustomize.config.k8s.io/v1beta1
 resources:
-  - namespace.yaml
   - crd.yaml
-  - role.yaml
+  - rbac.yaml
   - service.yaml
   - deployment.yaml
   - serviceaccount.yaml

@@ -6,3 +6,9 @@ resources:
 commonLabels:
   app.kubernetes.io/instance: veidemann-warcvalidator
   app.kubernetes.io/part-of: veidemann
+
+configMapGenerator:
+  - name: veidemann-warcvalidator
+    files:
+      - log4j2.xml
+

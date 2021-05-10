@@ -32,9 +32,6 @@ spec:
             - --bind
             - $(POD_IP)
             - --no-update-check
-          volumeMounts:
-            - name: secrets
-              mountPath: /secrets
           env:
             - name: PROXY
               value: "true"
@@ -43,8 +40,8 @@ spec:
             - name: RETHINKDB_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: rethinkdb
-                  key: rethinkdb-password
+                  name: rethinkdb-env
+                  key: DB_PASSWORD
             - name: POD_IP
               valueFrom:
                 fieldRef:
@@ -73,7 +70,3 @@ spec:
               command:
                 - /rethinkdb-probe
             timeoutSeconds: 5
-      volumes:
-        - name: secrets
-          secret:
-            secretName: rethinkdb

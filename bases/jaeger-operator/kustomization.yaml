@@ -4,12 +4,8 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 namespace: observability
 
 resources:
-  - namespace.yaml
   - vendor/crds/jaegertracing.io_jaegers_crd.yaml
   - vendor/service_account.yaml
   - vendor/cluster_role.yaml
   - vendor/cluster_role_binding.yaml
   - vendor/operator.yaml
-
-patchesStrategicMerge:
-  - operator_patch.yaml

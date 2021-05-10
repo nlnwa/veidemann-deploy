@@ -7,3 +7,11 @@ resources:
 commonLabels:
   app.kubernetes.io/instance: veidemann-dns-resolver
   app.kubernetes.io/part-of: veidemann
+
+configMapGenerator:
+  - name: veidemann-dns-resolver
+    options:
+      # disable so we can reload the configuration without restarting the pod
+      disableNameSuffixHash: true
+    files:
+      - Corefile

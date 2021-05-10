@@ -22,13 +22,10 @@ spec:
       volumes:
         - name: config
           configMap:
-            name: veidemann-dashboard-environment
+            name: veidemann-dashboard
             items:
               - key: environment.json
                 path: environment.json
-
-      terminationGracePeriodSeconds: 30
-
       containers:
         - name: veidemann-dashboard
           image: norsknettarkiv/veidemann-dashboard:v0.18.0
@@ -37,5 +34,5 @@ spec:
               name: http
               protocol: TCP
           volumeMounts:
-            - mountPath: /usr/share/nginx/html/veidemann/assets/config/
+            - mountPath: /usr/share/nginx/html/veidemann/assets/config
               name: config

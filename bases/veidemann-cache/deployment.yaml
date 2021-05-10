@@ -18,14 +18,9 @@ spec:
         app.kubernetes.io/component: cache-balancer
     spec:
       serviceAccountName: veidemann-cache
-      volumes:
-        - emptyDir:
-            medium: Memory
-          name: dshm
       containers:
         - name: veidemann-cache-balancer
           image: norsknettarkiv/veidemann-cache:0.2.3
-          imagePullPolicy: IfNotPresent
           args:
             - squid
             - -b

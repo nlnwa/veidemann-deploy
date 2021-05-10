@@ -19,6 +19,8 @@ spec:
         app.kubernetes.io/name: veidemann-contentwriter
         app.kubernetes.io/component: contentwriter
       annotations:
+        # skip outbound to jaeger collector
+        config.linkerd.io/skip-outbound-ports: "14250"
         linkerd.io/inject: enabled
     spec:
       terminationGracePeriodSeconds: 600
@@ -27,9 +29,9 @@ spec:
           name: workdir
         - name: warcs
           emptyDir: {}
-        - name: veidemann-config
+        - name: log4j2
           configMap:
-            name: veidemann
+            name: veidemann-contentwriter
             items:
               - key: log4j2.xml
                 path: log4j2.xml
@@ -45,11 +47,11 @@ spec:
             - mountPath: /warcs
               name: warcs
             - mountPath: /veidemann/config/log4j2.xml
-              name: veidemann-config
+              name: log4j2
               subPath: log4j2.xml
           envFrom:
             - secretRef:
-                name: veidemann-rethinkdb-env
+                name: rethinkdb-env
                 optional: false
           env:
             - name: DB_HOST
@@ -75,7 +77,7 @@ spec:
             - name: JAEGER_AGENT_PORT
               value: "6831"
             - name: JAEGER_SAMPLER_TYPE
-              value: probabilistic
+              value: remote
             - name: JAEGER_SAMPLER_PARAM
               value: "0.1"
             - name: JAVA_TOOL_OPTIONS

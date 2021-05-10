@@ -7,3 +7,8 @@ resources:
 commonLabels:
   app.kubernetes.io/instance: veidemann-frontier
   app.kubernetes.io/part-of: veidemann
+
+configMapGenerator:
+  - name: veidemann-frontier
+    files:
+      - log4j2.xml

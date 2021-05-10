@@ -17,11 +17,11 @@ spec:
       restartPolicy: Never
       containers:
         - name: veidemann-db-initializer
-          image: norsknettarkiv/veidemann-db-initializer:v0.8.0
+          image: norsknettarkiv/veidemann-db-initializer:0.6.1
           imagePullPolicy: IfNotPresent
           envFrom:
             - secretRef:
-                name: veidemann-rethinkdb-env
+                name: rethinkdb-env
                 optional: false
           env:
             - name: DB_HOST

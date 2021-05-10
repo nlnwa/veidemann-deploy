@@ -2,8 +2,10 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 
 secretGenerator:
-  - name: veidemann-ingress-tls-cert
+  - name: veidemann-cert
+    options:
+      disableNameSuffixHash: true
     type: kubernetes.io/tls
     files:
-      - tls.key=veidemann.local/key.pem
-      - tls.crt=veidemann.local/cert.pem
+      - tls.key=veidemann.test/key.pem
+      - tls.crt=veidemann.test/cert.pem

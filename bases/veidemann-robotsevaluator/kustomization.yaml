@@ -7,3 +7,9 @@ resources:
 commonLabels:
   app.kubernetes.io/instance: veidemann-robotsevaluator
   app.kubernetes.io/part-of: veidemann
+
+configMapGenerator:
+  - name: veidemann-robotsevaluator
+    files:
+      - log4j2.xml
+

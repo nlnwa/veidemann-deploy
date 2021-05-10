@@ -18,10 +18,18 @@ spec:
         app.kubernetes.io/component: dns-resolver
       annotations:
         linkerd.io/inject: enabled
+        config.linkerd.io/skip-outbound-ports: "8080"
     spec:
+      volumes:
+        - name: corefile
+          configMap:
+            name: veidemann-dns-resolver
+            items:
+              - key: Corefile
+                path: Corefile
       containers:
         - name: veidemann-dns-resolver
-          image: norsknettarkiv/veidemann-dns-resolver:v0.3.0
+          image: norsknettarkiv/veidemann-dns-resolver:v0.3.1
           env:
             - name: LOG_WRITER_HOST
               value: "veidemann-log-service"
@@ -31,8 +39,6 @@ spec:
               value: "veidemann-contentwriter"
             - name: CONTENT_WRITER_PORT
               value: "8082"
-            - name: DNS_SERVER
-              value: 8.8.8.8
           ports:
             - containerPort: 8053
               name: grpc
@@ -69,3 +75,7 @@ spec:
             periodSeconds: 15
             successThreshold: 1
             timeoutSeconds: 1
+          volumeMounts:
+            - name: corefile
+              mountPath: /Corefile
+              subPath: Corefile

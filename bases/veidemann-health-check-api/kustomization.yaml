@@ -8,3 +8,13 @@ commonLabels:
 resources:
   - deployment.yaml
   - service.yaml
+
+secretGenerator:
+  - name: veidemann-health-check-api
+    literals:
+      - CONTROLLER_API_KEY="ABCD-1234"
+
+configMapGenerator:
+  - name: veidemann-version
+    literals:
+      - versions.json="{}"
