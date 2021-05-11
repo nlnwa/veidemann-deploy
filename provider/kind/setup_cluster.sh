@@ -4,7 +4,7 @@ SCRIPT_DIR=$(dirname $0)
 PREREQUISITES=${SCRIPT_DIR}/../../scripts/prerequisites.sh
 UPDATE_HOSTS=${SCRIPT_DIR}/../../scripts/update_hosts.sh
 
-source $PREREQUISITES kubectl kind linkerd kustomize
+source $PREREQUISITES kubectl kind helm linkerd kustomize veidemannctl
 
 # Create patch and update /etc/hosts for local cluster ip
 HOSTNAME=veidemann.test

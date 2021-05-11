@@ -4,7 +4,7 @@ SCRIPT_DIR=$(dirname $0)
 PREREQUISITES=${SCRIPT_DIR}/../../scripts/prerequisites.sh
 UPDATE_HOSTS=${SCRIPT_DIR}/../../scripts/update_hosts.sh
 
-source $PREREQUISITES kubectl minikube linkerd kustomize veidemannctl
+source $PREREQUISITES kubectl minikube helm linkerd kustomize veidemannctl
 
 set -e
 
