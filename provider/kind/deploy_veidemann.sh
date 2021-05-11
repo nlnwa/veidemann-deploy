@@ -6,3 +6,5 @@ if ! [[ $(kubectl config current-context) = *kind* ]]; then echo "WARNING: Not a
 SCRIPT_DIR=$(dirname $0)
 
 kustomize build $SCRIPT_DIR | kubectl apply -f -
+
+${SCRIPT_DIR}/../../dev/veidemann/scylla/install_scylla.sh

@@ -7,6 +7,7 @@ LINKERD_VERSION=stable-2.10.1
 KUBECTL_VERSION=v1.20.6
 MINIKUBE_VERSION=v1.20.0
 VEIDEMANNCTL_VERSION=0.4.0
+HELM_VERSION=v3.5.3
 
 function check_cmd() {
   local CMD=$1
@@ -68,8 +69,19 @@ for CMD in "$@"; do
       curl -L https://github.com/kubernetes-sigs/kustomize/releases/download/kustomize/${KUSTOMIZE_VERSION}/kustomize_${KUSTOMIZE_VERSION}_${OPSYS}_amd64.tar.gz |
         tar xz
       sudo install kustomize /usr/local/bin/kustomize
-      yes y | kustomize install-completion
+      sudo sh -c "/usr/local/bin/kustomize completion bash > /etc/bash_completion.d/kustomize"
       rm kustomize
+    fi
+    ;;
+  helm)
+    check_cmd helm $HELM_VERSION 'version --short | sed "s/\([0-9]\.[0-9]\.[0-9]\).*/\1/"'
+    INSTALL=$?
+    if [ $INSTALL -ne 0 ]; then
+      echo "Installing Helm"
+      curl -L https://get.helm.sh/helm-${HELM_VERSION}-linux-amd64.tar.gz | tar xz
+      sudo install linux-amd64/helm /usr/local/bin/helm
+      sudo sh -c "/usr/local/bin/helm completion bash > /etc/bash_completion.d/helm"
+      rm -r linux-amd64/
     fi
     ;;
   linkerd)

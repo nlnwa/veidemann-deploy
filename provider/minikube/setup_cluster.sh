@@ -63,3 +63,8 @@ sleep 1
 # Install jaeger
 kustomize build ${SCRIPT_DIR}/../../dev/observability/jaeger | kubectl apply -f -
 
+# Install cert manager
+${SCRIPT_DIR}/../../dev/cert-manager/install_cert_manager.sh
+
+# Install scylla-operator
+${SCRIPT_DIR}/../../dev/scylla-operator/install_scylla_operator.sh

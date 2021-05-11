@@ -4,12 +4,12 @@ metadata:
   name: veidemann-log-schema
 spec:
   ttlSecondsAfterFinished: 60
-  backoffLimit: 3
+  backoffLimit: 5
   template:
     spec:
       containers:
         - name: veidemann-log-schema
           image: norsknettarkiv/veidemann-log-schema:v1.0.0
           env:
-            - name: SCYLLA_HOST
-              value: scylla
+            - name: CQLSH_HOST
+              value: "scylla-dc1-rac1-0"

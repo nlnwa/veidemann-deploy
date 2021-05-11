@@ -10,6 +10,5 @@ resources:
   - redis
   - dex
   - rethinkdb
-  - scylla
   - util-pod
   - veidemann
