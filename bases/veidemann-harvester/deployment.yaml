@@ -150,8 +150,6 @@ spec:
               value: "true"
             - name: JAEGER_SERVICE_NAME
               value: veidemann-harvester-browser
-            - name: JAEGER_PROPAGATION
-              value: jaeger,b3
           livenessProbe:
             failureThreshold: 3
             httpGet:
