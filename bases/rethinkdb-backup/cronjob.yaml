@@ -6,7 +6,7 @@ metadata:
     app.kubernetes.io/name: rethinkdb-backup
     app.kubernetes.io/component: backup
 spec:
-  suspend: true
+  suspend: false
   schedule: "0 0 * * *"
   concurrencyPolicy: "Forbid"
   failedJobsHistoryLimit: 3
@@ -20,11 +20,11 @@ spec:
             app.kubernetes.io/name: rethinkdb-backup
             app.kubernetes.io/component: backup
         spec:
-          restartPolicy: OnFailure
+          restartPolicy: Never
           volumes:
-            - name: secret
+            - name: rethinkdb-password
               secret:
-                secretName: veidemann-rethinkdb-env
+                secretName: rethinkdb-env
                 optional: false
                 items:
                   - key: DB_PASSWORD
@@ -33,7 +33,7 @@ spec:
               emptyDir: {}
           containers:
             - name: rethinkdb-backup
-              image: norsknettarkiv/rethinkdb-backup:0.3.1
+              image: norsknettarkiv/rethinkdb-backup:0.4.0
               env:
                 - name: DB_HOST
                   value: "rethinkdb-proxy"
@@ -44,16 +44,20 @@ spec:
               volumeMounts:
                 - name: data
                   mountPath: /data
-                - name: secret
+                - name: rethinkdb-password
                   mountPath: /secret
                   readOnly: true
               args:
                 - dump
                 - --export
-                - veidemann
+                - veidemann.config
+                - --export
+                - veidemann.config_crawl_entities
+                - --export
+                - veidemann.config_seeds
+                - --export
+                - veidemann.system
                 - --password-file
                 - /secret/rethinkdb-password
                 - --connect
                 - "$(DB_HOST):$(DB_PORT)"
-
-

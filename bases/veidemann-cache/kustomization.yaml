@@ -13,6 +13,8 @@ commonLabels:
 
 secretGenerator:
   - name: veidemann-cache
+    options:
+      disableNameSuffixHash: true
     type: Opaque
     files:
       - cert/cache-selfsigned.key

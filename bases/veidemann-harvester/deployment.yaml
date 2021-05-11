@@ -23,16 +23,10 @@ spec:
         linkerd.io/inject: enabled
         # opaque proxy port
         config.linkerd.io/opaque-ports: "9900"
-        # skip outbound to cache (squid)
-        config.linkerd.io/skip-outbound-ports: "3128"
+        # skip outbound to cache (3128), jaeger collector  (14250) and log service (8080)
+        config.linkerd.io/skip-outbound-ports: "3128, 8080, 14250"
     spec:
       volumes:
-        - name: veidemann-config
-          configMap:
-            name: veidemann
-            items:
-              - key: log4j2.xml
-                path: log4j2.xml
         - name: workdir
           emptyDir: {}
         - name: dshm
@@ -40,11 +34,12 @@ spec:
             medium: Memory
         - name: cache-certificate
           secret:
+            optional: false
             secretName: veidemann-cache
       terminationGracePeriodSeconds: 30
       containers:
         - name: veidemann-browser-controller
-          image: norsknettarkiv/veidemann-browser-controller:v0.2.1
+          image: norsknettarkiv/veidemann-browser-controller:v0.2.2
           imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 9999
@@ -54,7 +49,7 @@ spec:
               protocol: TCP
           envFrom:
             - secretRef:
-                name: veidemann-rethinkdb-env
+                name: rethinkdb-env
                 optional: false
           env:
             - name: PORT
@@ -100,11 +95,9 @@ spec:
             - name: JAEGER_AGENT_PORT
               value: "6831"
             - name: JAEGER_SAMPLER_TYPE
-              value: probabilistic
+              value: remote
             - name: JAEGER_SAMPLER_PARAM
               value: "0.1"
-            - name: JAEGER_PROPAGATION
-              value: jaeger,b3
             - name: LOG_LEVEL
               value: WARN
           volumeMounts:
@@ -143,8 +136,6 @@ spec:
               value: "3128"
             - name: JAEGER_SERVICE_NAME
               value: veidemann-harvester-proxy
-            - name: JAEGER_PROPAGATION
-              value: jaeger,b3
         - name: veidemann-harvester-browser
           image: browserless/chrome:1.33.1-puppeteer-3.0.0
           imagePullPolicy: IfNotPresent

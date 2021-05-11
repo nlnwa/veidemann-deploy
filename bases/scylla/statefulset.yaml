@@ -21,6 +21,10 @@ spec:
           args:
             - --seeds
             - scylla-0.$(NAME).$(NAMESPACE).svc.cluster.local
+            - --listen-address
+            - $(POD_IP)
+            - --rpc-address
+            - $(POD_IP)
           ports:
             - containerPort: 7000
               name: intra-node

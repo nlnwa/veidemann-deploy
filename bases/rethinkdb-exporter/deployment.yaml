@@ -10,7 +10,7 @@ spec:
   selector:
     matchLabels:
       app.kubernetes.io/name: rethinkdb-exporter
-      app.kubernetes.io/component: metrics 
+      app.kubernetes.io/component: metrics
   template:
     metadata:
       labels:
@@ -34,7 +34,7 @@ spec:
               port: http
           envFrom:
             - secretRef:
-                name: veidemann-rethinkdb-env
+                name: rethinkdb-env
                 optional: false
           env:
             - name: DB_HOST

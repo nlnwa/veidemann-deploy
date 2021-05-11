@@ -26,9 +26,9 @@ spec:
       volumes:
         - name: workdir
           emptyDir: {}
-        - name: veidemann-config
+        - name: log4j2
           configMap:
-            name: veidemann
+            name: veidemann-frontier
             items:
               - key: log4j2.xml
                 path: log4j2.xml
@@ -54,7 +54,7 @@ spec:
               memory: 2Gi
           envFrom:
             - secretRef:
-                name: veidemann-rethinkdb-env
+                name: rethinkdb-env
                 optional: false
           env:
             - name: DB_HOST
@@ -112,7 +112,7 @@ spec:
             - mountPath: /workdir
               name: workdir
             - mountPath: /veidemann/config/log4j2.xml
-              name: veidemann-config
+              name: log4j2
               subPath: log4j2.xml
           readinessProbe:
             exec:

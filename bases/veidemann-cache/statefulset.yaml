@@ -22,7 +22,6 @@ spec:
       containers:
         - name: veidemann-cache
           image: norsknettarkiv/veidemann-cache:0.2.3
-          imagePullPolicy: IfNotPresent
           ports:
             - name: http
               containerPort: 3128
@@ -31,6 +30,8 @@ spec:
             - name: DNS_SERVERS
               value: veidemann-dns-resolver
           volumeMounts:
+            - name: dshm
+              mountPath: /var/run/squid
             - name: workdir
               mountPath: /var/cache/squid
             - name: cache-certificate
@@ -52,6 +53,7 @@ spec:
             medium: Memory
         - name: cache-certificate
           secret:
+            optional: false
             secretName: veidemann-cache
         - name: workdir
           emptyDir: {}

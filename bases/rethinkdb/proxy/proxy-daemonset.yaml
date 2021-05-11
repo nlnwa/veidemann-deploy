@@ -18,6 +18,9 @@ spec:
         app.kubernetes.io/component: proxy
       annotations:
         linkerd.io/inject: enabled
+        config.linkerd.io/opaque-ports: "28015"
+        config.linkerd.io/skip-inbound-ports: "29015"
+        config.linkerd.io/skip-outbound-ports: "29015"
     spec:
       priorityClassName: rethinkdb-priority
       serviceAccountName: rethinkdb
@@ -34,9 +37,6 @@ spec:
             - $(POD_IP)
             - --no-update-check
             - --no-http-admin
-          volumeMounts:
-            - name: secrets
-              mountPath: /secrets
           env:
             - name: PROXY
               value: "true"
@@ -45,8 +45,9 @@ spec:
             - name: RETHINKDB_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: rethinkdb
-                  key: rethinkdb-password
+                  optional: false
+                  name: rethinkdb-env
+                  key: DB_PASSWORD
             - name: POD_IP
               valueFrom:
                 fieldRef:
@@ -75,7 +76,3 @@ spec:
               command:
                 - /rethinkdb-probe
             timeoutSeconds: 5
-      volumes:
-        - name: secrets
-          secret:
-            secretName: rethinkdb

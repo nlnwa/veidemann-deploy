@@ -5,7 +5,8 @@ metadata:
   labels:
     app.kubernetes.io/name: veidemann-reset
 spec:
-  ttlSecondsAfterFinished: 60
+  # Job is eligible to be deleted immediatly after it is completed
+  ttlSecondsAfterFinished: 0
   backoffLimit: 1
   template:
     metadata:
@@ -36,9 +37,11 @@ spec:
               subPath: invalidwarcs
             - name: backup
               mountPath: /backup
-          envFrom:
-            - secretRef:
-                name: veidemann-reset-secret
           env:
             - name: RETHINKDB_HOST
               value: rethinkdb-proxy
+            - name: RETHINKDB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: rethinkdb-env
+                  key: DB_PASSWORD

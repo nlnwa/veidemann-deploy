@@ -42,8 +42,9 @@ spec:
             - name: RETHINKDB_PASSWORD
               valueFrom:
                 secretKeyRef:
-                  name: rethinkdb
-                  key: rethinkdb-password
+                  optional: false
+                  name: rethinkdb-env
+                  key: DB_PASSWORD
             - name: POD_IP
               valueFrom:
                 fieldRef:

@@ -9,6 +9,6 @@ commonLabels:
   app.kubernetes.io/part-of: veidemann
 
 configMapGenerator:
-  - name: veidemann-dashboard-environment
+  - name: veidemann-dashboard
     literals:
       - environment.json="{}"

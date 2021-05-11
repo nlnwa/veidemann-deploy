@@ -20,7 +20,8 @@ spec:
     spec:
       volumes:
         - name: data
-          emptyDir: {}
+          emptyDir:
+            medium: Memory
       containers:
         - name: veidemann-ooshandler
           image: norsknettarkiv/veidemann-ooshandler:0.1.6

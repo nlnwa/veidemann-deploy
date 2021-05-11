@@ -18,7 +18,7 @@ spec:
         - name: veidemann-log-schema
           image: norsknettarkiv/veidemann-log-schema:v1.0.0
           env:
-            - name: SCYLLA_HOST
+            - name: CQLSH_HOST
               value: scylla
             - name: TEMPLATE
               value: /schema/v001.cql.tmpl

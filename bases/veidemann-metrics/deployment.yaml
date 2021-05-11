@@ -22,14 +22,14 @@ spec:
     spec:
       containers:
         - name: veidemann-metrics
-          image: norsknettarkiv/veidemann-metrics:v0.3.0
+          image: norsknettarkiv/veidemann-metrics:v0.3.1
           ports:
             - containerPort: 9301
               name: http-metrics
               protocol: TCP
           envFrom:
             - secretRef:
-                name: veidemann-rethinkdb-env
+                name: rethinkdb-env
                 optional: false
           env:
             - name: PORT

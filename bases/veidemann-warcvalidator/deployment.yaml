@@ -19,9 +19,9 @@ spec:
       volumes:
         - name: warcs
           emptyDir: {}
-        - name: veidemann-config
+        - name: log4j2
           configMap:
-            name: veidemann
+            name: veidemann-warcvalidator
             items:
               - key: log4j2.xml
                 path: log4j2.xml
@@ -38,8 +38,8 @@ spec:
             - name: warcs
               mountPath: /invalidwarcs
               subPath: invalidwarcs
-            - name: veidemann-config
-              mountPath: /app/resources/log4j2.xml
+            - name: log4j2
+              mountPath: /veidemann/config/log4j2.xml
               subPath: log4j2.xml
           env:
             - name: SLEEP_TIME
