@@ -12,4 +12,4 @@ spec:
           image: norsknettarkiv/veidemann-log-schema:v1.0.0
           env:
             - name: CQLSH_HOST
-              value: "scylla-dc1-rac1-0"
+              value: "scylla-client"

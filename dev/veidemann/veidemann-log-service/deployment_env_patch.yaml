@@ -9,4 +9,4 @@ spec:
         - name: veidemann-log-service
           env:
             - name: DB_HOST
-              value: "scylla-dc1-rac1-0"
+              value: "scylla-client"
