@@ -8,12 +8,6 @@ nodes:
     kubeadmConfigPatches:
       - |
         apiVersion: kubeadm.k8s.io/v1beta2
-        kind: ClusterConfiguration
-        apiServer:
-          extraArgs:
-            enable-admission-plugins: NodeRestriction,MutatingAdmissionWebhook,ValidatingAdmissionWebhook
-      - |
-        apiVersion: kubeadm.k8s.io/v1beta2
         kind: InitConfiguration
         nodeRegistration:
           kubeletExtraArgs:
