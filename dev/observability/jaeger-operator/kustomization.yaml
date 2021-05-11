@@ -5,3 +5,6 @@ namespace: observability
 
 resources:
   - ../../../bases/jaeger-operator
+
+patchesStrategicMerge:
+  - operator_env_patch.yaml
