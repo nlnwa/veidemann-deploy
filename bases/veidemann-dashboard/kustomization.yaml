@@ -12,8 +12,3 @@ configMapGenerator:
   - name: veidemann-dashboard
     literals:
       - environment.json="{}"
-  - name: veidemann-versions
-    options:
-      disableNameSuffixHash: true
-    literals:
-      - versions.json="{}"
