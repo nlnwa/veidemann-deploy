@@ -28,7 +28,7 @@ spec:
                 path: environment.json
       containers:
         - name: veidemann-dashboard
-          image: norsknettarkiv/veidemann-dashboard:v0.18.1
+          image: norsknettarkiv/veidemann-dashboard:v0.18.2
           ports:
             - containerPort: 80
               name: http
