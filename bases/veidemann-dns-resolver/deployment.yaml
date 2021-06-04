@@ -39,6 +39,8 @@ spec:
               value: "veidemann-contentwriter"
             - name: CONTENT_WRITER_PORT
               value: "8082"
+            - name: DNS_SERVER
+              value: "8.8.8.8"
           ports:
             - containerPort: 8053
               name: grpc
