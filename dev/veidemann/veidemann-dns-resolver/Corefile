@@ -20,5 +20,5 @@ arpa {
         logHost {$LOG_WRITER_HOST}
         logPort {$LOG_WRITER_PORT}
     }
-    forward . 8.8.8.8
+    forward . {$DNS_SERVER}
 }
